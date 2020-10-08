@@ -11,7 +11,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -28,7 +27,6 @@ public class Drivetrain extends SubsystemBase {
       new CANSparkMax(Constants.rightLeader, MotorType.kBrushless),
       new CANSparkMax(Constants.rightFollower1, MotorType.kBrushless),
       new CANSparkMax(Constants.rightFollower2, MotorType.kBrushless));
-  private final XboxController driveController = new XboxController(Constants.driveController);
 
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
