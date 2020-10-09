@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.IntakeBalls;
+import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -43,11 +44,13 @@ public class RobotContainer {
   private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive,
       () -> driveController.getX(Hand.kRight), () -> driveController.getY(Hand.kLeft), 0.3);
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
+  private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
   JoystickButton leftBumper = new JoystickButton(driveController, Constants.leftBumper);
+  JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
 
   public RobotContainer() {
     m_drive.setDefaultCommand(m_driveCommand);
@@ -67,7 +70,7 @@ public class RobotContainer {
     leftTrigger.whenActive(m_quarterSpeedDrive);
 
     leftBumper.toggleWhenPressed(m_intakeCommand);
-
+    aButton.toggleWhenPressed(m_outtakeSlowlyCommand);
   }
 
   /**
