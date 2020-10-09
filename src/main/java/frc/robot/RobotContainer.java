@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.DefaultDrive;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeBalls;
+import frc.robot.commands.PrecisionDrive;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -26,18 +29,27 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drive = new Drivetrain();
+  private final Intake m_intake = new Intake();
   private final XboxController driveController = new XboxController(Constants.driveController);
-
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final XboxController systemsController = new XboxController(Constants.systemsController);
 
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getX(Hand.kRight),
       () -> driveController.getY(Hand.kLeft));
+  private final PrecisionDrive m_halfSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getX(Hand.kRight),
+      () -> driveController.getY(Hand.kLeft), 0.5);
+  private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive,
+      () -> driveController.getX(Hand.kRight), () -> driveController.getY(Hand.kLeft), 0.3);
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+
+  // Triggers
+  Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
+  Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
+  JoystickButton leftBumper = new JoystickButton(driveController, Constants.leftBumper);
+
   public RobotContainer() {
     m_drive.setDefaultCommand(m_driveCommand);
     // Configure the button bindings
@@ -51,6 +63,12 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    rightTrigger.whenActive(m_halfSpeedDrive);
+    leftTrigger.whenActive(m_quarterSpeedDrive);
+
+    leftBumper.toggleWhenPressed(m_intakeCommand);
+
     // if (driveController.getX(GenericHID.Hand.kRight) > 0.05 ||
     // driveController.getY(GenericHID.Hand.kLeft) > 0.05) {
 
@@ -67,6 +85,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    // return m_autoCommand;
+    return null;
   }
 }

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -42,4 +44,10 @@ public final class Constants {
     // Controllers
     public static int driveController = 0;
     public static int systemsController = 1;
+
+    // Speeds
+    public static double intakeSpeed = 0.5;
+
+    // Buttons
+    public static int leftBumper = 5;
 }

@@ -56,7 +56,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double turn) {
-    m_drive.arcadeDrive(-fwd, -turn);
+    m_drive.arcadeDrive(-fwd, -turn); // <<<<<<Need to invert motors instead >>>>>>>
   }
 
 }
