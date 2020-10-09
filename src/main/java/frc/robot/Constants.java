@@ -47,5 +47,14 @@ public final class Constants {
     public static double intakeSpeed = 0.5;
 
     // Buttons
+    public static int aButton = 1;
+    public static int bButton = 2;
+    public static int xButton = 3;
+    public static int yButton = 4;
     public static int leftBumper = 5;
+    public static int rightBumper = 6;
+    public static int backButton = 7;
+    public static int startButton = 8;
+    public static int leftStickPressDown = 9;
+    public static int rightStickPressDown = 10;
 }

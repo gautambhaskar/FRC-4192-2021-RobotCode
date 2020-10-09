@@ -27,23 +27,22 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drive = new Drivetrain();
-  private final Intake m_intake = new Intake();
+  // Controllers
   private final XboxController driveController = new XboxController(Constants.driveController);
   private final XboxController systemsController = new XboxController(Constants.systemsController);
 
+  // Subsystems
+  private final Drivetrain m_drive = new Drivetrain();
+  private final Intake m_intake = new Intake();
+
+  // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getX(Hand.kRight),
       () -> driveController.getY(Hand.kLeft));
   private final PrecisionDrive m_halfSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getX(Hand.kRight),
       () -> driveController.getY(Hand.kLeft), 0.5);
   private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive,
       () -> driveController.getX(Hand.kRight), () -> driveController.getY(Hand.kLeft), 0.3);
-
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -69,13 +68,6 @@ public class RobotContainer {
 
     leftBumper.toggleWhenPressed(m_intakeCommand);
 
-    // if (driveController.getX(GenericHID.Hand.kRight) > 0.05 ||
-    // driveController.getY(GenericHID.Hand.kLeft) > 0.05) {
-
-    // }
-    // new JoystickButton(exampleController, XBoxController.Button.kX.value)
-    // .and(new JoystickButton(exampleController, XboxController.Button.kY.value))
-    // .whenActive(new ExampleCommand());
   }
 
   /**
