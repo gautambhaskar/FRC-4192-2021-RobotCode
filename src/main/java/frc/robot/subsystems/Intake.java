@@ -26,8 +26,6 @@ public class Intake extends SubsystemBase {
   private final DoubleSolenoid solenoid3 = new DoubleSolenoid(1, 6);
   private final DoubleSolenoid intakeSolenoid = new DoubleSolenoid(0, 7);
 
-  // Figure out pneumatics!!!
-  //
   public Intake() {
 
   }
