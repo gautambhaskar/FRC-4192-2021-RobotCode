@@ -70,7 +70,7 @@ public class RobotContainer {
     leftTrigger.whenActive(m_quarterSpeedDrive);
 
     leftBumper.toggleWhenPressed(m_intakeCommand);
-    aButton.toggleWhenPressed(m_outtakeSlowlyCommand);
+    aButton.whenHeld(m_outtakeSlowlyCommand);
   }
 
   /**
