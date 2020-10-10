@@ -46,6 +46,10 @@ public final class Constants {
     // Speeds
     public static double intakeSpeed = 0.5;
     public static double outtakeSlowlySpeed = 0.3;
+    public static double indexSpeed = 0.3;
+    public static double feederSpeed = 0.3;
+    public static double shooterSpeed = 0.3;
+    public static double hoodRotateSpeed = 0.3;
 
     // Buttons
     public static int aButton = 1;

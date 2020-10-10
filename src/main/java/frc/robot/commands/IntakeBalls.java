@@ -27,6 +27,7 @@ public class IntakeBalls extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_intake.raise();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,6 +40,7 @@ public class IntakeBalls extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_intake.intake(0);
+    m_intake.lower();
   }
 
   // Returns true when the command should end.

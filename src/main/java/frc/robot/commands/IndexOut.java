@@ -8,39 +8,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ShootingSystem;
 
-public class OuttakeSlowly extends CommandBase {
-  private final Intake m_intake;
-  private final double m_outtakeSlowlySpeed;
-
-  /**
-   * Creates a new IntakeBalls.
-   */
-  public OuttakeSlowly(Intake subsystem, double speed) {
-    m_intake = subsystem;
-    m_outtakeSlowlySpeed = speed;
-    addRequirements(m_intake);
-    // Use addRequirements() here to declare subsystem dependencies.
+public class IndexOut extends CommandBase {
+  private final ShootingSystem m_index;
+  private final double m_indexSpeed;
+  
+  public IndexOut(ShootingSystem subsystem, double speed) {
+    m_index = subsystem;
+    m_indexSpeed = speed;
+    addRequirements(m_index);
   }
+
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.raise();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.intake(-m_outtakeSlowlySpeed);
+    m_index.index(-m_indexSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intake.intake(0);
-    m_intake.lower();
+    m_index.index(0);
   }
 
   // Returns true when the command should end.

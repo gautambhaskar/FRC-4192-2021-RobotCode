@@ -10,6 +10,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,7 +21,12 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   private final CANSparkMax intakeMotor = new CANSparkMax(Constants.intake, MotorType.kBrushless);
+  private final DoubleSolenoid solenoid1 = new DoubleSolenoid(3, 4);
+  private final DoubleSolenoid solenoid2 = new DoubleSolenoid(2, 5);
+  private final DoubleSolenoid solenoid3 = new DoubleSolenoid(1, 6);
+  private final DoubleSolenoid intakeSolenoid = new DoubleSolenoid(0, 7);
 
+  // Figure out pneumatics!!!
   //
   public Intake() {
 
@@ -31,5 +39,13 @@ public class Intake extends SubsystemBase {
 
   public void intake(double intakeSpeed) {
     intakeMotor.set(intakeSpeed);
+  }
+
+  public void raise() {
+    intakeSolenoid.set(Value.kReverse);
+  }
+
+  public void lower() {
+    intakeSolenoid.set(Value.kForward);
   }
 }

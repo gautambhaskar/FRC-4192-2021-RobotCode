@@ -14,11 +14,14 @@ import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
+import frc.robot.commands.IndexIn;
+import frc.robot.commands.IndexOut;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.ShootingSystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -35,6 +38,7 @@ public class RobotContainer {
   // Subsystems
   private final Drivetrain m_drive = new Drivetrain();
   private final Intake m_intake = new Intake();
+  private final ShootingSystem m_ShootingSystem= new ShootingSystem();
 
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getX(Hand.kRight),
@@ -45,11 +49,15 @@ public class RobotContainer {
       () -> driveController.getX(Hand.kRight), () -> driveController.getY(Hand.kLeft), 0.3);
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
-
+  private final IndexIn m_indexInCommand = new IndexIn(m_ShootingSystem, Constants.indexSpeed);
+  private final IndexOut m_indexOutCommand = new IndexOut(m_ShootingSystem, Constants.indexSpeed);
+  
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
   JoystickButton leftBumper = new JoystickButton(driveController, Constants.leftBumper);
+  JoystickButton startButton = new JoystickButton(systemsController, Constants.startButton);
+  JoystickButton backButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
 
   public RobotContainer() {
@@ -68,7 +76,8 @@ public class RobotContainer {
 
     rightTrigger.whenActive(m_halfSpeedDrive);
     leftTrigger.whenActive(m_quarterSpeedDrive);
-
+    startButton.whenHeld(m_indexInCommand);
+    backButton.whenHeld(m_indexOutCommand);
     leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
   }
