@@ -42,12 +42,12 @@ public class RobotContainer {
   private final ShootingSystem m_ShootingSystem = new ShootingSystem();
 
   // Commands
-  private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getX(Hand.kRight),
-      () -> driveController.getY(Hand.kLeft));
-  private final PrecisionDrive m_halfSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getX(Hand.kRight),
-      () -> driveController.getY(Hand.kLeft), 0.5);
-  private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive,
-      () -> driveController.getX(Hand.kRight), () -> driveController.getY(Hand.kLeft), 0.3);
+  private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
+      () -> driveController.getX(Hand.kRight));
+  private final PrecisionDrive m_halfSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
+      () -> driveController.getX(Hand.kRight), 0.5);
+  private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
+      () -> driveController.getX(Hand.kRight), 0.3);
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_ShootingSystem, Constants.indexSpeed);
