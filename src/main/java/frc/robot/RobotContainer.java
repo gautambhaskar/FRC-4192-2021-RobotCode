@@ -79,8 +79,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    rightTrigger.whenActive(m_halfSpeedDrive);
-    leftTrigger.whenActive(m_quarterSpeedDrive);
+    rightTrigger.whileActiveOnce(m_halfSpeedDrive);
+    leftTrigger.whileActiveOnce(m_quarterSpeedDrive);
     rightTriggerSubsystems.whenActive(m_turretTurnRight);
     leftTriggerSubsystems.whenActive(m_turretTurnLeft);
     startButton.whenHeld(m_indexInCommand);
