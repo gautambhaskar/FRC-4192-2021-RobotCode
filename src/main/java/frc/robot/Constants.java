@@ -50,6 +50,7 @@ public final class Constants {
     public static double feederSpeed = 0.3;
     public static double shooterSpeed = 0.3;
     public static double hoodRotateSpeed = 0.3;
+    public static double turretTurn = 0.3;
 
     // Buttons
     public static int aButton = 1;

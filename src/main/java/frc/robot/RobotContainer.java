@@ -16,6 +16,7 @@ import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
 import frc.robot.commands.IndexIn;
 import frc.robot.commands.IndexOut;
+import frc.robot.commands.TurretTurn;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,7 +39,7 @@ public class RobotContainer {
   // Subsystems
   private final Drivetrain m_drive = new Drivetrain();
   private final Intake m_intake = new Intake();
-  private final ShootingSystem m_ShootingSystem= new ShootingSystem();
+  private final ShootingSystem m_ShootingSystem = new ShootingSystem();
 
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getX(Hand.kRight),
@@ -51,7 +52,9 @@ public class RobotContainer {
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_ShootingSystem, Constants.indexSpeed);
   private final IndexOut m_indexOutCommand = new IndexOut(m_ShootingSystem, Constants.indexSpeed);
-  
+  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_ShootingSystem, Constants.turretTurn);
+  private final TurretTurn m_turretTurnRight = new TurretTurn(m_ShootingSystem, -Constants.turretTurn);
+
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
@@ -59,6 +62,8 @@ public class RobotContainer {
   JoystickButton startButton = new JoystickButton(systemsController, Constants.startButton);
   JoystickButton backButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
+  Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.6);
+  Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.6);
 
   public RobotContainer() {
     m_drive.setDefaultCommand(m_driveCommand);
@@ -76,6 +81,8 @@ public class RobotContainer {
 
     rightTrigger.whenActive(m_halfSpeedDrive);
     leftTrigger.whenActive(m_quarterSpeedDrive);
+    rightTriggerSubsystems.whenActive(m_turretTurnRight);
+    leftTriggerSubsystems.whenActive(m_turretTurnLeft);
     startButton.whenHeld(m_indexInCommand);
     backButton.whenHeld(m_indexOutCommand);
     leftBumper.toggleWhenPressed(m_intakeCommand);
