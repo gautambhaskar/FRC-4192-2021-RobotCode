@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,14 +21,16 @@ public class Turret extends SubsystemBase {
 
   // Motor
   private final CANSparkMax turretMotor = new CANSparkMax(Constants.index, MotorType.kBrushless);
+  private final double initialPosition;
 
   public Turret() {
-
+    initialPosition = turretMotor.getEncoder().getPosition();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Turret Angular Position", initialPosition - turretMotor.getEncoder().getPosition());
   }
 
   // Set Turret Speed

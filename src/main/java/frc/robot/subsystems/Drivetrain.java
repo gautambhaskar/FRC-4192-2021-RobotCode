@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -19,12 +20,13 @@ public class Drivetrain extends SubsystemBase {
   /**
    * Creates a new Drivetrain.
    */
-  private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(
-      new CANSparkMax(Constants.leftLeader, MotorType.kBrushless),
+  private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless);
+  private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless);
+
+  private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftLead,
       new CANSparkMax(Constants.leftFollower1, MotorType.kBrushless),
       new CANSparkMax(Constants.leftFollower2, MotorType.kBrushless));
-  private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(
-      new CANSparkMax(Constants.rightLeader, MotorType.kBrushless),
+  private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightLead,
       new CANSparkMax(Constants.rightFollower1, MotorType.kBrushless),
       new CANSparkMax(Constants.rightFollower2, MotorType.kBrushless));
 
@@ -36,7 +38,8 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-
+    SmartDashboard.putNumber("Drivetrain Left RPM", leftLead.getEncoder().getVelocity());
+    SmartDashboard.putNumber("Drivetrain Right RPM", rightLead.getEncoder().getVelocity());
     // This method will be called once per scheduler run
   }
 
