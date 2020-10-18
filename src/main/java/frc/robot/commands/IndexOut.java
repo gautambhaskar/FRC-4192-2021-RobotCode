@@ -8,13 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShootingSystem;
+import frc.robot.subsystems.Index;
 
 public class IndexOut extends CommandBase {
-  private final ShootingSystem m_index;
+  private final Index m_index;
   private final double m_indexSpeed;
   
-  public IndexOut(ShootingSystem subsystem, double speed) {
+  public IndexOut(Index subsystem, double speed) {
     m_index = subsystem;
     m_indexSpeed = speed;
     addRequirements(m_index);
@@ -29,13 +29,13 @@ public class IndexOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_index.index(-m_indexSpeed);
+    m_index.run(-m_indexSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_index.index(0);
+    m_index.run(0);
   }
 
   // Returns true when the command should end.

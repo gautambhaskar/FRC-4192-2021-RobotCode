@@ -17,12 +17,16 @@ import frc.robot.commands.PrecisionDrive;
 import frc.robot.commands.IndexIn;
 import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
+import frc.robot.commands.UnjamBall;
+import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ShootingSystem;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.ShootingSystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -40,6 +44,8 @@ public class RobotContainer {
   private final Drivetrain m_drive = new Drivetrain();
   private final Intake m_intake = new Intake();
   private final ShootingSystem m_ShootingSystem = new ShootingSystem();
+  private final Index m_Index = new Index();
+  private final Turret m_Turret = new Turret();
 
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
@@ -50,10 +56,14 @@ public class RobotContainer {
       () -> driveController.getX(Hand.kRight), 0.3);
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
-  private final IndexIn m_indexInCommand = new IndexIn(m_ShootingSystem, Constants.indexSpeed);
-  private final IndexOut m_indexOutCommand = new IndexOut(m_ShootingSystem, Constants.indexSpeed);
-  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_ShootingSystem, Constants.turretTurn);
-  private final TurretTurn m_turretTurnRight = new TurretTurn(m_ShootingSystem, -Constants.turretTurn);
+  private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
+  private final IndexOut m_indexOutCommand = new IndexOut(m_Index, Constants.indexSpeed);
+  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret, Constants.turretTurn);
+  private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret, -Constants.turretTurn);
+  private final RunShooter m_runShooter = new RunShooter(m_ShootingSystem, Constants.shooterSpeed,
+      Constants.feederSpeed);
+  private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
+      Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -62,6 +72,9 @@ public class RobotContainer {
   JoystickButton startButton = new JoystickButton(systemsController, Constants.startButton);
   JoystickButton backButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
+  JoystickButton yButton = new JoystickButton(systemsController, Constants.yButton);
+  JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
+
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.6);
 
@@ -78,15 +91,16 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
     rightTrigger.whileActiveOnce(m_halfSpeedDrive);
     leftTrigger.whileActiveOnce(m_quarterSpeedDrive);
-    rightTriggerSubsystems.whenActive(m_turretTurnRight);
-    leftTriggerSubsystems.whenActive(m_turretTurnLeft);
+    rightTriggerSubsystems.whileActiveOnce(m_turretTurnRight);
+    leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft);
     startButton.whenHeld(m_indexInCommand);
     backButton.whenHeld(m_indexOutCommand);
     leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
+    yButton.toggleWhenPressed(m_runShooter);
+    driverBackButton.whenHeld(m_unjamBalls);
   }
 
   /**

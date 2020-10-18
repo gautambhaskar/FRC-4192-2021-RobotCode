@@ -27,7 +27,7 @@ public final class Constants {
     public static int rightFollower1 = 6;
     public static int rightFollower2 = 7;
     public static int intake = 8;
-    public static int index = 9;
+    public static int index = 9; // Burnt out
     public static int turret = 10;
     public static int feeder = 11;
     public static int shooterLeft = 12;
@@ -63,4 +63,11 @@ public final class Constants {
     public static int startButton = 8;
     public static int leftStickPressDown = 9;
     public static int rightStickPressDown = 10;
+
+    public static class unjamBalls {
+        public static double ind_power = 0.2;
+        public static double s_power = 0.2;
+        public static double f_power = 0.2;
+    }
+
 }
