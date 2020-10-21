@@ -32,7 +32,7 @@ public class ShootingSystem extends SubsystemBase {
       f_allowedErr;
 
   // Motors
-  private final CANSparkMax feederMotor = new CANSparkMax(Constants.feeder, MotorType.kBrushless);
+  private final CANSparkMax feederMotor = new CANSparkMax(Constants.feeder, MotorType.kBrushed);
   private final CANSparkMax shooterLeftMotor = new CANSparkMax(Constants.shooterLeft, MotorType.kBrushless);
   private final CANSparkMax shooterRightMotor = new CANSparkMax(Constants.shooterRight, MotorType.kBrushless);
 

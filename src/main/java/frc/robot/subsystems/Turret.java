@@ -20,7 +20,7 @@ public class Turret extends SubsystemBase {
    */
 
   // Motor
-  private final CANSparkMax turretMotor = new CANSparkMax(Constants.index, MotorType.kBrushless);
+  private final CANSparkMax turretMotor = new CANSparkMax(Constants.index, MotorType.kBrushed);
   private final double initialPosition;
 
   public Turret() {

@@ -69,10 +69,10 @@ public class RobotContainer {
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
   JoystickButton leftBumper = new JoystickButton(driveController, Constants.leftBumper);
-  JoystickButton startButton = new JoystickButton(systemsController, Constants.startButton);
-  JoystickButton backButton = new JoystickButton(systemsController, Constants.backButton);
+  JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
+  JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
-  JoystickButton yButton = new JoystickButton(systemsController, Constants.yButton);
+  JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
 
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -95,11 +95,11 @@ public class RobotContainer {
     leftTrigger.whileActiveOnce(m_quarterSpeedDrive);
     rightTriggerSubsystems.whileActiveOnce(m_turretTurnRight); // not working
     leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft); // not working
-    startButton.whenHeld(m_indexInCommand); 
-    backButton.whenHeld(m_indexOutCommand); 
+    systemsStartButton.whenHeld(m_indexInCommand);
+    systemsBackButton.whenHeld(m_indexOutCommand);
     leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
-    yButton.toggleWhenPressed(m_runShooter); // fail
+    systemsYButton.toggleWhenPressed(m_runShooter); // fail
     driverBackButton.whenHeld(m_unjamBalls); // PID'ing to 0...not good
   }
 
