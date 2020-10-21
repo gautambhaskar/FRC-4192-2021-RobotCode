@@ -35,6 +35,7 @@ public class ShootingSystem extends SubsystemBase {
   private final CANSparkMax feederMotor = new CANSparkMax(Constants.feeder, MotorType.kBrushless);
   private final CANSparkMax shooterLeftMotor = new CANSparkMax(Constants.shooterLeft, MotorType.kBrushless);
   private final CANSparkMax shooterRightMotor = new CANSparkMax(Constants.shooterRight, MotorType.kBrushless);
+
   private final CANSparkMax hoodMotor = new CANSparkMax(Constants.hood, MotorType.kBrushless);
 
   // PID Controller
@@ -42,7 +43,7 @@ public class ShootingSystem extends SubsystemBase {
   private CANPIDController feederController = feederMotor.getPIDController();
 
   public ShootingSystem() {
-    shooterRightMotor.follow(shooterLeftMotor);
+    shooterRightMotor.follow(shooterLeftMotor, true);
 
     // PID coefficients
     kP = 5e-8;
