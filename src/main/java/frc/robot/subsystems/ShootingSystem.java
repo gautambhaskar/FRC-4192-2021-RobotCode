@@ -50,8 +50,8 @@ public class ShootingSystem extends SubsystemBase {
     kD = 0;
     kIz = 0;
     kFF = 0;
-    kMaxOutput = 0.3;
-    kMinOutput = -0.3;
+    kMaxOutput = 0.8;
+    kMinOutput = -0.8;
     maxRPM = 5700;
 
     // Smart Motion Coefficients
@@ -71,8 +71,8 @@ public class ShootingSystem extends SubsystemBase {
     f_kD = 0;
     f_kIz = 0;
     f_kFF = 0;
-    f_kMaxOutput = 0.3;
-    f_kMinOutput = -0.3;
+    f_kMaxOutput = 0.8;
+    f_kMinOutput = -0.8;
     f_maxRPM = 5700;
 
     // Smart Motion Coefficients

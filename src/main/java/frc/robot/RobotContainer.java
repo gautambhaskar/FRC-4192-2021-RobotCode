@@ -93,14 +93,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
     rightTrigger.whileActiveOnce(m_halfSpeedDrive);
     leftTrigger.whileActiveOnce(m_quarterSpeedDrive);
-    rightTriggerSubsystems.whileActiveOnce(m_turretTurnRight);
-    leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft);
-    startButton.whenHeld(m_indexInCommand);
-    backButton.whenHeld(m_indexOutCommand);
+    rightTriggerSubsystems.whileActiveOnce(m_turretTurnRight); // not working
+    leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft); // not working
+    startButton.whenHeld(m_indexInCommand); 
+    backButton.whenHeld(m_indexOutCommand); 
     leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
-    yButton.toggleWhenPressed(m_runShooter);
-    driverBackButton.whenHeld(m_unjamBalls);
+    yButton.toggleWhenPressed(m_runShooter); // fail
+    driverBackButton.whenHeld(m_unjamBalls); // PID'ing to 0...not good
   }
 
   /**
