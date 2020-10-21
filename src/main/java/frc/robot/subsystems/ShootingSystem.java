@@ -46,7 +46,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterRightMotor.follow(shooterLeftMotor, true);
 
     // PID coefficients
-    kP = 5e-8;
+    kP = 5e-6;
     kI = 0;
     kD = 0;
     kIz = 0;
@@ -67,7 +67,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterController.setOutputRange(kMinOutput, kMaxOutput);
 
     // PID coefficients
-    f_kP = 5e-8;
+    f_kP = 5e-6;
     f_kI = 0;
     f_kD = 0;
     f_kIz = 0;
