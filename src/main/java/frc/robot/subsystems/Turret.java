@@ -23,7 +23,7 @@ public class Turret extends SubsystemBase {
    */
 
   // Motor
-  private final CANSparkMax turretMotor = new CANSparkMax(Constants.index, MotorType.kBrushed);
+  private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
   private final double initialPosition;
   // limelight
   private NetworkTable table;
@@ -38,7 +38,7 @@ public class Turret extends SubsystemBase {
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");
- 
+
   }
 
   @Override
@@ -53,22 +53,24 @@ public class Turret extends SubsystemBase {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
   }
-  //gets camMode
-  public double getCamMode(){
+
+  // gets camMode
+  public double getCamMode() {
     camMode = table.getEntry("camMode").getDouble(0);
     return camMode;
   }
-  //puts camera into smart dashboard
-  public void switchCameraMode(){
-    if(getCamMode()==0){
-			table.getEntry("camMode").setDouble(1);
-			SmartDashboard.putString("Camera Mode", "Camera");
-    }
-    else if(getCamMode()==1){
-			table.getEntry("camMode").setDouble(0);
-			SmartDashboard.putString("Camera Mode", "Vision");
+
+  // puts camera into smart dashboard
+  public void switchCameraMode() {
+    if (getCamMode() == 0) {
+      table.getEntry("camMode").setDouble(1);
+      SmartDashboard.putString("Camera Mode", "Camera");
+    } else if (getCamMode() == 1) {
+      table.getEntry("camMode").setDouble(0);
+      SmartDashboard.putString("Camera Mode", "Vision");
     }
   }
+
   // Set Turret Speed
   public void turn(double turretSpeed) {
     turretMotor.set(turretSpeed);
