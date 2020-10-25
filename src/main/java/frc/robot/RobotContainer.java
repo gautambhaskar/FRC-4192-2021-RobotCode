@@ -100,7 +100,7 @@ public class RobotContainer {
     leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
     systemsYButton.toggleWhenPressed(m_runShooter); // fail
-    driverBackButton.whenHeld(m_unjamBalls); // PID'ing to 0...not good
+    driverBackButton.whenHeld(m_unjamBalls);
   }
 
   /**

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.revrobotics.CANPIDController;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -28,7 +30,7 @@ public final class Constants {
     public static int rightFollower2 = 7;
     public static int intake = 8;
     public static int index = 9; // Burnt out
-    public static int turret = 10;
+    public static int turret = 10; // blinking yellow
     public static int feeder = 11;
     public static int shooterLeft = 12;
     public static int shooterRight = 13;
@@ -70,4 +72,38 @@ public final class Constants {
         public static double f_power = 0.2;
     }
 
+    public static class shooterPID {
+        public static double kP = 0.0004;
+        public static double kI = 0.000001;
+        public static double kD = 0;
+        public static double kFF = 0.0002;
+        public static double kMax = 0.8;
+        public static double kMin = -0.8;
+    }
+
+    public static class feederPID {
+        public static double kP = 5e-6;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double kFF = 0.00026;
+        public static double kMax = 0.8;
+        public static double kMin = -0.8;
+    }
+
+    public static class turretPID {
+        public static double kP = 1.5;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double kFF = 0;
+        public static double kMax = 0.8;
+        public static double kMin = -0.8;
+    }
+
+    public static void distributePID(double[] constants, CANPIDController controller) {
+        controller.setP(constants[0]);
+        controller.setI(constants[1]);
+        controller.setD(constants[2]);
+        controller.setFF(constants[3]);
+        controller.setOutputRange(constants[4], constants[5]);
+    }
 }

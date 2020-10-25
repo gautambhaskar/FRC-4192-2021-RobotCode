@@ -10,6 +10,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.feederPID;
+import frc.robot.Constants.shooterPID;
+
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
@@ -45,47 +48,16 @@ public class ShootingSystem extends SubsystemBase {
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
 
-    // PID coefficients
-    kP = 5e-6;
-    kI = 0;
-    kD = 0;
-    kIz = 0;
-    kFF = 0;
-    kMaxOutput = 0.8;
-    kMinOutput = -0.8;
-    maxRPM = 5700;
+    double[] initialShooterConstants = { shooterPID.kP, shooterPID.kI, shooterPID.kD, shooterPID.kFF, shooterPID.kMin,
+        shooterPID.kMax };
+    Constants.distributePID(initialShooterConstants, shooterController);
+    SmartDashboard.putNumberArray("Shooter PID Constants", initialShooterConstants);
 
-    // Smart Motion Coefficients
-    maxVel = 2000; // rpm
-    maxAcc = 1500;
+    double[] initialFeederConstants = { feederPID.kP, feederPID.kI, feederPID.kD, feederPID.kFF, feederPID.kMax,
+        feederPID.kMin };
+    Constants.distributePID(initialFeederConstants, feederController);
+    SmartDashboard.putNumberArray("Feeder PID Constants", initialFeederConstants);
 
-    shooterController.setP(kP);
-    shooterController.setI(kI);
-    shooterController.setD(kD);
-    shooterController.setIZone(kIz);
-    shooterController.setFF(kFF);
-    shooterController.setOutputRange(kMinOutput, kMaxOutput);
-
-    // PID coefficients
-    f_kP = 5e-6;
-    f_kI = 0;
-    f_kD = 0;
-    f_kIz = 0;
-    f_kFF = 0;
-    f_kMaxOutput = 0.8;
-    f_kMinOutput = -0.8;
-    f_maxRPM = 5700;
-
-    // Smart Motion Coefficients
-    f_maxVel = 2000; // rpm
-    f_maxAcc = 1500;
-
-    feederController.setP(f_kP);
-    feederController.setI(f_kI);
-    feederController.setD(f_kD);
-    feederController.setIZone(f_kIz);
-    feederController.setFF(f_kFF);
-    feederController.setOutputRange(f_kMinOutput, f_kMaxOutput);
   }
 
   @Override
@@ -93,6 +65,21 @@ public class ShootingSystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber("Feeder Speed", feederMotor.getEncoder().getVelocity());
+
+    // Grab numbers from SmartDashboard and set to motors
+    double[] defaultPID = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    double[] newShooterPIDconstants = SmartDashboard.getNumberArray("Shooter PID Constants", defaultPID);
+    double[] newFeederPIDconstants = SmartDashboard.getNumberArray("Feeder PID Constants", defaultPID);
+    Constants.distributePID(newShooterPIDconstants, shooterController);
+    Constants.distributePID(newFeederPIDconstants, feederController);
+
+    // Grab constants from motors and post to SmartDashboard
+    double[] shooterPIDconstants = { shooterController.getP(), shooterController.getI(), shooterController.getD(),
+        shooterController.getFF(), shooterController.getOutputMin(), shooterController.getOutputMax() };
+    double[] feederPIDconstants = { feederController.getP(), feederController.getI(), feederController.getD(),
+        feederController.getFF(), feederController.getOutputMin(), feederController.getOutputMax() };
+    SmartDashboard.putNumberArray("Shooter PID Constants", shooterPIDconstants);
+    SmartDashboard.putNumberArray("Feeder PID Constants", feederPIDconstants);
   }
 
   public void startShooter(double shooterSpeed, double feederSpeed) {
