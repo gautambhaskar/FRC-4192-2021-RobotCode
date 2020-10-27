@@ -49,8 +49,8 @@ public final class Constants {
     public static double intakeSpeed = 0.5;
     public static double outtakeSlowlySpeed = 0.3;
     public static double indexSpeed = 0.3;
-    public static double feederSpeed = 1000;
-    public static double shooterSpeed = 1000;
+    public static double feederSpeed = 3000;
+    public static double shooterSpeed = 4000;
     public static double hoodRotateSpeed = 0.3;
     public static double turretTurn = 0.7;
 
