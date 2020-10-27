@@ -62,6 +62,12 @@ public class ShootingSystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+  }
+
+  public void startShooter(double shooterSpeed, double feederSpeed) {
+    shooterController.setReference(shooterSpeed, ControlType.kSmartVelocity);
+    feederController.setReference(feederSpeed, ControlType.kSmartVelocity);
+    SmartDashboard.putNumber("Shooter speed", shooterSpeed);
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber("Feeder Speed", feederMotor.getEncoder().getVelocity());
@@ -80,11 +86,6 @@ public class ShootingSystem extends SubsystemBase {
         feederController.getFF(), feederController.getOutputMin(), feederController.getOutputMax() };
     SmartDashboard.putNumberArray("Shooter PID Constants", shooterPIDconstants);
     SmartDashboard.putNumberArray("Feeder PID Constants", feederPIDconstants);
-  }
-
-  public void startShooter(double shooterSpeed, double feederSpeed) {
-    shooterController.setReference(shooterSpeed, ControlType.kSmartVelocity);
-    feederController.setReference(feederSpeed, ControlType.kSmartVelocity);
   }
 
   public void setPower(double s_power, double f_power) {
