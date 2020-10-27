@@ -74,6 +74,6 @@ public class Turret extends SubsystemBase {
   // Set Turret Speed
   public void turn(double turretSpeed) {
     turretMotor.set(turretSpeed);
-    SmartDashboard.putString("Message", "subsystem-level command run");
+    SmartDashboard.putNumber("turret speed setting", turretSpeed);
   }
 }
