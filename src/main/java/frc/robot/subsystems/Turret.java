@@ -53,7 +53,7 @@ public class Turret extends SubsystemBase {
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
-    SmartDashboard.putString("Turret data", turretMotor.toString());
+    SmartDashboard.putNumber("Turret data", turretMotor.get());
   }
 
   // gets camMode
