@@ -25,7 +25,7 @@ public class Turret extends SubsystemBase {
 
   // Motor
   private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
-  private final double initialPosition;
+  // private final double initialPosition;
   // limelight
   private NetworkTable table;
   private NetworkTableEntry tx;
@@ -34,7 +34,7 @@ public class Turret extends SubsystemBase {
   private double camMode;
 
   public Turret() {
-    initialPosition = turretMotor.getEncoder().getPosition();
+    // initialPosition = turretMotor.getEncoder().getPosition();
     table = NetworkTableInstance.getDefault().getTable("limelight");
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
@@ -49,7 +49,8 @@ public class Turret extends SubsystemBase {
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Turret Angular Position", initialPosition - turretMotor.getEncoder().getPosition());
+    // SmartDashboard.putNumber("Turret Angular Position", initialPosition -
+    // turretMotor.getEncoder().getPosition());
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);

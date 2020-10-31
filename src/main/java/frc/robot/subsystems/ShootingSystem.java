@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -39,8 +41,6 @@ public class ShootingSystem extends SubsystemBase {
   private final CANSparkMax shooterLeftMotor = new CANSparkMax(Constants.shooterLeft, MotorType.kBrushless);
   private final CANSparkMax shooterRightMotor = new CANSparkMax(Constants.shooterRight, MotorType.kBrushless);
 
-  private final CANSparkMax hoodMotor = new CANSparkMax(Constants.hood, MotorType.kBrushless);
-
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
@@ -51,12 +51,22 @@ public class ShootingSystem extends SubsystemBase {
     double[] initialShooterConstants = { shooterPID.kP, shooterPID.kI, shooterPID.kD, shooterPID.kFF, shooterPID.kMin,
         shooterPID.kMax };
     Constants.distributePID(initialShooterConstants, shooterController);
-    SmartDashboard.putNumberArray("Shooter PID Constants", initialShooterConstants);
+    SmartDashboard.putNumber("Shooter kP", shooterPID.kP);
+    SmartDashboard.putNumber("Shooter kI", shooterPID.kI);
+    SmartDashboard.putNumber("Shooter kD", shooterPID.kD);
+    SmartDashboard.putNumber("Shooter kFF", shooterPID.kFF);
+    SmartDashboard.putNumber("Shooter kMin", shooterPID.kMin);
+    SmartDashboard.putNumber("Shooter kMax", shooterPID.kMax);
 
     double[] initialFeederConstants = { feederPID.kP, feederPID.kI, feederPID.kD, feederPID.kFF, feederPID.kMax,
         feederPID.kMin };
     Constants.distributePID(initialFeederConstants, feederController);
-    SmartDashboard.putNumberArray("Feeder PID Constants", initialFeederConstants);
+    SmartDashboard.putNumber("Feeder kP", feederPID.kP);
+    SmartDashboard.putNumber("Feeder kI", feederPID.kI);
+    SmartDashboard.putNumber("Feeder kD", feederPID.kD);
+    SmartDashboard.putNumber("Feeder kFF", feederPID.kFF);
+    SmartDashboard.putNumber("Feeder kMin", feederPID.kMin);
+    SmartDashboard.putNumber("Feeder kMax", feederPID.kMax);
 
   }
 
@@ -67,38 +77,53 @@ public class ShootingSystem extends SubsystemBase {
     SmartDashboard.putNumber("Feeder Speed", feederMotor.getEncoder().getVelocity());
 
     // Grab numbers from SmartDashboard and set to motors
-    double[] defaultPID = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-    double[] newShooterPIDconstants = SmartDashboard.getNumberArray("Shooter PID Constants", defaultPID);
-    double[] newFeederPIDconstants = SmartDashboard.getNumberArray("Feeder PID Constants", defaultPID);
+
+    // TEST THIS!!! CHECK "SOURCES" AND PULL VALUE TO A WIDGET FOR THE PID
+    // CONTROLLER. CHECK IF YOU CAN MANIPULATE VALUES DIRECTLY WHEN IN TEST MODE...
+    Shuffleboard.getTab("Shooter").add("Shooter PID Controller", shooterController);
+    Shuffleboard.getTab("Feeder").add("Feeder PID Controller", shooterController);
+
+    double[] newShooterPIDconstants = { SmartDashboard.getNumber("Shooter kP", 0),
+        SmartDashboard.getNumber("Shooter kI", 0), SmartDashboard.getNumber("Shooter kD", 0),
+        SmartDashboard.getNumber("Shooter kFF", 0), SmartDashboard.getNumber("Shooter kMin", 0),
+        SmartDashboard.getNumber("Shooter kMax", 0) };
+    double[] newFeederPIDconstants = { SmartDashboard.getNumber("Feeder kP", 0),
+        SmartDashboard.getNumber("Feeder kI", 0), SmartDashboard.getNumber("Feeder kD", 0),
+        SmartDashboard.getNumber("Feeder kFF", 0), SmartDashboard.getNumber("Feeder kMin", 0),
+        SmartDashboard.getNumber("Feeder kMax", 0) };
     Constants.distributePID(newShooterPIDconstants, shooterController);
     Constants.distributePID(newFeederPIDconstants, feederController);
 
-    // Grab constants from motors and post to SmartDashboard
-    double[] shooterPIDconstants = { shooterController.getP(), shooterController.getI(), shooterController.getD(),
-        shooterController.getFF(), shooterController.getOutputMin(), shooterController.getOutputMax() };
-    double[] feederPIDconstants = { feederController.getP(), feederController.getI(), feederController.getD(),
-        feederController.getFF(), feederController.getOutputMin(), feederController.getOutputMax() };
-    SmartDashboard.putNumberArray("Shooter PID Constants", shooterPIDconstants);
-    SmartDashboard.putNumberArray("Feeder PID Constants", feederPIDconstants);
+    // Grab constants from motors and post to SmartDashboar
+    SmartDashboard.putNumber("Shooter kP", shooterController.getP());
+    SmartDashboard.putNumber("Shooter kI", shooterController.getI());
+    SmartDashboard.putNumber("Shooter kD", shooterController.getD());
+    SmartDashboard.putNumber("Shooter kFF", shooterController.getFF());
+    SmartDashboard.putNumber("Shooter kMin", shooterController.getOutputMin());
+    SmartDashboard.putNumber("Shooter kMax", shooterController.getOutputMax());
+
+    SmartDashboard.putNumber("Feeder kP", feederController.getP());
+    SmartDashboard.putNumber("Feeder kI", feederController.getI());
+    SmartDashboard.putNumber("Feeder kD", feederController.getD());
+    SmartDashboard.putNumber("Feeder kFF", feederController.getFF());
+    SmartDashboard.putNumber("Feeder kMin", feederController.getOutputMin());
+    SmartDashboard.putNumber("Feeder kMax", feederController.getOutputMax());
   }
 
   public void startShooter(double shooterSpeed, double feederSpeed) {
     shooterController.setReference(shooterSpeed, ControlType.kSmartVelocity);
     feederController.setReference(feederSpeed, ControlType.kSmartVelocity);
-    SmartDashboard.putNumber("Shooter speed", shooterSpeed);
+    SmartDashboard.putNumber("Shooter Setpoint", shooterSpeed);
+    SmartDashboard.putNumber("Feeder Setpoint", feederSpeed);
   }
 
   public void setPower(double s_power, double f_power) {
-    shooterLeftMotor.set(s_power);
-    feederMotor.set(f_power);
+    shooterController.setReference(s_power, ControlType.kVoltage);
+    feederController.setReference(f_power, ControlType.kVoltage);
   }
 
   public void stopShooter() {
-    shooterLeftMotor.set(0);
-    feederMotor.set(0);
-  }
-
-  public void hood(double hoodRotate) {
-    hoodMotor.set(hoodRotate);
+    shooterController.setReference(0, ControlType.kVoltage);
+    feederController.setReference(0, ControlType.kVoltage);
   }
 }
