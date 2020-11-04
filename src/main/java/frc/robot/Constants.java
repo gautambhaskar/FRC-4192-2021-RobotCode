@@ -82,7 +82,7 @@ public final class Constants {
     }
 
     public static class feederPID {
-        public static double kP = 5e-4;
+        public static double kP = 5e-3;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0.00026;
