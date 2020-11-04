@@ -47,27 +47,6 @@ public class ShootingSystem extends SubsystemBase {
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
-
-    double[] initialShooterConstants = { shooterPID.kP, shooterPID.kI, shooterPID.kD, shooterPID.kFF, shooterPID.kMin,
-        shooterPID.kMax };
-    Constants.distributePID(initialShooterConstants, shooterController);
-    SmartDashboard.putNumber("Shooter kP", shooterPID.kP);
-    SmartDashboard.putNumber("Shooter kI", shooterPID.kI);
-    SmartDashboard.putNumber("Shooter kD", shooterPID.kD);
-    SmartDashboard.putNumber("Shooter kFF", shooterPID.kFF);
-    SmartDashboard.putNumber("Shooter kMin", shooterPID.kMin);
-    SmartDashboard.putNumber("Shooter kMax", shooterPID.kMax);
-
-    double[] initialFeederConstants = { feederPID.kP, feederPID.kI, feederPID.kD, feederPID.kFF, feederPID.kMax,
-        feederPID.kMin };
-    Constants.distributePID(initialFeederConstants, feederController);
-    SmartDashboard.putNumber("Feeder kP", feederPID.kP);
-    SmartDashboard.putNumber("Feeder kI", feederPID.kI);
-    SmartDashboard.putNumber("Feeder kD", feederPID.kD);
-    SmartDashboard.putNumber("Feeder kFF", feederPID.kFF);
-    SmartDashboard.putNumber("Feeder kMin", feederPID.kMin);
-    SmartDashboard.putNumber("Feeder kMax", feederPID.kMax);
-
   }
 
   @Override
