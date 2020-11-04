@@ -59,8 +59,6 @@ public class ShootingSystem extends SubsystemBase {
 
     // TEST THIS!!! CHECK "SOURCES" AND PULL VALUE TO A WIDGET FOR THE PID
     // CONTROLLER. CHECK IF YOU CAN MANIPULATE VALUES DIRECTLY WHEN IN TEST MODE...
-    Shuffleboard.getTab("Tuning").add("Shooter PID Controller", shooterController);
-    Shuffleboard.getTab("Tuning").add("Feeder PID Controller", shooterController);
 
     double[] newShooterPIDconstants = { SmartDashboard.getNumber("Shooter kP", 0),
         SmartDashboard.getNumber("Shooter kI", 0), SmartDashboard.getNumber("Shooter kD", 0),
