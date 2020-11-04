@@ -102,8 +102,8 @@ public class ShootingSystem extends SubsystemBase {
   }
 
   public void startShooter(double shooterSpeed, double feederSpeed) {
-    shooterController.setReference(shooterSpeed, ControlType.kSmartVelocity);
-    feederController.setReference(feederSpeed, ControlType.kSmartVelocity);
+    shooterController.setReference(shooterSpeed, ControlType.kVelocity);
+    feederController.setReference(feederSpeed, ControlType.kVelocity);
     SmartDashboard.putNumber("Shooter Setpoint", shooterSpeed);
     SmartDashboard.putNumber("Feeder Setpoint", feederSpeed);
   }
