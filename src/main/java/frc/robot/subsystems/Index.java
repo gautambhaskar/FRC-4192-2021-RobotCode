@@ -27,7 +27,6 @@ public class Index extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Index RPM", indexMotor.getEncoder().getVelocity());
   }
 
   public void run(double indexSpeed) {
