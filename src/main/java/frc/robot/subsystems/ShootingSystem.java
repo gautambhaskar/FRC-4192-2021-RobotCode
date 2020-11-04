@@ -85,7 +85,20 @@ public class ShootingSystem extends SubsystemBase {
     Constants.distributePID(newShooterPIDconstants, shooterController);
     Constants.distributePID(newFeederPIDconstants, feederController);
 
-    // Grab constants from motors and post to SmartDashboar
+    // Grab constants from motors and post to SmartDashboard
+    SmartDashboard.putNumber("Shooter kP", shooterController.getP());
+    SmartDashboard.putNumber("Shooter kI", shooterController.getI());
+    SmartDashboard.putNumber("Shooter kD", shooterController.getD());
+    SmartDashboard.putNumber("Shooter kFF", shooterController.getFF());
+    SmartDashboard.putNumber("Shooter kMin", shooterController.getOutputMin());
+    SmartDashboard.putNumber("Shooter kMax", shooterController.getOutputMax());
+
+    SmartDashboard.putNumber("Feeder kP", feederController.getP());
+    SmartDashboard.putNumber("Feeder kI", feederController.getI());
+    SmartDashboard.putNumber("Feeder kD", feederController.getD());
+    SmartDashboard.putNumber("Feeder kFF", feederController.getFF());
+    SmartDashboard.putNumber("Feeder kMin", feederController.getOutputMin());
+    SmartDashboard.putNumber("Feeder kMax", feederController.getOutputMax());
   }
 
   public void startShooter(double shooterSpeed, double feederSpeed) {
