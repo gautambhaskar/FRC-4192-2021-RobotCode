@@ -48,19 +48,19 @@ public class ShootingSystem extends SubsystemBase {
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
 
-    SmartDashboard.putNumber("Shooter kP", shooterController.getP());
-    SmartDashboard.putNumber("Shooter kI", shooterController.getI());
-    SmartDashboard.putNumber("Shooter kD", shooterController.getD());
-    SmartDashboard.putNumber("Shooter kFF", shooterController.getFF());
-    SmartDashboard.putNumber("Shooter kMin", shooterController.getOutputMin());
-    SmartDashboard.putNumber("Shooter kMax", shooterController.getOutputMax());
+    SmartDashboard.putNumber("Shooter kP", Constants.shooterPID.kP);
+    SmartDashboard.putNumber("Shooter kI", Constants.shooterPID.kI);
+    SmartDashboard.putNumber("Shooter kD", Constants.shooterPID.kD);
+    SmartDashboard.putNumber("Shooter kFF", Constants.shooterPID.kFF);
+    SmartDashboard.putNumber("Shooter kMin", Constants.shooterPID.kMin);
+    SmartDashboard.putNumber("Shooter kMax", Constants.shooterPID.kMax);
 
-    SmartDashboard.putNumber("Feeder kP", feederController.getP());
-    SmartDashboard.putNumber("Feeder kI", feederController.getI());
-    SmartDashboard.putNumber("Feeder kD", feederController.getD());
-    SmartDashboard.putNumber("Feeder kFF", feederController.getFF());
-    SmartDashboard.putNumber("Feeder kMin", feederController.getOutputMin());
-    SmartDashboard.putNumber("Feeder kMax", feederController.getOutputMax());
+    SmartDashboard.putNumber("Feeder kP", Constants.feederPID.kP);
+    SmartDashboard.putNumber("Feeder kI", Constants.feederPID.kI);
+    SmartDashboard.putNumber("Feeder kD", Constants.feederPID.kD);
+    SmartDashboard.putNumber("Feeder kFF", Constants.feederPID.kFF);
+    SmartDashboard.putNumber("Feeder kMin", Constants.feederPID.kMin);
+    SmartDashboard.putNumber("Feeder kMax", Constants.feederPID.kMax);
   }
 
   @Override
