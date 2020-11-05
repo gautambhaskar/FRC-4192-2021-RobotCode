@@ -15,6 +15,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.feederPID;
 import frc.robot.Constants.shooterPID;
 
+import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
@@ -67,7 +68,8 @@ public class ShootingSystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity());
-    SmartDashboard.putNumber("Feeder Speed", feederMotor.getEncoder().getVelocity());
+    SmartDashboard.putNumber("Feeder Speed",
+        feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192).getVelocity());
 
     // Grab numbers from SmartDashboard and set to motors
 
