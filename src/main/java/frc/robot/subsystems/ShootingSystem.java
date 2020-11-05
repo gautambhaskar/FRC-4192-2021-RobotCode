@@ -48,6 +48,7 @@ public class ShootingSystem extends SubsystemBase {
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
+    feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
 
     SmartDashboard.putNumber("Shooter kP", Constants.shooterPID.kP);
     SmartDashboard.putNumber("Shooter kI", Constants.shooterPID.kI);
@@ -62,6 +63,7 @@ public class ShootingSystem extends SubsystemBase {
     SmartDashboard.putNumber("Feeder kFF", Constants.feederPID.kFF);
     SmartDashboard.putNumber("Feeder kMin", Constants.feederPID.kMin);
     SmartDashboard.putNumber("Feeder kMax", Constants.feederPID.kMax);
+
   }
 
   @Override
