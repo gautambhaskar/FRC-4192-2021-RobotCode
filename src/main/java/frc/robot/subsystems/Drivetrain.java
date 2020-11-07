@@ -12,6 +12,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -32,14 +34,16 @@ public class Drivetrain extends SubsystemBase {
 
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
+  private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
+
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Drivetrain Left RPM", leftLead.getEncoder().getVelocity());
-    SmartDashboard.putNumber("Drivetrain Right RPM", rightLead.getEncoder().getVelocity());
+    tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity());
+    tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity());
     // This method will be called once per scheduler run
   }
 

@@ -11,6 +11,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -27,6 +29,9 @@ public class Turret extends SubsystemBase {
   private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
   // private final double initialPosition;
   // limelight
+  private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
+  private ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
+
   private NetworkTable table;
   private NetworkTableEntry tx;
   private NetworkTableEntry ty;
@@ -51,10 +56,9 @@ public class Turret extends SubsystemBase {
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Turret Angular Position", initialPosition -
     // turretMotor.getEncoder().getPosition());
-    SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightArea", area);
-    SmartDashboard.putNumber("Turret data", turretMotor.get());
+    cameraTab.add("LimelightX", x);
+    cameraTab.add("LimelightY", y);
+    cameraTab.add("LimelightArea", area);
   }
 
   // gets camMode
@@ -67,17 +71,17 @@ public class Turret extends SubsystemBase {
   public void switchCameraMode() {
     if (getCamMode() == 0) {
       table.getEntry("camMode").setDouble(1);
-      SmartDashboard.putString("Camera Mode", "Camera");
+      cameraTab.add("Camera Mode", "Camera");
     } else if (getCamMode() == 1) {
       table.getEntry("camMode").setDouble(0);
-      SmartDashboard.putString("Camera Mode", "Vision");
+      cameraTab.add("Camera Mode", "Vision");
     }
   }
 
   // Set Turret Speed
   public void turn(double turretSpeed) {
     turretMotor.set(turretSpeed); // didn't turn.
-    SmartDashboard.putNumber("turret set speed", turretSpeed); // didn't show anything besides 0.
-    SmartDashboard.putNumber("turret speed setting", turretMotor.getDeviceId()); // showed 10
+    tab.add("turret set output", turretSpeed); // didn't show anything besides 0.
+    tab.add("turret applied output", turretMotor.getAppliedOutput()); // showed 10
   }
 }

@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Index;
@@ -14,6 +16,8 @@ import frc.robot.subsystems.Index;
 public class IndexIn extends CommandBase {
   private final Index m_index;
   private final double m_indexSpeed;
+
+  private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
 
   public IndexIn(Index subsystem, double speed) {
     m_index = subsystem;
@@ -25,7 +29,7 @@ public class IndexIn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putBoolean("Index engaged", true);
+    tab.add("Index engaged", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,7 +42,7 @@ public class IndexIn extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_index.run(0);
-    SmartDashboard.putBoolean("Index engaged", false);
+    tab.add("Index engaged", false);
   }
 
   // Returns true when the command should end.
