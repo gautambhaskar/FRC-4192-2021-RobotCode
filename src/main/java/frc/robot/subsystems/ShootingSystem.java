@@ -17,6 +17,8 @@ import frc.robot.Constants;
 import frc.robot.Constants.feederPID;
 import frc.robot.Constants.shooterPID;
 
+import java.util.Arrays;
+
 import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -94,11 +96,11 @@ public class ShootingSystem extends SubsystemBase {
     double[] newFeederPIDconstants = { f_kP.getDouble(0), f_kI.getDouble(0), f_kD.getDouble(0), f_kFF.getDouble(0),
         f_kMin.getDouble(0), f_kMax.getDouble(0) };
     // Puts new values into old array
-    if (!newShooterPIDconstants.equals(s_pastPIDconstants)) {
+    if (Arrays.equals(newShooterPIDconstants, s_pastPIDconstants) == false) {
       s_pastPIDconstants = newShooterPIDconstants;
       Constants.distributePID(newShooterPIDconstants, shooterController);
     }
-    if (!newFeederPIDconstants.equals(f_pastPIDconstants)) {
+    if (Arrays.equals(newFeederPIDconstants, f_pastPIDconstants) == false) {
       f_pastPIDconstants = newFeederPIDconstants;
       Constants.distributePID(newFeederPIDconstants, feederController);
     }
