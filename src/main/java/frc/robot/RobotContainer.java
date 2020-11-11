@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
@@ -47,6 +48,8 @@ public class RobotContainer {
   private final Index m_Index = new Index();
   private final Turret m_Turret = new Turret();
 
+
+
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
       () -> driveController.getX(Hand.kRight));
@@ -64,6 +67,10 @@ public class RobotContainer {
       Constants.feederSpeed);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
+  private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
+
+
+
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -74,9 +81,10 @@ public class RobotContainer {
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
-
+  JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.6);
+
 
   public RobotContainer() {
     m_drive.setDefaultCommand(m_driveCommand);
@@ -101,6 +109,7 @@ public class RobotContainer {
     aButton.whenHeld(m_outtakeSlowlyCommand);
     systemsYButton.toggleWhenPressed(m_runShooter); // fail
     driverBackButton.whenHeld(m_unjamBalls);
+    driverYButton.toggleWhenPressed(m_alignWithTarget);
   }
 
   /**
