@@ -92,6 +92,7 @@ public class ShootingSystem extends SubsystemBase {
 
     double[] newShooterPIDconstants = new double[] { kP.getDouble(0), kI.getDouble(0), kD.getDouble(0),
         kFF.getDouble(0), kMin.getDouble(0), kMax.getDouble(0) };
+    SmartDashboard.putNumber("Test Val", kP.getDouble(0));
     double[] newFeederPIDconstants = new double[] { f_kP.getDouble(0), f_kI.getDouble(0), f_kD.getDouble(0),
         f_kFF.getDouble(0), f_kMin.getDouble(0), f_kMax.getDouble(0) };
     // Puts new values into old array
