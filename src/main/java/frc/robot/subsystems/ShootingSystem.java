@@ -48,7 +48,6 @@ public class ShootingSystem extends SubsystemBase {
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
-
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
 
@@ -59,7 +58,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterRightMotor.follow(shooterLeftMotor, true);
     feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
 
-     tuningTab.add("Shooter kP", shooterController.getP()).getEntry();
+    tuningTab.add("Shooter kP", shooterController.getP()).getEntry();
     kI = tuningTab.add("Shooter kI", shooterController.getI()).getEntry();
     kD = tuningTab.add("Shooter kD", shooterController.getD()).getEntry();
     kFF = tuningTab.add("Shooter kFF", shooterController.getFF()).getEntry();
@@ -78,7 +77,7 @@ public class ShootingSystem extends SubsystemBase {
         feederController.getFF(), feederController.getOutputMin(), feederController.getOutputMax() };
 
   }
-  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -87,7 +86,7 @@ public class ShootingSystem extends SubsystemBase {
         () -> feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192).getVelocity());
 
     // Grab numbers from SmartDashboard and set to motors
-   
+
     // TEST THIS!!! CHECK "SOURCES" AND PULL VALUE TO A WIDGET FOR THE PID
     // CONTROLLER. CHECK IF YOU CAN MANIPULATE VALUES DIRECTLY WHEN IN TEST MODE...
 
@@ -108,14 +107,14 @@ public class ShootingSystem extends SubsystemBase {
     tuningTab.addNumber("Current kI of Shooter", () -> shooterController.getI());
     tuningTab.addNumber("Current kD of Shooter", () -> shooterController.getD());
   }
-   
+
   public void startShooter(double shooterSpeed, double feederSpeed) {
     shooterController.setReference(shooterSpeed, ControlType.kVelocity);
     feederController.setReference(feederSpeed, ControlType.kVelocity);
     tuningTab.add("Shooter Setpoint", shooterSpeed);
     tuningTab.add("Feeder Setpoint", feederSpeed);
   }
- 
+
   public void setPower(double s_power, double f_power) {
     shooterController.setReference(s_power, ControlType.kVoltage);
     feederController.setReference(f_power, ControlType.kVoltage);
