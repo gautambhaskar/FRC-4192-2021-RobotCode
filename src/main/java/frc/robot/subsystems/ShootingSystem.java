@@ -90,10 +90,10 @@ public class ShootingSystem extends SubsystemBase {
     // TEST THIS!!! CHECK "SOURCES" AND PULL VALUE TO A WIDGET FOR THE PID
     // CONTROLLER. CHECK IF YOU CAN MANIPULATE VALUES DIRECTLY WHEN IN TEST MODE...
 
-    double[] newShooterPIDconstants = { kP.getDouble(0), kI.getDouble(0), kD.getDouble(0), kFF.getDouble(0),
-        kMin.getDouble(0), kMax.getDouble(0) };
-    double[] newFeederPIDconstants = { f_kP.getDouble(0), f_kI.getDouble(0), f_kD.getDouble(0), f_kFF.getDouble(0),
-        f_kMin.getDouble(0), f_kMax.getDouble(0) };
+    double[] newShooterPIDconstants = new double[] { kP.getDouble(0), kI.getDouble(0), kD.getDouble(0),
+        kFF.getDouble(0), kMin.getDouble(0), kMax.getDouble(0) };
+    double[] newFeederPIDconstants = new double[] { f_kP.getDouble(0), f_kI.getDouble(0), f_kD.getDouble(0),
+        f_kFF.getDouble(0), f_kMin.getDouble(0), f_kMax.getDouble(0) };
     // Puts new values into old array
     if (Arrays.equals(newShooterPIDconstants, s_pastPIDconstants) == false) {
       s_pastPIDconstants = newShooterPIDconstants;
