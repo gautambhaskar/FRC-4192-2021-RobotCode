@@ -48,16 +48,19 @@ public class ShootingSystem extends SubsystemBase {
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
+  
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
 
   private double[] s_pastPIDconstants;
   private double[] f_pastPIDconstants;
-
+  private double[] newShooterPID;
+  private double[] newFeederPID;
+  
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
     feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
-
+    
     tuningTab.add("Shooter kP", shooterController.getP()).getEntry();
     kI = tuningTab.add("Shooter kI", shooterController.getI()).getEntry();
     kD = tuningTab.add("Shooter kD", shooterController.getD()).getEntry();
@@ -76,6 +79,8 @@ public class ShootingSystem extends SubsystemBase {
     f_pastPIDconstants = new double[] { feederController.getP(), feederController.getI(), feederController.getD(),
         feederController.getFF(), feederController.getOutputMin(), feederController.getOutputMax() };
 
+    newShooterPID = new double[6]; // If doesn't work, put outside constructor.
+    newFeederPID = new double[6];
   }
 
   @Override
@@ -90,25 +95,34 @@ public class ShootingSystem extends SubsystemBase {
     // TEST THIS!!! CHECK "SOURCES" AND PULL VALUE TO A WIDGET FOR THE PID
     // CONTROLLER. CHECK IF YOU CAN MANIPULATE VALUES DIRECTLY WHEN IN TEST MODE...
 
-    double[] newShooterPIDconstants = new double[] { kP.getDouble(0), kI.getDouble(0), kD.getDouble(0),
-        kFF.getDouble(0), kMin.getDouble(0), kMax.getDouble(0) };
-    SmartDashboard.putNumber("Test Val", kP.getDouble(0));
-    double[] newFeederPIDconstants = new double[] { f_kP.getDouble(0), f_kI.getDouble(0), f_kD.getDouble(0),
-        f_kFF.getDouble(0), f_kMin.getDouble(0), f_kMax.getDouble(0) };
+    newShooterPID[0] = kP.getDouble(0);
+    newShooterPID[1] = kI.getDouble(0);
+    newShooterPID[2] = kD.getDouble(0);
+    newShooterPID[3] = kFF.getDouble(0);
+    newShooterPID[4] = kMin.getDouble(0);
+    newShooterPID[5] = kMax.getDouble(0);
+
+    newFeederPID[0] = f_kP.getDouble(0);
+    newFeederPID[1] = f_kI.getDouble(0);
+    newFeederPID[2] = f_kD.getDouble(0);
+    newFeederPID[3] = f_kFF.getDouble(0);
+    newFeederPID[4] = f_kMin.getDouble(0);
+    newFeederPID[5] = f_kMax.getDouble(0);
+
     // Puts new values into old array
-    if (Arrays.equals(newShooterPIDconstants, s_pastPIDconstants) == false) {
-      s_pastPIDconstants = newShooterPIDconstants;
-      Constants.distributePID(newShooterPIDconstants, shooterController);
+    if (Arrays.equals(newShooterPID, s_pastPIDconstants) == false) {
+      s_pastPIDconstants = newShooterPID;
+      Constants.distributePID(newShooterPID, shooterController);
     }
-    if (Arrays.equals(newFeederPIDconstants, f_pastPIDconstants) == false) {
-      f_pastPIDconstants = newFeederPIDconstants;
-      Constants.distributePID(newFeederPIDconstants, feederController);
+    if (Arrays.equals(newFeederPID, f_pastPIDconstants) == false) {
+      f_pastPIDconstants = newFeederPID;
+      Constants.distributePID(newFeederPID, feederController);
     }
+
     tuningTab.addNumber("Current kP of Shooter", () -> shooterController.getP());
     tuningTab.addNumber("Current kI of Shooter", () -> shooterController.getI());
     tuningTab.addNumber("Current kD of Shooter", () -> shooterController.getD());
   }
-
   public void startShooter(double shooterSpeed, double feederSpeed) {
     shooterController.setReference(shooterSpeed, ControlType.kVelocity);
     feederController.setReference(feederSpeed, ControlType.kVelocity);

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DefaultDrive;
+import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
@@ -48,8 +49,6 @@ public class RobotContainer {
   private final Index m_Index = new Index();
   private final Turret m_Turret = new Turret();
 
-
-
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
       () -> driveController.getX(Hand.kRight));
@@ -57,6 +56,7 @@ public class RobotContainer {
       () -> driveController.getX(Hand.kRight), 0.5);
   private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
       () -> driveController.getX(Hand.kRight), 0.3);
+  private final DriveStraight m_driveStraight = new DriveStraight(m_drive, driveController.getY(Hand.kLeft));
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
@@ -68,9 +68,6 @@ public class RobotContainer {
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
-
-
-
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -84,7 +81,7 @@ public class RobotContainer {
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.6);
-
+  Trigger joystickYOnly = new Trigger(() -> Math.abs(driveController.getX(Hand.kRight)) < 0.05);
 
   public RobotContainer() {
     m_drive.setDefaultCommand(m_driveCommand);
@@ -110,6 +107,7 @@ public class RobotContainer {
     systemsYButton.toggleWhenPressed(m_runShooter); // fail
     driverBackButton.whenHeld(m_unjamBalls);
     driverYButton.toggleWhenPressed(m_alignWithTarget);
+    joystickYOnly.whileActiveOnce(m_driveStraight);
   }
 
   /**
