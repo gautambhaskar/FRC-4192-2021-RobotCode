@@ -20,8 +20,6 @@ public class IntakeBalls extends CommandBase {
   /**
    * Creates a new IntakeBalls.
    */
-  private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
-
 
   public IntakeBalls(Intake subsystem, double speed) {
     m_intake = subsystem;
@@ -34,7 +32,6 @@ public class IntakeBalls extends CommandBase {
   @Override
   public void initialize() {
     m_intake.raise();
-    tab.add("Intake engaged", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -48,7 +45,6 @@ public class IntakeBalls extends CommandBase {
   public void end(boolean interrupted) {
     m_intake.intake(0);
     m_intake.lower();
-    tab.add("Intake engaged", false);
   }
 
   // Returns true when the command should end.

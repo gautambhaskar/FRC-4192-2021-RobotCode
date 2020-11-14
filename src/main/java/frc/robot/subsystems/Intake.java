@@ -10,6 +10,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,9 +26,12 @@ public class Intake extends SubsystemBase {
   // private final DoubleSolenoid solenoid2 = new DoubleSolenoid(2, 5);
   // private final DoubleSolenoid solenoid3 = new DoubleSolenoid(1, 6);
   // private final DoubleSolenoid intakeSolenoid = new DoubleSolenoid(0, 7);
+  private ShuffleboardTab subsystemTab = Shuffleboard.getTab("Subsystems");
+
+  private NetworkTableEntry intakeEngaged;
 
   public Intake() {
-
+    intakeEngaged = subsystemTab.add("Intake engaged", false).getEntry();
   }
 
   @Override
@@ -39,9 +45,11 @@ public class Intake extends SubsystemBase {
 
   public void raise() {
     // intakeSolenoid.set(Value.kReverse);
+    intakeEngaged.setBoolean(true);
   }
 
   public void lower() {
     // intakeSolenoid.set(Value.kForward);
+    intakeEngaged.setBoolean(false);
   }
 }
