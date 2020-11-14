@@ -51,6 +51,7 @@ public class ShootingSystem extends SubsystemBase {
 
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
+  private NetworkTableEntry shooterSpeed, feederSpeed;
 
   private double[] s_pastPIDconstants;
   private double[] f_pastPIDconstants;
@@ -81,14 +82,16 @@ public class ShootingSystem extends SubsystemBase {
 
     newShooterPID = new double[6]; // If doesn't work, put outside constructor.
     newFeederPID = new double[6];
+
+    shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity()).getEntry();
+    feederSpeed = tuningTab.add("Feeder Speed", feederMotor.getEncoder().getVelocity()).getEntry();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    tuningTab.addNumber("Shooter Speed", () -> shooterLeftMotor.getEncoder().getVelocity());
-    tuningTab.addNumber("Feeder Speed",
-        () -> feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192).getVelocity());
+    shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
+    feederSpeed.setDouble(feederMotor.getEncoder().getVelocity());
 
     // Grab numbers from SmartDashboard and set to motors
 
