@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -42,6 +43,8 @@ public class Drivetrain extends SubsystemBase {
   private AHRS ahrs;
   private double init_angle;
 
+  NetworkTableEntry leftRPM, rightRPM;
+
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
     try {
@@ -50,12 +53,15 @@ public class Drivetrain extends SubsystemBase {
     } catch (RuntimeException ex) {
       DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
     }
+
+    leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
+    rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
   }
 
   @Override
   public void periodic() {
-    tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity());
-    tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity());
+    leftRPM.setDouble(leftLead.getEncoder().getVelocity());
+    rightRPM.setDouble(rightLead.getEncoder().getVelocity());
     // This method will be called once per scheduler run
   }
 
