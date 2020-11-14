@@ -92,8 +92,9 @@ public class Turret extends SubsystemBase {
     cameraTab.add("LimelightY", y);
     cameraTab.add("LimelightArea", area);
 
-    double[] newTurretPIDconstants = { kP.getDouble(0), kI.getDouble(0), kD.getDouble(0), kFF.getDouble(0),
-        kMin.getDouble(0), kMax.getDouble(0) };
+    // double[] newTurretPIDconstants = { kP.getDouble(0), kI.getDouble(0),
+    // kD.getDouble(0), kFF.getDouble(0),
+    // kMin.getDouble(0), kMax.getDouble(0) };
 
     // if (Arrays.equals(newTurretPIDconstants, pastPIDconstants) == false) {
     // pastPIDconstants = newTurretPIDconstants;
