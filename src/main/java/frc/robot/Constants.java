@@ -82,7 +82,7 @@ public final class Constants {
     }
 
     public static class feederPID {
-        public static double kP = 5e-3;
+        public static double kP = 0.005;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0.00026;
@@ -92,6 +92,15 @@ public final class Constants {
 
     public static class turretPID {
         public static double kP = 1.5;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double kFF = 0;
+        public static double kMax = 0.8;
+        public static double kMin = -0.8;
+    }
+    
+    public static class drivePID{
+        public static double kP = .00005;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0;

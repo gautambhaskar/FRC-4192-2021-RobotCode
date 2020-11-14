@@ -34,15 +34,15 @@ public class Turret extends SubsystemBase {
   private NetworkTableEntry kP, kI, kD, kFF, kMax, kMin;
 
   // Motor
-  private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
+  // private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret,
+  // MotorType.kBrushed);
 
   // Controller
-  private CANPIDController turretController = turretMotor.getPIDController();
+  // private CANPIDController turretController = turretMotor.getPIDController();
   // private final double initialPosition;
 
-  //past PID constants
+  // past PID constants
   private double[] pastPIDconstants;
-  
 
   // tabs
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
@@ -62,18 +62,21 @@ public class Turret extends SubsystemBase {
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");
 
-    //turretController.setFeedbackDevice(tx.getDouble(0));
-    
+    // turretController.setFeedbackDevice(tx.getDouble(0));
 
-    kP = tuningTab.add("Turret kP", turretController.getP()).getEntry();
-    kI = tuningTab.add("Turret kI", turretController.getI()).getEntry();
-    kD = tuningTab.add("Turret kD", turretController.getD()).getEntry();
-    kFF = tuningTab.add("Turret kFF", turretController.getFF()).getEntry();
-    kMin = tuningTab.add("Turret kMin", turretController.getOutputMin()).getEntry();
-    kMax = tuningTab.add("Turret kMax", turretController.getOutputMax()).getEntry();
-    pastPIDconstants = new double[] { turretController.getP(), turretController.getI(), turretController.getD(),
-    turretController.getFF(), turretController.getOutputMin(), turretController.getOutputMax() };
-    
+    // kP = tuningTab.add("Turret kP", turretController.getP()).getEntry();
+    // kI = tuningTab.add("Turret kI", turretController.getI()).getEntry();
+    // kD = tuningTab.add("Turret kD", turretController.getD()).getEntry();
+    // kFF = tuningTab.add("Turret kFF", turretController.getFF()).getEntry();
+    // kMin = tuningTab.add("Turret kMin",
+    // turretController.getOutputMin()).getEntry();
+    // kMax = tuningTab.add("Turret kMax",
+    // turretController.getOutputMax()).getEntry();
+    // pastPIDconstants = new double[] { turretController.getP(),
+    // turretController.getI(), turretController.getD(),
+    // turretController.getFF(), turretController.getOutputMin(),
+    // turretController.getOutputMax() };
+
   }
 
   @Override
@@ -88,15 +91,15 @@ public class Turret extends SubsystemBase {
     cameraTab.add("LimelightX", x);
     cameraTab.add("LimelightY", y);
     cameraTab.add("LimelightArea", area);
-    
-    double[] newTurretPIDconstants = { kP.getDouble(0), kI.getDouble(0), kD.getDouble(0), kFF.getDouble(0),
-      kMin.getDouble(0), kMax.getDouble(0) };
 
-    if (Arrays.equals(newTurretPIDconstants, pastPIDconstants) == false) {
-      pastPIDconstants = newTurretPIDconstants;
-      Constants.distributePID(newTurretPIDconstants, turretController);
-    }
-    
+    double[] newTurretPIDconstants = { kP.getDouble(0), kI.getDouble(0), kD.getDouble(0), kFF.getDouble(0),
+        kMin.getDouble(0), kMax.getDouble(0) };
+
+    // if (Arrays.equals(newTurretPIDconstants, pastPIDconstants) == false) {
+    // pastPIDconstants = newTurretPIDconstants;
+    // Constants.distributePID(newTurretPIDconstants, turretController);
+    // }
+
   }
 
   // gets camMode
@@ -114,13 +117,14 @@ public class Turret extends SubsystemBase {
       table.getEntry("camMode").setDouble(0);
       cameraTab.add("Camera Mode", "Vision");
     }
-  } 
+  }
 
   // Set Turret Speed
   public void turn(double turretSpeed) {
-    turretMotor.set(turretSpeed); // didn't turn.
-    tab.add("turret set output", turretSpeed); // didn't show anything besides 0.
-    tab.add("turret applied output", turretMotor.getAppliedOutput()); // showed 10
+    // turretMotor.set(turretSpeed); // didn't turn.
+    // tab.add("turret set output", turretSpeed); // didn't show anything besides 0.
+    // tab.add("turret applied output", turretMotor.getAppliedOutput()); // showed
+    // 10
   }
 
   public double limelightOffset() {
@@ -128,15 +132,14 @@ public class Turret extends SubsystemBase {
   }
 
   public void startAlign() {
-    if (tx.getDouble(0.0) > 1){
-      turretMotor.set(turretPID.kP*tx.getDouble(0));
-      tab.add("turret set output", turretPID.kP*tx.getDouble(0));
-      tab.add("turret applied output", turretMotor.getAppliedOutput());
-    }
-    else if(tx.getDouble(0.0) < 1){
-      turretMotor.set(-turretPID.kP*tx.getDouble(0));
-      tab.add("turret set output", -turretPID.kP*tx.getDouble(0));
-      tab.add("turret applied output", turretMotor.getAppliedOutput());
+    if (tx.getDouble(0.0) > 1) {
+      // turretMotor.set(turretPID.kP*tx.getDouble(0));
+      // tab.add("turret set output", turretPID.kP*tx.getDouble(0));
+      // tab.add("turret applied output", turretMotor.getAppliedOutput());
+    } else if (tx.getDouble(0.0) < 1) {
+      // turretMotor.set(-turretPID.kP*tx.getDouble(0));
+      // tab.add("turret set output", -turretPID.kP*tx.getDouble(0));
+      // tab.add("turret applied output", turretMotor.getAppliedOutput());
     }
   }
 }
