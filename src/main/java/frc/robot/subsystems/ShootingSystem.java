@@ -57,6 +57,8 @@ public class ShootingSystem extends SubsystemBase {
   private double[] newShooterPID;
   private double[] newFeederPID;
 
+  private NetworkTableEntry shooterSpeed, feederSpeed;
+
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
     feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
@@ -81,14 +83,16 @@ public class ShootingSystem extends SubsystemBase {
 
     newShooterPID = new double[6]; // If doesn't work, put outside constructor.
     newFeederPID = new double[6];
+
+    shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity()).getEntry();
+    feederSpeed = tuningTab.add("Feeder Speed", feederMotor.getEncoder().getVelocity()).getEntry();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    tuningTab.addNumber("Shooter Speed", () -> shooterLeftMotor.getEncoder().getVelocity());
-    tuningTab.addNumber("Feeder Speed",
-        () -> feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192).getVelocity());
+    shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
+    feederSpeed.setDouble(feederMotor.getEncoder().getVelocity());
 
     // Grab numbers from SmartDashboard and set to motors
 
@@ -122,6 +126,7 @@ public class ShootingSystem extends SubsystemBase {
     tuningTab.addNumber("Current kP of Shooter", () -> shooterController.getP());
     tuningTab.addNumber("Current kI of Shooter", () -> shooterController.getI());
     tuningTab.addNumber("Current kD of Shooter", () -> shooterController.getD());
+
   }
 
   public void startShooter(double shooterSpeed, double feederSpeed) {
