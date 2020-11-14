@@ -48,7 +48,7 @@ public class ShootingSystem extends SubsystemBase {
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
-  
+
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
 
@@ -56,12 +56,12 @@ public class ShootingSystem extends SubsystemBase {
   private double[] f_pastPIDconstants;
   private double[] newShooterPID;
   private double[] newFeederPID;
-  
+
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
     feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
-    
-    tuningTab.add("Shooter kP", shooterController.getP()).getEntry();
+
+    kP = tuningTab.add("Shooter kP", shooterController.getP()).getEntry();
     kI = tuningTab.add("Shooter kI", shooterController.getI()).getEntry();
     kD = tuningTab.add("Shooter kD", shooterController.getD()).getEntry();
     kFF = tuningTab.add("Shooter kFF", shooterController.getFF()).getEntry();
@@ -123,6 +123,7 @@ public class ShootingSystem extends SubsystemBase {
     tuningTab.addNumber("Current kI of Shooter", () -> shooterController.getI());
     tuningTab.addNumber("Current kD of Shooter", () -> shooterController.getD());
   }
+
   public void startShooter(double shooterSpeed, double feederSpeed) {
     shooterController.setReference(shooterSpeed, ControlType.kVelocity);
     feederController.setReference(feederSpeed, ControlType.kVelocity);
