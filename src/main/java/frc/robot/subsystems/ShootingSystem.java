@@ -58,6 +58,8 @@ public class ShootingSystem extends SubsystemBase {
   private double[] newShooterPID;
   private double[] newFeederPID;
 
+  private NetworkTableEntry shooterSpeed, feederSpeed;
+
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
     feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
@@ -125,6 +127,7 @@ public class ShootingSystem extends SubsystemBase {
     tuningTab.addNumber("Current kP of Shooter", () -> shooterController.getP());
     tuningTab.addNumber("Current kI of Shooter", () -> shooterController.getI());
     tuningTab.addNumber("Current kD of Shooter", () -> shooterController.getD());
+
   }
 
   public void startShooter(double shooterSpeed, double feederSpeed) {
