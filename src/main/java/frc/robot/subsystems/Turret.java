@@ -55,6 +55,8 @@ public class Turret extends SubsystemBase {
   private NetworkTableEntry ta;
   private double camMode;
 
+  NetworkTableEntry limelightX, limelightY, limelightA;
+
   public Turret() {
     // initialPosition = turretMotor.getEncoder().getPosition();
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -76,7 +78,9 @@ public class Turret extends SubsystemBase {
     // turretController.getI(), turretController.getD(),
     // turretController.getFF(), turretController.getOutputMin(),
     // turretController.getOutputMax() };
-
+    limelightX = cameraTab.add("LimelightX", tx.getDouble(0)).getEntry();
+    limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
+    limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
   }
 
   @Override
@@ -88,9 +92,9 @@ public class Turret extends SubsystemBase {
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Turret Angular Position", initialPosition -
     // turretMotor.getEncoder().getPosition());
-    cameraTab.add("LimelightX", x);
-    cameraTab.add("LimelightY", y);
-    cameraTab.add("LimelightArea", area);
+    limelightA.setDouble(area);
+    limelightX.setDouble(x);
+    limelightY.setDouble(y);
 
     // double[] newTurretPIDconstants = { kP.getDouble(0), kI.getDouble(0),
     // kD.getDouble(0), kFF.getDouble(0),
