@@ -123,11 +123,6 @@ public class ShootingSystem extends SubsystemBase {
       f_pastPIDconstants = newFeederPID;
       Constants.distributePID(newFeederPID, feederController);
     }
-
-    tuningTab.addNumber("Current kP of Shooter", () -> shooterController.getP());
-    tuningTab.addNumber("Current kI of Shooter", () -> shooterController.getI());
-    tuningTab.addNumber("Current kD of Shooter", () -> shooterController.getD());
-
   }
 
   public void startShooter(double shooterSpeed, double feederSpeed) {
