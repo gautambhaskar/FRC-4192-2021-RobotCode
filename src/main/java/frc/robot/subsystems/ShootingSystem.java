@@ -57,7 +57,7 @@ public class ShootingSystem extends SubsystemBase {
   private double[] newShooterPID;
   private double[] newFeederPID;
 
-  private NetworkTableEntry shooterSpeed, feederSpeed;
+  private NetworkTableEntry shooterSpeed, feederSpeed, shooterSetpoint, feederSetpoint;
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
@@ -85,6 +85,8 @@ public class ShootingSystem extends SubsystemBase {
     newFeederPID = new double[6];
 
     shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity()).getEntry();
+    shooterSetpoint = tuningTab.add("Shooter Setpoint", 0).getEntry();
+    feederSetpoint = tuningTab.add("Feeder Setpoint", 0).getEntry();
     feederSpeed = tuningTab.add("Feeder Speed", feederMotor.getEncoder().getVelocity()).getEntry();
   }
 
@@ -127,8 +129,8 @@ public class ShootingSystem extends SubsystemBase {
   public void startShooter(double shooterSpeed, double feederSpeed) {
     shooterController.setReference(shooterSpeed, ControlType.kVelocity);
     feederController.setReference(feederSpeed, ControlType.kVelocity);
-    tuningTab.add("Shooter Setpoint", shooterSpeed);
-    tuningTab.add("Feeder Setpoint", feederSpeed);
+    shooterSetpoint.setDouble(shooterSpeed);
+    feederSetpoint.setDouble(feederSpeed);
   }
 
   public void setPower(double s_power, double f_power) {
