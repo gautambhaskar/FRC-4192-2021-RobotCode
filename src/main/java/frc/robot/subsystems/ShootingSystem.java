@@ -126,11 +126,11 @@ public class ShootingSystem extends SubsystemBase {
     }
   }
 
-  public void startShooter(double shooterSpeed, double feederSpeed) {
-    shooterController.setReference(shooterSpeed, ControlType.kVelocity);
-    feederController.setReference(feederSpeed, ControlType.kVelocity);
-    shooterSetpoint.setDouble(shooterSpeed);
-    feederSetpoint.setDouble(feederSpeed);
+  public void startShooter(double shooterSpd, double feederSpd) {
+    shooterController.setReference(shooterSpd, ControlType.kVelocity);
+    feederController.setReference(feederSpd, ControlType.kVelocity);
+    shooterSetpoint.setDouble(shooterSpd);
+    feederSetpoint.setDouble(feederSpd);
   }
 
   public void setPower(double s_power, double f_power) {
