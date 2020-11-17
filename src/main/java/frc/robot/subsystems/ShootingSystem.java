@@ -71,7 +71,7 @@ public class ShootingSystem extends SubsystemBase {
     kMin = tuningTab.add("Shooter kMin", shooterController.getOutputMin()).getEntry();
     kMax = tuningTab.add("Shooter kMax", shooterController.getOutputMax()).getEntry();
     s_pastPIDconstants = new double[] { shooterController.getP(), shooterController.getI(), shooterController.getD(),
-    shooterController.getFF(), shooterController.getOutputMin(), shooterController.getOutputMax() };
+        shooterController.getFF(), shooterController.getOutputMin(), shooterController.getOutputMax() };
 
     f_kP = tuningTab.add("Feeder kP", feederController.getP()).getEntry();
     f_kI = tuningTab.add("Feeder kI", feederController.getI()).getEntry();
@@ -80,7 +80,7 @@ public class ShootingSystem extends SubsystemBase {
     f_kMin = tuningTab.add("Feeder kMin", feederController.getOutputMin()).getEntry();
     f_kMax = tuningTab.add("Feeder kMax", feederController.getOutputMax()).getEntry();
     f_pastPIDconstants = new double[] { feederController.getP(), feederController.getI(), feederController.getD(),
-    feederController.getFF(), feederController.getOutputMin(), feederController.getOutputMax() };
+        feederController.getFF(), feederController.getOutputMin(), feederController.getOutputMax() };
 
     newShooterPID = new double[6]; // If doesn't work, put outside constructor.
     newFeederPID = new double[6];
