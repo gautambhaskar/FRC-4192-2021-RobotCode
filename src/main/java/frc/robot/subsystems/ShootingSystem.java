@@ -51,7 +51,6 @@ public class ShootingSystem extends SubsystemBase {
 
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
-  private NetworkTableEntry shooterSpeed, feederSpeed;
 
   private double[] s_pastPIDconstants;
   private double[] f_pastPIDconstants;
