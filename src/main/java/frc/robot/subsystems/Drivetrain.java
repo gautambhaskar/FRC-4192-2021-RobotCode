@@ -40,19 +40,11 @@ public class Drivetrain extends SubsystemBase {
 
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
 
-  private AHRS ahrs;
-  private double init_angle;
 
   NetworkTableEntry leftRPM, rightRPM;
 
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
-    try {
-      //ahrs = new AHRS(SPI.Port.kMXP);
-      //init_angle = ahrs.getAngle();
-    } catch (RuntimeException ex) {
-      DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-    }
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
@@ -70,6 +62,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double returnAngle() {
-    return (0 - init_angle); // Replace 0 w sensor val
+    return (0); // Replace 0 w sensor val
   }
 }
