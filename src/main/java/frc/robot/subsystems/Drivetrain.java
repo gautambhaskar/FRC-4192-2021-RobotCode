@@ -48,8 +48,8 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
     try {
-      ahrs = new AHRS(SPI.Port.kMXP);
-      init_angle = ahrs.getAngle();
+      //ahrs = new AHRS(SPI.Port.kMXP);
+      //init_angle = ahrs.getAngle();
     } catch (RuntimeException ex) {
       DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
     }
@@ -70,6 +70,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double returnAngle() {
-    return (ahrs.getAngle() - init_angle);
+    return (0 - init_angle); // Replace 0 w sensor val
   }
 }
