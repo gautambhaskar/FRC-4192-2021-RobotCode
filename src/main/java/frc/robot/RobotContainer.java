@@ -56,7 +56,7 @@ public class RobotContainer {
       () -> driveController.getX(Hand.kRight), 0.5);
   private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
       () -> driveController.getX(Hand.kRight), 0.3);
-  private final DriveStraight m_driveStraight = new DriveStraight(m_drive, driveController.getY(Hand.kLeft));
+  private final DriveStraight m_driveStraight = new DriveStraight(m_drive, () -> driveController.getY(Hand.kLeft));
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
@@ -81,7 +81,7 @@ public class RobotContainer {
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.6);
-  Trigger joystickYOnly = new Trigger(() -> Math.abs(driveController.getX(Hand.kRight)) < 0.05);
+  Trigger joystickYOnly = new Trigger(() -> Math.abs(driveController.getX(Hand.kRight)) < 0.2 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05);
 
   public RobotContainer() {
     m_drive.setDefaultCommand(m_driveCommand);

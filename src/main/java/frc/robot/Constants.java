@@ -100,7 +100,7 @@ public final class Constants {
     }
     
     public static class drivePID{
-        public static double kP = .005;
+        public static double kP = .05;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0;

@@ -53,15 +53,18 @@ public class Drivetrain extends SubsystemBase {
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
-    robotAngle = tab.add("Robot Angle", imu.getAngle()).getEntry();
+    robotAngle = tab.add("Robot Angle", init_angle-imu.getAngle()).getEntry();
   }
 
   @Override
   public void periodic() {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
-    robotAngle.setDouble(imu.getAngle());
+    robotAngle.setDouble(init_angle-imu.getAngle());
     // This method will be called once per scheduler run
+  }
+  public void recalibrateAngle() {
+    init_angle = imu.getAngle();
   }
 
   public void arcadeDrive(double fwd, double turn) {
@@ -69,6 +72,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double returnAngle() {
-    return (imu.getAngle() - init_angle); // Replace 0 w sensor val
+    return (init_angle-imu.getAngle()); // Replace 0 w sensor val
   }
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.drivePID;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.util.function.DoubleSupplier;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -21,7 +22,7 @@ public class DriveStraight extends PIDCommand {
    * Creates a new DriveStraight.
    */
 
-  public DriveStraight(Drivetrain m_drive, double m_forward) {
+  public DriveStraight(Drivetrain m_drive, DoubleSupplier m_forward) {
     super(
         // The controller that the command will use
         new PIDController(drivePID.kP, drivePID.kI, drivePID.kD),
@@ -32,10 +33,11 @@ public class DriveStraight extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          m_drive.arcadeDrive(m_forward, output);
-          SmartDashboard.putNumber("angle", output);
+          m_drive.arcadeDrive(m_forward.getAsDouble(), output);
+          SmartDashboard.putNumber("output", output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
+    m_drive.recalibrateAngle();
     addRequirements(m_drive);
     // Configure additional PID options by calling `getController` here.
   }
