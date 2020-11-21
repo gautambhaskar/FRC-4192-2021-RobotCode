@@ -8,14 +8,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.feederPID;
-import frc.robot.Constants.shooterPID;
+//import frc.robot.Constants.feederPID;
+//import frc.robot.Constants.shooterPID;
 
 import java.util.Arrays;
 
@@ -129,9 +128,10 @@ public class ShootingSystem extends SubsystemBase {
 
   public void startShooter(double shooterSpd, double feederSpd) {
     shooterController.setReference(shooterSpd, ControlType.kVelocity);
-    feederController.setReference(feederSpd, ControlType.kVelocity);
+    // feederController.setReference(feederSpd, ControlType.kVelocity);
     shooterSetpoint.setDouble(shooterSpd);
-    feederSetpoint.setDouble(feederSpd);
+    // feederSetpoint.setDouble(feederSpd);
+    feederMotor.set(0.7);
   }
 
   public void setPower(double s_power, double f_power) {
