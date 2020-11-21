@@ -61,7 +61,7 @@ public class ShootingSystem extends SubsystemBase {
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
-    feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192).setInverted(false);
+    feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192).setInverted(true);
     feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
 
     kP = tuningTab.add("Shooter kP", shooterController.getP()).getEntry();
