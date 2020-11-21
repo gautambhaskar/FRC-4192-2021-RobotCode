@@ -34,8 +34,7 @@ public class Turret extends SubsystemBase {
   private NetworkTableEntry kP, kI, kD, kFF, kMax, kMin;
 
   // Motor
-  // private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret,
-  // MotorType.kBrushed);
+  private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
 
   // Controller
   // private CANPIDController turretController = turretMotor.getPIDController();
@@ -126,7 +125,7 @@ public class Turret extends SubsystemBase {
 
   // Set Turret Speed
   public void turn(double turretSpeed) {
-    // turretMotor.set(turretSpeed); // didn't turn.
+    turretMotor.set(turretSpeed); // didn't turn.
     // tab.add("turret set output", turretSpeed); // didn't show anything besides 0.
     // tab.add("turret applied output", turretMotor.getAppliedOutput()); // showed
     // 10

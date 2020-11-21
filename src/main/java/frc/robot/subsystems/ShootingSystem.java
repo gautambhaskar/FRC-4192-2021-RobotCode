@@ -130,8 +130,9 @@ public class ShootingSystem extends SubsystemBase {
     shooterController.setReference(shooterSpd, ControlType.kVelocity);
     // feederController.setReference(feederSpd, ControlType.kVelocity);
     shooterSetpoint.setDouble(shooterSpd);
+    feederController.setReference(0.7, ControlType.kVoltage);
     // feederSetpoint.setDouble(feederSpd);
-    feederMotor.set(0.7);
+    // feederMotor.set(0.7);
   }
 
   public void setPower(double s_power, double f_power) {
