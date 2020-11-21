@@ -33,8 +33,7 @@
               "Graph/Visible time": 30.0,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/Feeder Speed": true
+              "Y-axis/Lower bound": -1.0
             }
           },
           "2,0": {
@@ -49,8 +48,7 @@
               "Graph/Visible time": 30.0,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/Shooter Speed": true
+              "Y-axis/Lower bound": -1.0
             }
           },
           "0,0": {
@@ -236,6 +234,39 @@
               "_source0": "network_table:///SmartDashboard/Turret data",
               "_title": "Turret data"
             }
+          },
+          "6,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Code Version No.",
+              "_title": "Code Version No."
+            }
+          },
+          "7,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/angle",
+              "_title": "angle"
+            }
+          },
+          "4,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/output",
+              "_title": "output"
+            }
           }
         }
       }
@@ -268,6 +299,37 @@
                   "Wheels/Number of wheels": 4,
                   "Wheels/Wheel diameter": 80.0,
                   "Visuals/Show velocity vectors": true
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[1]/setpoint",
+                  "_title": "PIDController[1]/setpoint"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[1]",
+                  "_title": "PIDController[1]"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[10]/Value",
+                  "_title": "DigitalInput[10]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalOutput[19]/Value",
+                  "_title": "DigitalOutput[19]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[18]/Value",
+                  "_title": "DigitalInput[18]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
                 }
               ]
             }
@@ -332,6 +394,6 @@
     "x": 0.0,
     "y": 0.0,
     "width": 1440.0,
-    "height": 860.0
+    "height": 668.5
   }
 }

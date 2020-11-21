@@ -56,12 +56,11 @@ public class ShootingSystem extends SubsystemBase {
   private double[] newShooterPID;
   private double[] newFeederPID;
 
-  private NetworkTableEntry shooterSpeed, feederSpeed, shooterSetpoint, feederSetpoint;
+  private NetworkTableEntry shooterSpeed, feederSpeed, shooterSetpoint, feederSetpoint, feederAO;
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
-    feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192).setInverted(true);
-    feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
+//    feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
 
     kP = tuningTab.add("Shooter kP", shooterController.getP()).getEntry();
     kI = tuningTab.add("Shooter kI", shooterController.getI()).getEntry();
@@ -88,6 +87,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterSetpoint = tuningTab.add("Shooter Setpoint", 0).getEntry();
     feederSetpoint = tuningTab.add("Feeder Setpoint", 0).getEntry();
     feederSpeed = tuningTab.add("Feeder Speed", feederMotor.getEncoder().getVelocity()).getEntry();
+    feederAO = tuningTab.add("Feeder Applied Output", feederMotor.getAppliedOutput()).getEntry();
   }
 
   @Override
@@ -95,7 +95,8 @@ public class ShootingSystem extends SubsystemBase {
     // This method will be called once per scheduler run
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
     feederSpeed.setDouble(feederMotor.getEncoder().getVelocity());
-
+    feederAO.setDouble(feederMotor.getAppliedOutput());
+    
     // Grab numbers from SmartDashboard and set to motors
 
     // TEST THIS!!! CHECK "SOURCES" AND PULL VALUE TO A WIDGET FOR THE PID
@@ -128,11 +129,11 @@ public class ShootingSystem extends SubsystemBase {
 
   public void startShooter(double shooterSpd, double feederSpd) {
     shooterController.setReference(shooterSpd, ControlType.kVelocity);
-    // feederController.setReference(feederSpd, ControlType.kVelocity);
+    //feederController.setReference(feederSpd, ControlType.kVelocity);
     shooterSetpoint.setDouble(shooterSpd);
-    feederController.setReference(0.7, ControlType.kVoltage);
-    // feederSetpoint.setDouble(feederSpd);
-    // feederMotor.set(0.7);
+    //feederController.setReference(0.7, ControlType.kVoltage);
+    feederSetpoint.setDouble(feederSpd);
+    feederMotor.set(0.7);
   }
 
   public void setPower(double s_power, double f_power) {
