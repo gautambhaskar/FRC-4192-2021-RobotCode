@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase {
    */
 
   private static final ADIS16448_IMU imu = new ADIS16448_IMU();
-  private double init_angle, robotAngle;
+  private double init_angle;
 
   private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless);
   private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless);
@@ -45,7 +45,7 @@ public class Drivetrain extends SubsystemBase {
 
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
 
-  NetworkTableEntry leftRPM, rightRPM;
+  NetworkTableEntry leftRPM, rightRPM, robotAngle;
 
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
@@ -60,6 +60,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
+    robotAngle.setDouble(imu.getAngle());
     // This method will be called once per scheduler run
   }
 
@@ -68,7 +69,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double returnAngle() {
-    robotAngle.setDouble(imu.getAngle());
     return (imu.getAngle() - init_angle); // Replace 0 w sensor val
   }
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.drivePID;
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -32,6 +33,7 @@ public class DriveStraight extends PIDCommand {
         output -> {
           // Use the output here
           m_drive.arcadeDrive(m_forward, output);
+          SmartDashboard.putNumber("angle", output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drive);
