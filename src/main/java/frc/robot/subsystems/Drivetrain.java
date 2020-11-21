@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -26,6 +27,10 @@ public class Drivetrain extends SubsystemBase {
   /**
    * Creates a new Drivetrain.
    */
+
+  private static final ADIS16448_IMU imu = new ADIS16448_IMU();
+  private double init_angle;
+
   private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless);
   private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless);
 
@@ -40,11 +45,11 @@ public class Drivetrain extends SubsystemBase {
 
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
 
-
   NetworkTableEntry leftRPM, rightRPM;
 
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
+    init_angle = imu.getAngle();
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
@@ -62,6 +67,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double returnAngle() {
-    return (0); // Replace 0 w sensor val
+    return (imu.getAngle() - init_angle); // Replace 0 w sensor val
   }
 }
