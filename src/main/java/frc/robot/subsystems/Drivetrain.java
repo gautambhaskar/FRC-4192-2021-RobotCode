@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase {
    */
 
   private static final ADIS16448_IMU imu = new ADIS16448_IMU();
-  private double init_angle;
+  private double init_angle, robotAngle;
 
   private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless);
   private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless);
@@ -53,6 +53,7 @@ public class Drivetrain extends SubsystemBase {
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
+    robotAngle = tab.add("Robot Angle", imu.getAngle()).getEntry();
   }
 
   @Override
@@ -67,6 +68,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double returnAngle() {
+    robotAngle.setDouble(imu.getAngle());
     return (imu.getAngle() - init_angle); // Replace 0 w sensor val
   }
 }
