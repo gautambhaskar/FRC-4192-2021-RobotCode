@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.Timer;
+
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -31,6 +33,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private Timer timer;
+  
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -41,6 +45,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
+    timer = new Timer();
+    timer.start();
     SmartDashboard.putNumber("Code Version No.", 1.0);
     m_robotContainer = new RobotContainer();
     CameraServer.getInstance().startAutomaticCapture();
@@ -105,6 +111,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    timer.reset();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -115,7 +122,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
+    SmartDashboard.putNumber(timer.get());
   }
 
   @Override
