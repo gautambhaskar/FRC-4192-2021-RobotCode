@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-// import frc.robot.Constants.turretPID;
+import frc.robot.Constants.turretPID;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -37,8 +37,8 @@ public class Turret extends SubsystemBase {
   private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
 
   // Controller
-  // private CANPIDController turretController = turretMotor.getPIDController();
-  // private final double initialPosition;
+  private CANPIDController turretController = turretMotor.getPIDController();
+  private final double initialPosition;
 
   // past PID constants
   private double[] pastPIDconstants;
@@ -54,32 +54,35 @@ public class Turret extends SubsystemBase {
   private NetworkTableEntry ta;
   private double camMode;
 
-  NetworkTableEntry limelightX, limelightY, limelightA;
+  NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput;
 
   public Turret() {
-    // initialPosition = turretMotor.getEncoder().getPosition();
+    initialPosition = turretMotor.getEncoder().getPosition();
     table = NetworkTableInstance.getDefault().getTable("limelight");
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");
 
-    // turretController.setFeedbackDevice(tx.getDouble(0));
-
-    // kP = tuningTab.add("Turret kP", turretController.getP()).getEntry();
-    // kI = tuningTab.add("Turret kI", turretController.getI()).getEntry();
-    // kD = tuningTab.add("Turret kD", turretController.getD()).getEntry();
-    // kFF = tuningTab.add("Turret kFF", turretController.getFF()).getEntry();
-    // kMin = tuningTab.add("Turret kMin",
-    // turretController.getOutputMin()).getEntry();
-    // kMax = tuningTab.add("Turret kMax",
-    // turretController.getOutputMax()).getEntry();
-    // pastPIDconstants = new double[] { turretController.getP(),
-    // turretController.getI(), turretController.getD(),
-    // turretController.getFF(), turretController.getOutputMin(),
-    // turretController.getOutputMax() };
+    kP = tuningTab.add("Turret kP", turretController.getP()).getEntry();
+    kI = tuningTab.add("Turret kI", turretController.getI()).getEntry();
+    kD = tuningTab.add("Turret kD", turretController.getD()).getEntry();
+    kFF = tuningTab.add("Turret kFF", turretController.getFF()).getEntry();
+    kMin = tuningTab.add("Turret kMin",
+    turretController.getOutputMin()).getEntry();
+    kMax = tuningTab.add("Turret kMax",
+    turretController.getOutputMax()).getEntry();
+    pastPIDconstants = new double[] { turretController.getP(),
+    turretController.getI(), turretController.getD(),
+    turretController.getFF(), turretController.getOutputMin(),
+    turretController.getOutputMax() };
     limelightX = cameraTab.add("LimelightX", tx.getDouble(0)).getEntry();
     limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
     limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
+    
+    visionMode = cameraTab.add("Camera Mode", "Camera").getEntry();
+    
+    turretSetOutput = tab.add("turret set output", 0).getEntry();
+    turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
   }
 
   @Override
@@ -95,15 +98,14 @@ public class Turret extends SubsystemBase {
     limelightX.setDouble(x);
     limelightY.setDouble(y);
 
-    // double[] newTurretPIDconstants = { kP.getDouble(0), kI.getDouble(0),
-    // kD.getDouble(0), kFF.getDouble(0),
-    // kMin.getDouble(0), kMax.getDouble(0) };
+    double[] newTurretPIDconstants = { kP.getDouble(0), kI.getDouble(0),
+    kD.getDouble(0), kFF.getDouble(0),
+    kMin.getDouble(0), kMax.getDouble(0) };
 
-    // if (Arrays.equals(newTurretPIDconstants, pastPIDconstants) == false) {
-    // pastPIDconstants = newTurretPIDconstants;
-    // Constants.distributePID(newTurretPIDconstants, turretController);
-    // }
-
+    if (Arrays.equals(newTurretPIDconstants, pastPIDconstants) == false) {
+    pastPIDconstants = newTurretPIDconstants;
+    Constants.distributePID(newTurretPIDconstants, turretController);
+    }
   }
 
   // gets camMode
@@ -116,18 +118,20 @@ public class Turret extends SubsystemBase {
   public void switchCameraMode() {
     if (getCamMode() == 0) {
       table.getEntry("camMode").setDouble(1);
-      cameraTab.add("Camera Mode", "Camera");
+      visionMode.setString("Camera");
+      //cameraTab.add("Camera Mode", "Camera");
     } else if (getCamMode() == 1) {
       table.getEntry("camMode").setDouble(0);
-      cameraTab.add("Camera Mode", "Vision");
+      visionMode.setString("Vision");
+      //cameraTab.add("Camera Mode", "Vision");
     }
   }
 
   // Set Turret Speed
   public void turn(double turretSpeed) {
     turretMotor.set(turretSpeed); // didn't turn.
-    // tab.add("turret set output", turretSpeed); // didn't show anything besides 0.
-    // tab.add("turret applied output", turretMotor.getAppliedOutput()); // showed
+    tab.add("turret set output", turretSpeed); // didn't show anything besides 0.
+    tab.add("turret applied output", turretMotor.getAppliedOutput()); // showed
     // 10
   }
 
@@ -137,13 +141,13 @@ public class Turret extends SubsystemBase {
 
   public void startAlign() {
     if (tx.getDouble(0.0) > 1) {
-      // turretMotor.set(turretPID.kP*tx.getDouble(0));
-      // tab.add("turret set output", turretPID.kP*tx.getDouble(0));
-      // tab.add("turret applied output", turretMotor.getAppliedOutput());
+      turretMotor.set(turretPID.kP*tx.getDouble(0));
+      tab.add("turret set output", turretPID.kP*tx.getDouble(0));
+      tab.add("turret applied output", turretMotor.getAppliedOutput());
     } else if (tx.getDouble(0.0) < 1) {
-      // turretMotor.set(-turretPID.kP*tx.getDouble(0));
-      // tab.add("turret set output", -turretPID.kP*tx.getDouble(0));
-      // tab.add("turret applied output", turretMotor.getAppliedOutput());
+      turretMotor.set(-turretPID.kP*tx.getDouble(0));
+      tab.add("turret set output", -turretPID.kP*tx.getDouble(0));
+      tab.add("turret applied output", turretMotor.getAppliedOutput());
     }
   }
 }
