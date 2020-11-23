@@ -130,9 +130,8 @@ public class Turret extends SubsystemBase {
   // Set Turret Speed
   public void turn(double turretSpeed) {
     turretMotor.set(turretSpeed); // didn't turn.
-    tab.add("turret set output", turretSpeed); // didn't show anything besides 0.
-    tab.add("turret applied output", turretMotor.getAppliedOutput()); // showed
-    // 10
+    turretSetOutput.setDouble(turretSpeed);
+    turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
   }
 
   public double limelightOffset() {
@@ -142,12 +141,12 @@ public class Turret extends SubsystemBase {
   public void startAlign() {
     if (tx.getDouble(0.0) > 1) {
       turretMotor.set(turretPID.kP*tx.getDouble(0));
-      tab.add("turret set output", turretPID.kP*tx.getDouble(0));
-      tab.add("turret applied output", turretMotor.getAppliedOutput());
+      turretSetOutput.setDouble(turretPID.kP*tx.getDouble(0));
+      turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
     } else if (tx.getDouble(0.0) < 1) {
       turretMotor.set(-turretPID.kP*tx.getDouble(0));
-      tab.add("turret set output", -turretPID.kP*tx.getDouble(0));
-      tab.add("turret applied output", turretMotor.getAppliedOutput());
+      turretSetOutput.setDouble(-turretPID.kP*tx.getDouble(0));
+      turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
     }
   }
 }
