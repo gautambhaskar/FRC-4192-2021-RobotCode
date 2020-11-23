@@ -49,9 +49,7 @@ public class Turret extends SubsystemBase {
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
 
   private NetworkTable table;
-  private NetworkTableEntry tx;
-  private NetworkTableEntry ty;
-  private NetworkTableEntry ta;
+  private NetworkTableEntry tx, ty, ta;
   private double camMode;
 
   NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput;

@@ -22,10 +22,10 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   private final CANSparkMax intakeMotor = new CANSparkMax(Constants.intake, MotorType.kBrushless);
-  // private final DoubleSolenoid solenoid1 = new DoubleSolenoid(3, 4);
-  // private final DoubleSolenoid solenoid2 = new DoubleSolenoid(2, 5);
-  // private final DoubleSolenoid solenoid3 = new DoubleSolenoid(1, 6);
-  // private final DoubleSolenoid intakeSolenoid = new DoubleSolenoid(0, 7);
+  private final DoubleSolenoid solenoid1 = new DoubleSolenoid(3, 4);
+  private final DoubleSolenoid solenoid2 = new DoubleSolenoid(2, 5);
+  private final DoubleSolenoid solenoid3 = new DoubleSolenoid(1, 6);
+  private final DoubleSolenoid intakeSolenoid = new DoubleSolenoid(0, 7);
   private ShuffleboardTab subsystemTab = Shuffleboard.getTab("Subsystems");
 
   private NetworkTableEntry intakeEngaged;
@@ -44,12 +44,12 @@ public class Intake extends SubsystemBase {
   }
 
   public void raise() {
-    // intakeSolenoid.set(Value.kReverse);
+    intakeSolenoid.set(Value.kReverse);
     intakeEngaged.setBoolean(true);
   }
 
   public void lower() {
-    // intakeSolenoid.set(Value.kForward);
+    intakeSolenoid.set(Value.kForward);
     intakeEngaged.setBoolean(false);
   }
 }

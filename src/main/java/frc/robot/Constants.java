@@ -109,7 +109,7 @@ public final class Constants {
     }
 
     public static void distributePID(double[] constants, CANPIDController controller) {
-        controller.setP(constants[0]);
+    controller.setP(constants[0]);
         controller.setI(constants[1]);
         controller.setD(constants[2]);
         controller.setFF(constants[3]);
