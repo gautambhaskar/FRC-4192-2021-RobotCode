@@ -7,18 +7,20 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
 public class TurretTurn extends CommandBase {
   private final Turret m_turret;
-  private final double m_turretTurn;
+  private final DoubleSupplier m_turretTurn;
  
   /**
    * Creates a new TurretTurn.
    */
 
-  public TurretTurn(Turret subsystem, double turn) {
+  public TurretTurn(Turret subsystem, DoubleSupplier turn) {
     m_turret = subsystem;
     m_turretTurn = turn;
     addRequirements(m_turret);
@@ -33,7 +35,7 @@ public class TurretTurn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_turret.turn(m_turretTurn);
+    m_turret.turn(m_turretTurn.getAsDouble()/3);
   }
 
   // Called once the command ends or is interrupted.

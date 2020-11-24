@@ -61,8 +61,8 @@ public class RobotContainer {
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
   private final IndexOut m_indexOutCommand = new IndexOut(m_Index, Constants.indexSpeed);
-  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret, Constants.turretTurn);
-  private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret, -Constants.turretTurn);
+  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret, ()->systemsController.getTriggerAxis(Hand.kLeft));
+  private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret, ()->-systemsController.getTriggerAxis(Hand.kRight));
   private final RunShooter m_runShooter = new RunShooter(m_ShootingSystem, Constants.shooterSpeed,
       Constants.feederSpeed);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
@@ -79,8 +79,8 @@ public class RobotContainer {
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
-  Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.6);
-  Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.6);
+  Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
+  Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
   Trigger joystickYOnly = new Trigger(() -> Math.abs(driveController.getX(Hand.kRight)) < 0.2 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05 && driveController.getTriggerAxis(Hand.kRight) < 0.6 && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
 
   public RobotContainer() {
