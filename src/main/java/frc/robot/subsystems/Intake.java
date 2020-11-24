@@ -34,6 +34,7 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     intakeEngaged = subsystemTab.add("Intake engaged", false).getEntry();
+    intakeSolenoid.set(Value.kReverse);
   }
 
   @Override

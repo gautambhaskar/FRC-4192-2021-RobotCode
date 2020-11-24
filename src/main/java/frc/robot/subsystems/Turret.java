@@ -118,7 +118,7 @@ public class Turret extends SubsystemBase {
 
   public void startAlign() {
     if (tx.getDouble(0.0) > 1) {
-      turretMotor.set(turretPID.kP*tx.getDouble(0));
+      turretMotor.set(-turretPID.kP*tx.getDouble(0));
       turretSetOutput.setDouble(turretPID.kP*tx.getDouble(0));
       turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
     } else if (tx.getDouble(0.0) < 1) {

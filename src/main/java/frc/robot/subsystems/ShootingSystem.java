@@ -23,6 +23,8 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.EncoderType;
+
 
 public class ShootingSystem extends SubsystemBase {
   /**
@@ -48,6 +50,7 @@ public class ShootingSystem extends SubsystemBase {
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
 
+  
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
 
@@ -86,7 +89,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity()).getEntry();
     shooterSetpoint = tuningTab.add("Shooter Setpoint", 0).getEntry();
     feederSetpoint = tuningTab.add("Feeder Setpoint", 0).getEntry();
-    feederSpeed = tuningTab.add("Feeder Speed", feederMotor.getEncoder().getVelocity()).getEntry();
+    feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity()).getEntry();
     feederAO = tuningTab.add("Feeder Applied Output", feederMotor.getAppliedOutput()).getEntry();
   }
 
@@ -94,7 +97,7 @@ public class ShootingSystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
-    feederSpeed.setDouble(feederMotor.getEncoder().getVelocity());
+    feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
     feederAO.setDouble(feederMotor.getAppliedOutput());
     
     // Grab numbers from SmartDashboard and set to motors
@@ -131,7 +134,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterController.setReference(shooterSpd, ControlType.kVelocity);
     //feederController.setReference(feederSpd, ControlType.kVelocity);
     shooterSetpoint.setDouble(shooterSpd);
-    feederController.setReference(10, ControlType.kVoltage);
+    feederController.setReference(feederSpd, ControlType.kVoltage);
     feederSetpoint.setDouble(feederSpd);
     //feederMotor.set(0.7);
   }
