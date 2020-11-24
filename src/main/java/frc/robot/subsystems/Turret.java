@@ -14,6 +14,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.EncoderType;
 
 // import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -26,6 +27,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+
 public class Turret extends SubsystemBase {
   /**
    * Creates a new Turret.
@@ -37,7 +39,9 @@ public class Turret extends SubsystemBase {
   private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
 
   // Controller
-  private final double initialPosition;
+
+  //Encoder
+  private final CANEncoder turretEncoder = turretMotor.getEncoder(EncoderType.kNoSensor, 0);
 
   // past PID constants
   private double[] pastPIDconstants;
@@ -54,7 +58,6 @@ public class Turret extends SubsystemBase {
   NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput;
 
   public Turret() {
-    initialPosition = turretMotor.getEncoder().getPosition();
     table = NetworkTableInstance.getDefault().getTable("limelight");
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");

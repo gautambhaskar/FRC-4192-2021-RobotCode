@@ -61,8 +61,8 @@ public class RobotContainer {
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
   private final IndexOut m_indexOutCommand = new IndexOut(m_Index, Constants.indexSpeed);
-  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret, ()->systemsController.getTriggerAxis(Hand.kLeft));
-  private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret, ()->-systemsController.getTriggerAxis(Hand.kRight));
+  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret, ()->systemsController.getTriggerAxis(Hand.kLeft)*7/10);
+  private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret, ()->-systemsController.getTriggerAxis(Hand.kRight)*7/10);
   private final RunShooter m_runShooter = new RunShooter(m_ShootingSystem, Constants.shooterSpeed,
       Constants.feederSpeed);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
