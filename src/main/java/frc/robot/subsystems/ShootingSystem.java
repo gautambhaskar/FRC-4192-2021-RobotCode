@@ -118,11 +118,11 @@ public class ShootingSystem extends SubsystemBase {
 
     // Puts new values into old array
     if (Arrays.equals(newShooterPID, s_pastPIDconstants) == false) {
-      s_pastPIDconstants = newShooterPID;
+      s_pastPIDconstants = newShooterPID.clone();//clone works?
       Constants.distributePID(newShooterPID, shooterController);
     }
     if (Arrays.equals(newFeederPID, f_pastPIDconstants) == false) {
-      f_pastPIDconstants = newFeederPID;
+      f_pastPIDconstants = newFeederPID.clone();
       Constants.distributePID(newFeederPID, feederController);
     }
   }
