@@ -37,7 +37,6 @@ public class Turret extends SubsystemBase {
   private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
 
   // Controller
-  private CANPIDController turretController = turretMotor.getPIDController();
   private final double initialPosition;
 
   // past PID constants
@@ -60,19 +59,6 @@ public class Turret extends SubsystemBase {
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");
-
-    kP = tuningTab.add("Turret kP", turretController.getP()).getEntry();
-    kI = tuningTab.add("Turret kI", turretController.getI()).getEntry();
-    kD = tuningTab.add("Turret kD", turretController.getD()).getEntry();
-    kFF = tuningTab.add("Turret kFF", turretController.getFF()).getEntry();
-    kMin = tuningTab.add("Turret kMin",
-    turretController.getOutputMin()).getEntry();
-    kMax = tuningTab.add("Turret kMax",
-    turretController.getOutputMax()).getEntry();
-    pastPIDconstants = new double[] { turretController.getP(),
-    turretController.getI(), turretController.getD(),
-    turretController.getFF(), turretController.getOutputMin(),
-    turretController.getOutputMax() };
     limelightX = cameraTab.add("LimelightX", tx.getDouble(0)).getEntry();
     limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
     limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
@@ -95,15 +81,6 @@ public class Turret extends SubsystemBase {
     limelightA.setDouble(area);
     limelightX.setDouble(x);
     limelightY.setDouble(y);
-
-    double[] newTurretPIDconstants = { kP.getDouble(0), kI.getDouble(0),
-    kD.getDouble(0), kFF.getDouble(0),
-    kMin.getDouble(0), kMax.getDouble(0) };
-
-    if (Arrays.equals(newTurretPIDconstants, pastPIDconstants) == false) {
-    pastPIDconstants = newTurretPIDconstants;
-    Constants.distributePID(newTurretPIDconstants, turretController);
-    }
   }
 
   // gets camMode
