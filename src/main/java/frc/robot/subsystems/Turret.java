@@ -27,7 +27,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-
 public class Turret extends SubsystemBase {
   /**
    * Creates a new Turret.
@@ -40,7 +39,7 @@ public class Turret extends SubsystemBase {
 
   // Controller
 
-  //Encoder
+  // Encoder
   private final CANEncoder turretEncoder = turretMotor.getEncoder(EncoderType.kNoSensor, 0);
 
   // past PID constants
@@ -65,9 +64,9 @@ public class Turret extends SubsystemBase {
     limelightX = cameraTab.add("LimelightX", tx.getDouble(0)).getEntry();
     limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
     limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
-    
+
     visionMode = cameraTab.add("Camera Mode", "Camera").getEntry();
-    
+
     turretSetOutput = tab.add("turret set output", 0).getEntry();
     turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
   }
@@ -97,11 +96,11 @@ public class Turret extends SubsystemBase {
     if (getCamMode() == 0) {
       table.getEntry("camMode").setDouble(1);
       visionMode.setString("Camera");
-      //cameraTab.add("Camera Mode", "Camera");
+      // cameraTab.add("Camera Mode", "Camera");
     } else if (getCamMode() == 1) {
       table.getEntry("camMode").setDouble(0);
       visionMode.setString("Vision");
-      //cameraTab.add("Camera Mode", "Vision");
+      // cameraTab.add("Camera Mode", "Vision");
     }
   }
 
@@ -118,12 +117,12 @@ public class Turret extends SubsystemBase {
 
   public void startAlign() {
     if (tx.getDouble(0.0) > 1) {
-      turretMotor.set(-turretPID.kP*tx.getDouble(0));
-      turretSetOutput.setDouble(turretPID.kP*tx.getDouble(0));
+      turretMotor.set(-turretPID.kP * tx.getDouble(0));
+      turretSetOutput.setDouble(turretPID.kP * tx.getDouble(0));
       turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
     } else if (tx.getDouble(0.0) < 1) {
-      turretMotor.set(-turretPID.kP*tx.getDouble(0));
-      turretSetOutput.setDouble(-turretPID.kP*tx.getDouble(0));
+      turretMotor.set(-turretPID.kP * tx.getDouble(0));
+      turretSetOutput.setDouble(-turretPID.kP * tx.getDouble(0));
       turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
     }
   }
