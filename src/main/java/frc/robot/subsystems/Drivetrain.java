@@ -33,13 +33,14 @@ public class Drivetrain extends SubsystemBase {
 
   private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless);
   private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless);
+  private final CANSparkMax leftFollower1 = new CANSparkMax(Constants.leftFollower1, MotorType.kBrushless);
+  private final CANSparkMax leftFollower2 = new CANSparkMax(Constants.leftFollower2, MotorType.kBrushless);
+  private final CANSparkMax rightFollower1 = new CANSparkMax(Constants.rightFollower1, MotorType.kBrushless);
+  private final CANSparkMax rightFollower2 = new CANSparkMax(Constants.rightFollower2, MotorType.kBrushless);
 
-  private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftLead,
-      new CANSparkMax(Constants.leftFollower1, MotorType.kBrushless),
-      new CANSparkMax(Constants.leftFollower2, MotorType.kBrushless));
-  private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightLead,
-      new CANSparkMax(Constants.rightFollower1, MotorType.kBrushless),
-      new CANSparkMax(Constants.rightFollower2, MotorType.kBrushless));
+  private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftLead, leftFollower1, leftFollwer2);
+  private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightLead, rightFollower1,
+      rightFollower2);
 
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
@@ -53,25 +54,32 @@ public class Drivetrain extends SubsystemBase {
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
-    robotAngle = tab.add("Robot Angle", init_angle-imu.getAngle()).getEntry();
+    robotAngle = tab.add("Robot Angle", init_angle - imu.getAngle()).getEntry();
+    leftLead.setInverted(true);
+    rightLead.setInverted(true);
+    leftFollower1.setInverted(true);
+    leftFollower2.setInverted(true);
+    rightFollower1.setInverted(true);
+    rightFollower2.setInverted(true);
   }
 
   @Override
   public void periodic() {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
-    robotAngle.setDouble(init_angle-imu.getAngle());
+    robotAngle.setDouble(init_angle - imu.getAngle());
     // This method will be called once per scheduler run
   }
+
   public void recalibrateAngle() {
     init_angle = imu.getAngle();
   }
 
   public void arcadeDrive(double fwd, double turn) {
-    m_drive.arcadeDrive(-fwd, -turn); // <<<<<<Need to invert motors instead >>>>>>>
+    m_drive.arcadeDrive(fwd, turn); // <<<<<<Need to invert motors instead >>>>>>>
   }
 
   public double returnAngle() {
-    return (init_angle-imu.getAngle()); // Replace 0 w sensor val
+    return (init_angle - imu.getAngle()); // Replace 0 w sensor val
   }
 }
