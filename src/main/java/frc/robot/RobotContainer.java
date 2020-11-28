@@ -61,8 +61,10 @@ public class RobotContainer {
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
   private final IndexOut m_indexOutCommand = new IndexOut(m_Index, Constants.indexSpeed);
-  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret, ()->systemsController.getTriggerAxis(Hand.kLeft)*7/10);
-  private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret, ()->-systemsController.getTriggerAxis(Hand.kRight)*7/10);
+  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret,
+      () -> systemsController.getTriggerAxis(Hand.kLeft) * 7 / 10);
+  private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret,
+      () -> -systemsController.getTriggerAxis(Hand.kRight) * 7 / 10);
   private final RunShooter m_runShooter = new RunShooter(m_ShootingSystem, Constants.shooterSpeed,
       Constants.feederSpeed);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
@@ -81,7 +83,9 @@ public class RobotContainer {
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
-  Trigger joystickYOnly = new Trigger(() -> Math.abs(driveController.getX(Hand.kRight)) < 0.2 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05 && driveController.getTriggerAxis(Hand.kRight) < 0.6 && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
+  Trigger joystickYOnly = new Trigger(
+      () -> Math.abs(driveController.getX(Hand.kRight)) < 0.2 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05
+          && driveController.getTriggerAxis(Hand.kRight) < 0.6 && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
 
   public RobotContainer() {
     m_drive.setDefaultCommand(m_driveCommand);
@@ -98,13 +102,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     rightTrigger.whileActiveOnce(m_halfSpeedDrive);
     leftTrigger.whileActiveOnce(m_quarterSpeedDrive);
-    rightTriggerSubsystems.whileActiveOnce(m_turretTurnRight); // not working
-    leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft); // not working
+    rightTriggerSubsystems.whileActiveOnce(m_turretTurnRight);
+    leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft);
     systemsStartButton.whenHeld(m_indexInCommand);
     systemsBackButton.whenHeld(m_indexOutCommand);
     leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
-    systemsYButton.toggleWhenPressed(m_runShooter); // fail
+    systemsYButton.toggleWhenPressed(m_runShooter);
     driverBackButton.whenHeld(m_unjamBalls);
     driverYButton.toggleWhenPressed(m_alignWithTarget);
     joystickYOnly.whileActiveOnce(m_driveStraight);
