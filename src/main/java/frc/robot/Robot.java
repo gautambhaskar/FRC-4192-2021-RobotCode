@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     SmartDashboard.putNumber("Code Version No.", 1.0);
+    SmartDashboard.putString("Branch", "dev-c");
     m_robotContainer = new RobotContainer();
     CameraServer.getInstance().startAutomaticCapture();
   }
