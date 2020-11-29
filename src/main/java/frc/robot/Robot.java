@@ -45,7 +45,11 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     SmartDashboard.putNumber("Code Version No.", 1.0);
+    //dev-b
     SmartDashboard.putString("Branch", "dev-b");
+
+    //SmartDashboard.putString("Branch", "main");
+    //main
     m_robotContainer = new RobotContainer();
     CameraServer.getInstance().startAutomaticCapture();
   }
