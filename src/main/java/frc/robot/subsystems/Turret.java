@@ -49,7 +49,9 @@ public class Turret extends SubsystemBase {
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
   private ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
-
+  // private MjpegServer server;
+  // private HttpCamera LLFeed;
+  // private UsbCamera cargoCam;
   private NetworkTable table;
   private NetworkTableEntry tx, ty, ta;
   private double camMode;
