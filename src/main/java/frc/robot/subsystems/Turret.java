@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.turretPID;
+import edu.wpi.cscore.HttpCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -56,6 +58,8 @@ public class Turret extends SubsystemBase {
   private NetworkTableEntry tx, ty, ta;
   private double camMode;
 
+  private HttpCamera limelightFeed;
+
   NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput, turretAngle;
 
   public Turret() {
@@ -66,6 +70,9 @@ public class Turret extends SubsystemBase {
     limelightX = cameraTab.add("LimelightX", tx.getDouble(0)).getEntry();
     limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
     limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
+    limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
+    cameraTab.add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8)
+        .withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
     turretAngle = tab.add("Turret Angle", turretEncoder.getPosition()).getEntry();
 
     visionMode = cameraTab.add("Camera Mode", "Camera").getEntry();
