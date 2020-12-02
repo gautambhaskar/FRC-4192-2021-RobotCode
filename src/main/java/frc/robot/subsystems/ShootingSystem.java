@@ -88,11 +88,11 @@ public class ShootingSystem extends SubsystemBase {
     newFeederPID = new double[6];
 
     shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity())
-        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).getEntry();
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 0).getEntry();
     shooterSetpoint = tuningTab.add("Shooter Setpoint", 0).getEntry();
     feederSetpoint = tuningTab.add("Feeder Setpoint", 0).getEntry();
     feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity())
-        .getEntry();
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
     feederAO = tuningTab.add("Feeder Applied Output", feederMotor.getAppliedOutput()).getEntry();
   }
 
