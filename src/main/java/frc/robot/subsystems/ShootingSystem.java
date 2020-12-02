@@ -8,9 +8,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 //import frc.robot.Constants.feederPID;
@@ -24,7 +26,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
-
 
 public class ShootingSystem extends SubsystemBase {
   /**
@@ -50,7 +51,6 @@ public class ShootingSystem extends SubsystemBase {
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
 
-  
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
 
@@ -63,7 +63,8 @@ public class ShootingSystem extends SubsystemBase {
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
-//    feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
+    // feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature,
+    // 8192));
 
     kP = tuningTab.add("Shooter kP", shooterController.getP()).getEntry();
     kI = tuningTab.add("Shooter kI", shooterController.getI()).getEntry();
@@ -86,10 +87,12 @@ public class ShootingSystem extends SubsystemBase {
     newShooterPID = new double[6]; // If doesn't work, put outside constructor.
     newFeederPID = new double[6];
 
-    shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity()).getEntry();
+    shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity())
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).getEntry();
     shooterSetpoint = tuningTab.add("Shooter Setpoint", 0).getEntry();
     feederSetpoint = tuningTab.add("Feeder Setpoint", 0).getEntry();
-    feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity()).getEntry();
+    feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity())
+        .getEntry();
     feederAO = tuningTab.add("Feeder Applied Output", feederMotor.getAppliedOutput()).getEntry();
   }
 
@@ -99,7 +102,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
     feederAO.setDouble(feederMotor.getAppliedOutput());
-    
+
     // Grab numbers from SmartDashboard and set to motors
 
     // TEST THIS!!! CHECK "SOURCES" AND PULL VALUE TO A WIDGET FOR THE PID
@@ -121,7 +124,7 @@ public class ShootingSystem extends SubsystemBase {
 
     // Puts new values into old array
     if (Arrays.equals(newShooterPID, s_pastPIDconstants) == false) {
-      s_pastPIDconstants = newShooterPID.clone();//clone works?
+      s_pastPIDconstants = newShooterPID.clone();// clone works?
       Constants.distributePID(newShooterPID, shooterController);
     }
     if (Arrays.equals(newFeederPID, f_pastPIDconstants) == false) {
@@ -132,11 +135,11 @@ public class ShootingSystem extends SubsystemBase {
 
   public void startShooter(double shooterSpd, double feederSpd) {
     shooterController.setReference(shooterSpd, ControlType.kVelocity);
-    //feederController.setReference(feederSpd, ControlType.kVelocity);
+    // feederController.setReference(feederSpd, ControlType.kVelocity);
     shooterSetpoint.setDouble(shooterSpd);
     feederController.setReference(feederSpd, ControlType.kVoltage);
     feederSetpoint.setDouble(feederSpd);
-    //feederMotor.set(0.7);
+    // feederMotor.set(0.7);
   }
 
   public void setPower(double s_power, double f_power) {
