@@ -40,7 +40,7 @@ public class Turret extends SubsystemBase {
   // Controller
 
   // Encoder
-  private final CANEncoder turretEncoder = turretMotor.getEncoder(EncoderType.kHallSensor, 8192);
+  private final CANEncoder turretEncoder = turretMotor.getEncoder(EncoderType.kQuadrature, 8192);
 
   // past PID constants
   private double[] pastPIDconstants;
