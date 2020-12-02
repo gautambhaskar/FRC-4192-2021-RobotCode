@@ -20,7 +20,7 @@ public class Hood extends SubsystemBase {
   private final CANSparkMax m_hoodMotor;
 
   public Hood() {
-    m_hood = new CANSparkMax(Constants.hood, MotorType.kBrushless);
+    m_hoodMotor = new CANSparkMax(Constants.hood, MotorType.kBrushless);
   }
 
   @Override
