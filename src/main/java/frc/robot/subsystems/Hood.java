@@ -17,7 +17,7 @@ public class Hood extends SubsystemBase {
   /**
    * Creates a new Hood.
    */
-  private final CANSparkMax m_hood;
+  private final CANSparkMax m_hoodMotor;
 
   public Hood() {
     m_hood = new CANSparkMax(Constants.hood, MotorType.kBrushless);
@@ -29,6 +29,6 @@ public class Hood extends SubsystemBase {
   }
 
   public void runHood(double speed) {
-    m_hood.set(speed);
+    m_hoodMotor.set(speed);
   }
 }
