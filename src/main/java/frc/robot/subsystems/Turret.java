@@ -40,7 +40,7 @@ public class Turret extends SubsystemBase {
   // Controller
 
   // Encoder
-  private final CANEncoder turretEncoder = turretMotor.getEncoder(EncoderType.kNoSensor, 0);
+  private final CANEncoder turretEncoder = turretMotor.getEncoder(EncoderType.kQuadrature, 8192);
 
   // past PID constants
   private double[] pastPIDconstants;
@@ -54,7 +54,7 @@ public class Turret extends SubsystemBase {
   private NetworkTableEntry tx, ty, ta;
   private double camMode;
 
-  NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput;
+  NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput, turretAngle;
 
   public Turret() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -64,6 +64,7 @@ public class Turret extends SubsystemBase {
     limelightX = cameraTab.add("LimelightX", tx.getDouble(0)).getEntry();
     limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
     limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
+    turretAngle = tab.add("Turret Angle", turretEncoder.getPosition()).getEntry();
 
     visionMode = cameraTab.add("Camera Mode", "Camera").getEntry();
 
@@ -83,6 +84,8 @@ public class Turret extends SubsystemBase {
     limelightA.setDouble(area);
     limelightX.setDouble(x);
     limelightY.setDouble(y);
+    turretAngle.setDouble(turretEncoder.getPosition());
+
   }
 
   // gets camMode
