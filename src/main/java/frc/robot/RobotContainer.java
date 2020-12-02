@@ -17,12 +17,14 @@ import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
 import frc.robot.commands.RotateInPlace;
+import frc.robot.commands.RunHood;
 import frc.robot.commands.IndexIn;
 import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
 import frc.robot.commands.UnjamBall;
 import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.subsystems.Index;
@@ -49,6 +51,7 @@ public class RobotContainer {
   private final ShootingSystem m_ShootingSystem = new ShootingSystem();
   private final Index m_Index = new Index();
   private final Turret m_Turret = new Turret();
+  private final Hood m_hood = new Hood();
 
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
@@ -61,6 +64,8 @@ public class RobotContainer {
   private final RotateInPlace m_rotateInPlaceRight = new RotateInPlace(m_drive, Constants.driveRotateSpeed);
   private final DriveStraight m_driveStraight = new DriveStraight(m_drive, () -> driveController.getY(Hand.kLeft));
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
+  private final RunHood m_runHoodUp = new RunHood(m_hood, Constants.hoodRotateSpeed);
+  private final RunHood m_runHoodDown = new RunHood(m_hood, -Constants.hoodRotateSpeed);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
   private final IndexOut m_indexOutCommand = new IndexOut(m_Index, Constants.indexSpeed);
@@ -79,6 +84,8 @@ public class RobotContainer {
   Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
   JoystickButton leftBumper = new JoystickButton(driveController, Constants.leftBumper);
   JoystickButton rightBumper = new JoystickButton(driveController, Constants.rightBumper);
+  JoystickButton leftBumperSubsystems = new JoystickButton(systemsController, Constants.rightBumper);
+  JoystickButton rightBumperSubsystems = new JoystickButton(systemsController, Constants.rightBumper);
   JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
   JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
@@ -120,6 +127,10 @@ public class RobotContainer {
     // Rotate in Place
     leftBumper.whenHeld(m_rotateInPlaceLeft);
     rightBumper.whenHeld(m_rotateInPlaceRight);
+
+    // Rotate Hood
+    leftBumperSubsystems.whenHeld(m_runHoodUp);
+    rightBumperSubsystems.whenHeld(m_runHoodDown);
 
   }
 
