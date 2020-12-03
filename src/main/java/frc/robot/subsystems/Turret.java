@@ -71,7 +71,7 @@ public class Turret extends SubsystemBase {
     limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
     limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
     limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
-    cameraTab.add("LL", limelightFeed).withPosition(0, 0).withSize(15, 8)
+    cameraTab.add("Limelight", limelightFeed).withPosition(0, 0).withSize(15, 8)
         .withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
     turretAngle = tab.add("Turret Angle", turretEncoder.getPosition()).getEntry();
 
