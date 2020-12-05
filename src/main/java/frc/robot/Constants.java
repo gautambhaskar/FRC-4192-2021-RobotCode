@@ -54,6 +54,8 @@ public final class Constants {
     public static double hoodRotateSpeed = 0.3;
     public static double turretTurn = 0.7;
 
+    public static double basicRotateSpeed = 0.3;
+
     // Buttons
     public static int aButton = 1;
     public static int bButton = 2;
