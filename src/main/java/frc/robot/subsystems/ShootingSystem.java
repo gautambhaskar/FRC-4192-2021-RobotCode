@@ -150,7 +150,7 @@ public class ShootingSystem extends SubsystemBase {
     feederController.setReference(f_power, ControlType.kVoltage);
   }
 
-  public dvoid stopShooter() {
+  public void stopShooter() {
     shooterController.setReference(0, ControlType.kVoltage);
     feederController.setReference(0, ControlType.kVoltage);
   }
