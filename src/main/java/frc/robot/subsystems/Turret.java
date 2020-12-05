@@ -17,6 +17,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
 
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 // import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -25,9 +26,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.turretPID;
 import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.MjpegServer;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class Turret extends SubsystemBase {
   /**
@@ -42,7 +47,7 @@ public class Turret extends SubsystemBase {
   // Controller
 
   // Encoder
-  private final CANEncoder turretEncoder = turretMotor.getEncoder(EncoderType.kQuadrature, 8192);
+  private final Encoder turretEncoder = new Encoder(0, 1);
 
   // past PID constants
   private double[] pastPIDconstants;
@@ -51,16 +56,16 @@ public class Turret extends SubsystemBase {
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
   private ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
-  // private MjpegServer server;
-  // private HttpCamera LLFeed;
-  // private UsbCamera cargoCam;
   private NetworkTable table;
   private NetworkTableEntry tx, ty, ta;
   private double camMode;
 
   private HttpCamera limelightFeed;
+  private MjpegServer server;
+  private UsbCamera cargoCam;
 
   NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput, turretAngle;
+  NetworkTableEntry turretPosition, turretVelocity, turretDirection;
 
   public Turret() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -70,15 +75,26 @@ public class Turret extends SubsystemBase {
     limelightX = cameraTab.add("LimelightX", tx.getDouble(0)).getEntry();
     limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
     limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
+
     limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
-    cameraTab.add("Limelight", limelightFeed).withPosition(0, 0).withSize(15, 8)
-        .withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
-    turretAngle = tab.add("Turret Angle", turretEncoder.getPosition()).getEntry();
+    cargoCam = CameraServer.getInstance().startAutomaticCapture(0);
+    cargoCam.setConnectVerbose(0);
+    server.setSource(limelightFeed);
+    Shuffleboard.selectTab("Camera");
+
+
+    cameraTab.add("Camera Feed", server.getSource()).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 0)
+        .withSize(3, 3);
 
     visionMode = cameraTab.add("Camera Mode", "Camera").getEntry();
 
     turretSetOutput = tab.add("turret set output", 0).getEntry();
     turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
+
+    turretPosition = tab.add("turret angular position", turretEncoder.getDistance()).getEntry();
+    turretVelocity = tab.add("turret angular velocity", turretEncoder.getRate()).getEntry();
+    turretDirection = tab.add("turret direction", turretEncoder.getDirection()).getEntry();
+
   }
 
   @Override
@@ -93,8 +109,10 @@ public class Turret extends SubsystemBase {
     limelightA.setDouble(area);
     limelightX.setDouble(x);
     limelightY.setDouble(y);
-    turretAngle.setDouble(turretEncoder.getPosition());
 
+    turretPosition.setDouble(turretEncoder.getDistance());
+    turretVelocity.setDouble(turretEncoder.getRate());
+    turretDirection.setBoolean(turretEncoder.getDirection());
   }
 
   // gets camMode
@@ -137,5 +155,18 @@ public class Turret extends SubsystemBase {
       turretSetOutput.setDouble(-turretPID.kP * tx.getDouble(0));
       turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
     }
+  }
+
+  public double[] getPostitionAndVelocity() {
+    double position = turretEncoder.getDistance();
+    double velocity = turretEncoder.getRate();
+
+    double[] info = { position, velocity };
+    return info;
+  }
+
+  public boolean getDirection() {
+    boolean direction = turretEncoder.getDirection();
+    return direction;
   }
 }
