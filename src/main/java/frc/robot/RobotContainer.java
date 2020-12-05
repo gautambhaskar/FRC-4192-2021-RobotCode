@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -21,6 +22,7 @@ import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
 import frc.robot.commands.UnjamBall;
 import frc.robot.commands.RunShooter;
+import frc.robot.commands.StationaryRotation;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShootingSystem;
@@ -70,11 +72,14 @@ public class RobotContainer {
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
-
+  private final StationaryRotation m_stationaryRotationLeft = new StationaryRotation(m_drive, -Constants.driveRotateSpeed);
+  private final StationaryRotation m_stationaryRotationRight = new StationaryRotation(m_drive, Constants.driveRotateSpeed);
+  
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
   JoystickButton leftBumper = new JoystickButton(driveController, Constants.leftBumper);
+  JoystickButton rightBumper = new JoystickButton(driveController, Constants.rightBumper);
   JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
   JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
@@ -106,12 +111,15 @@ public class RobotContainer {
     leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft);
     systemsStartButton.whenHeld(m_indexInCommand);
     systemsBackButton.whenHeld(m_indexOutCommand);
-    leftBumper.toggleWhenPressed(m_intakeCommand);
+    // leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
     systemsYButton.toggleWhenPressed(m_runShooter);
     driverBackButton.whenHeld(m_unjamBalls);
     driverYButton.toggleWhenPressed(m_alignWithTarget);
     joystickYOnly.whileActiveOnce(m_driveStraight);
+    leftBumper.whenHeld(m_stationaryRotationLeft);
+    rightBumper.whenHeld(m_stationaryRotationRight);
+
   }
 
   /**
