@@ -13,15 +13,16 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class BasicAuton extends SequentialCommandGroup {
+public class DistanceAuton extends SequentialCommandGroup {
   /**
-   * Creates a new BasicAuton.
+   * Creates a new DistanceAuton.
    */
   private Drivetrain m_drive;
 
-  public BasicAuton(Drivetrain drive) { // Add your commands in the super() call, e.g.
+  public DistanceAuton(Drivetrain drive) {
+    // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DriveSetTime(drive, 1), new DriveSetTime(drive, 2));
+    super(new DriveSetDistance(drive, 10, 0.5), new DriveSetDistance(drive, 5, -0.3));
     m_drive = drive;
   }
 }

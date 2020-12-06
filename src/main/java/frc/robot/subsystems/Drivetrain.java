@@ -15,7 +15,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.networktables.NetworkTableEntry;
 // import edu.wpi.first.wpilibj.DriverStation;
-// import edu.wpi.first.wpilibj.SPI;
+// import edu.twpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -30,6 +30,7 @@ public class Drivetrain extends SubsystemBase {
 
   private static final ADIS16448_IMU imu = new ADIS16448_IMU();
   private double init_angle;
+  private double init_position;
 
   private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless);
   private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless);
@@ -56,6 +57,7 @@ public class Drivetrain extends SubsystemBase {
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
     robotAngle = tab.add("Robot Angle", init_angle - imu.getAngle()).getEntry();
     leftLead.setInverted(true);
+    leftLead.getEncoder().setPosition(0);
     rightLead.setInverted(true);
     leftFollower1.setInverted(true);
     leftFollower2.setInverted(true);
@@ -81,5 +83,13 @@ public class Drivetrain extends SubsystemBase {
 
   public double returnAngle() {
     return (init_angle - imu.getAngle()); // Replace 0 w sensor val
+  }
+
+  public double returnDrivetrainPosition() {
+    return (init_position - leftLead.getEncoder().getPosition());
+  }
+  
+  public void recalibratePosition() {
+    init_position = leftLead.getEncoder().getPosition();
   }
 }

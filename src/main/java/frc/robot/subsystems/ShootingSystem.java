@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 //import frc.robot.Constants.feederPID;
 //import frc.robot.Constants.shooterPID;
+import frc.robot.Constants.shooterPID;
+import frc.robot.Constants.feederPID;
 
 import java.util.Arrays;
 
@@ -71,31 +73,31 @@ public class ShootingSystem extends SubsystemBase {
     shuffleFeederPID = tuningTab.getLayout("Feeder PID", BuiltInLayouts.kList).withSize(1, 5);
     shuffleShooterPID = tuningTab.getLayout("Shooter PID", BuiltInLayouts.kList).withSize(1, 5);
 
-    kP = shuffleShooterPID.add("Shooter kP", shooterController.getP()).getEntry();
-    kI = shuffleShooterPID.add("Shooter kI", shooterController.getI()).getEntry();
-    kD = shuffleShooterPID.add("Shooter kD", shooterController.getD()).getEntry();
-    kFF = shuffleShooterPID.add("Shooter kFF", shooterController.getFF()).getEntry();
-    kMin = shuffleShooterPID.add("Shooter kMin", shooterController.getOutputMin()).getEntry();
-    kMax = shuffleShooterPID.add("Shooter kMax", shooterController.getOutputMax()).getEntry();
-    s_pastPIDconstants = new double[] { shooterController.getP(), shooterController.getI(), shooterController.getD(),
-        shooterController.getFF(), shooterController.getOutputMin(), shooterController.getOutputMax() };
+    kP = shuffleShooterPID.add("Shooter kP", shooterPID.kP).getEntry();
+    kI = shuffleShooterPID.add("Shooter kI", shooterPID.kI).getEntry();
+    kD = shuffleShooterPID.add("Shooter kD", shooterPID.kD).getEntry();
+    kFF = shuffleShooterPID.add("Shooter kFF", shooterPID.kFF).getEntry();
+    kMin = shuffleShooterPID.add("Shooter kMin", shooterPID.kMin).getEntry();
+    kMax = shuffleShooterPID.add("Shooter kMax", shooterPID.kMax).getEntry();
+    s_pastPIDconstants = new double[] { shooterPID.kP, shooterPID.kI, shooterPID.kD, shooterPID.kFF, shooterPID.kMin,
+        shooterPID.kMax };
 
-    f_kP = shuffleFeederPID.add("Feeder kP", feederController.getP()).getEntry();
-    f_kI = shuffleFeederPID.add("Feeder kI", feederController.getI()).getEntry();
-    f_kD = shuffleFeederPID.add("Feeder kD", feederController.getD()).getEntry();
-    f_kFF = shuffleFeederPID.add("Feeder kFF", feederController.getFF()).getEntry();
-    f_kMin = shuffleFeederPID.add("Feeder kMin", feederController.getOutputMin()).getEntry();
-    f_kMax = shuffleFeederPID.add("Feeder kMax", feederController.getOutputMax()).getEntry();
-    f_pastPIDconstants = new double[] { feederController.getP(), feederController.getI(), feederController.getD(),
-        feederController.getFF(), feederController.getOutputMin(), feederController.getOutputMax() };
+    f_kP = shuffleFeederPID.add("Feeder kP", feederPID.kP).getEntry();
+    f_kI = shuffleFeederPID.add("Feeder kI", feederPID.kI).getEntry();
+    f_kD = shuffleFeederPID.add("Feeder kD", feederPID.kD).getEntry();
+    f_kFF = shuffleFeederPID.add("Feeder kFF", feederPID.kFF).getEntry();
+    f_kMin = shuffleFeederPID.add("Feeder kMin", feederPID.kMin).getEntry();
+    f_kMax = shuffleFeederPID.add("Feeder kMax", feederPID.kMax).getEntry();
+    f_pastPIDconstants = new double[] { feederPID.kP, feederPID.kI, feederPID.kD, feederPID.kFF, feederPID.kMin,
+        feederPID.kMax };
 
     newShooterPID = new double[6]; // If doesn't work, put outside constructor.
     newFeederPID = new double[6];
 
     shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 0).getEntry();
-    shooterSetpoint = shuffleShooterPID.add("Shooter Setpoint", 0).getEntry();
-    feederSetpoint = shuffleFeederPID.add("Feeder Setpoint", 0).getEntry();
+    shooterSetpoint = shuffleShooterPID.add("Shooter Setpoint", Constants.shooterSpeed).getEntry();
+    feederSetpoint = shuffleFeederPID.add("Feeder Setpoint", Constants.feederSpeed).getEntry();
     feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
   }
@@ -136,12 +138,10 @@ public class ShootingSystem extends SubsystemBase {
     }
   }
 
-  public void startShooter(double shooterSpd, double feederSpd) {
-    shooterController.setReference(shooterSpd, ControlType.kVelocity);
+  public void startShooter() {
+    shooterController.setReference(shooterSetpoint.getDouble(0), ControlType.kVelocity);
     // feederController.setReference(feederSpd, ControlType.kVelocity);
-    shooterSetpoint.setDouble(shooterSpd);
-    feederController.setReference(feederSpd, ControlType.kVoltage);
-    feederSetpoint.setDouble(feederSpd);
+    feederController.setReference(feederSetpoint.getDouble(0), ControlType.kVelocity);
     // feederMotor.set(0.7);
   }
 

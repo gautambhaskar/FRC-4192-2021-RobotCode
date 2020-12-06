@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DefaultDrive;
+import frc.robot.commands.DistanceAuton;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
@@ -66,14 +67,14 @@ public class RobotContainer {
       () -> systemsController.getTriggerAxis(Hand.kLeft) * 7 / 10);
   private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret,
       () -> -systemsController.getTriggerAxis(Hand.kRight) * 7 / 10);
-  private final RunShooter m_runShooter = new RunShooter(m_ShootingSystem, Constants.shooterSpeed,
-      Constants.feederSpeed);
+  private final RunShooter m_runShooter = new RunShooter(m_ShootingSystem);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
 
   // Autonomous Commands
   private final BasicAuton m_basicauton = new BasicAuton(m_drive);
+  private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
