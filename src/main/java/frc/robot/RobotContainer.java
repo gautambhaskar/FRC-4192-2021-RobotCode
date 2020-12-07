@@ -14,6 +14,7 @@ import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.BasicTeleOp;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DriveStraight;
+import frc.robot.commands.HoodRotate;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
@@ -23,6 +24,7 @@ import frc.robot.commands.TurretTurn;
 import frc.robot.commands.UnjamBall;
 import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.subsystems.Index;
@@ -49,6 +51,7 @@ public class RobotContainer {
   private final ShootingSystem m_ShootingSystem = new ShootingSystem();
   private final Index m_Index = new Index();
   private final Turret m_Turret = new Turret();
+  private final Hood m_hood = new Hood();
 
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
@@ -76,6 +79,9 @@ public class RobotContainer {
   private final BasicTeleOp m_basicturnLeft = new BasicTeleOp(m_drive, -Constants.basicRotateSpeed);
   private final BasicTeleOp m_basicturnRight = new BasicTeleOp(m_drive, Constants.basicRotateSpeed);
 
+  private final HoodRotate m_hoodRaise = new HoodRotate(m_hood, Constants.hoodRotateSpeed);
+  private final HoodRotate m_hoodLower = new HoodRotate(m_hood, -Constants.hoodRotateSpeed);
+
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
@@ -87,6 +93,7 @@ public class RobotContainer {
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
+  JoystickButton systemsXButton = new JoystickButton(systemsController, Constants.xButton);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
   Trigger joystickYOnly = new Trigger(
@@ -114,13 +121,15 @@ public class RobotContainer {
     systemsBackButton.whenHeld(m_indexOutCommand);
     // leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
-    systemsYButton.toggleWhenPressed(m_runShooter);
+    // systemsYButton.toggleWhenPressed(m_runShooter);
     driverBackButton.whenHeld(m_unjamBalls);
     driverYButton.toggleWhenPressed(m_alignWithTarget);
     joystickYOnly.whileActiveOnce(m_driveStraight);
 
     leftBumper.whenHeld(m_basicturnLeft);
     rightBumper.whenHeld(m_basicturnRight);
+    systemsYButton.whenHeld(m_hoodRaise);
+    systemsXButton.whenHeld(m_hoodLower);
   }
 
   /**
