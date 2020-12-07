@@ -78,6 +78,7 @@ public class RobotContainer {
   JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
   JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
+  JoystickButton systemsRotate = new JoystickButton(Constants.indexSpeed, Constants.indexSpeed);
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
