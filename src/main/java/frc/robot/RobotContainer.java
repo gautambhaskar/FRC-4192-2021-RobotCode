@@ -20,6 +20,7 @@ import frc.robot.commands.IndexIn;
 import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
 import frc.robot.commands.UnjamBall;
+import frc.robot.commands.hoodRotateAtSpeed;
 import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -61,6 +62,7 @@ public class RobotContainer {
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
   private final IndexOut m_indexOutCommand = new IndexOut(m_Index, Constants.indexSpeed);
+  private final HoodRotateAtSpeed m_hoodRotateAtSpeedCommand = new hoodRotateAtSpeed(m_ShootingSystem, Constants.hoodRotateSpeed = 0.3);
   private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret,
       () -> systemsController.getTriggerAxis(Hand.kLeft) * 7 / 10);
   private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret,
@@ -81,6 +83,7 @@ public class RobotContainer {
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
+  JoystickButton driverXButton = new JoystickButton(driveController, Constants.xButton);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
   Trigger joystickYOnly = new Trigger(
@@ -107,6 +110,7 @@ public class RobotContainer {
     systemsStartButton.whenHeld(m_indexInCommand);
     systemsBackButton.whenHeld(m_indexOutCommand);
     leftBumper.toggleWhenPressed(m_intakeCommand);
+    driverXButton.toggleWhenPressed(m_hoodRotateAtSpeedCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
     systemsYButton.toggleWhenPressed(m_runShooter);
     driverBackButton.whenHeld(m_unjamBalls);

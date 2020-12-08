@@ -45,7 +45,7 @@ public class ShootingSystem extends SubsystemBase {
   private final CANSparkMax feederMotor = new CANSparkMax(Constants.feeder, MotorType.kBrushed);
   private final CANSparkMax shooterLeftMotor = new CANSparkMax(Constants.shooterLeft, MotorType.kBrushless);
   private final CANSparkMax shooterRightMotor = new CANSparkMax(Constants.shooterRight, MotorType.kBrushless);
-
+  private final CANSparkMax hoodMotor = new CANSparkMax(Constants.hood, MotorType.kBrushless);
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
@@ -128,6 +128,9 @@ public class ShootingSystem extends SubsystemBase {
       f_pastPIDconstants = newFeederPID.clone();
       Constants.distributePID(newFeederPID, feederController);
     }
+  }
+  public void rotateHood(double hoodSpeed){
+    hoodMotor.set(hoodSpeed);
   }
 
   public void startShooter(double shooterSpd, double feederSpd) {
