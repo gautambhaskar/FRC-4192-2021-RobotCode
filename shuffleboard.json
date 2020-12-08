@@ -267,6 +267,17 @@
               "_source0": "network_table:///SmartDashboard/output",
               "_title": "output"
             }
+          },
+          "8,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Branch",
+              "_title": "Branch"
+            }
           }
         }
       }
@@ -330,6 +341,26 @@
                   "_title": "DigitalInput[18]/Value",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[16,3]/Value",
+                  "_title": "DoubleSolenoid[16,3]/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[16,1]/Value",
+                  "_title": "DoubleSolenoid[16,1]/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[16,2]/Value",
+                  "_title": "DoubleSolenoid[16,2]/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[16,0]/Value",
+                  "_title": "DoubleSolenoid[16,0]/Value"
                 }
               ]
             }
@@ -393,7 +424,7 @@
   "windowGeometry": {
     "x": 0.0,
     "y": 0.0,
-    "width": 1440.0,
+    "width": 1442.5,
     "height": 668.5
   }
 }

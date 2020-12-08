@@ -79,6 +79,7 @@ public class Turret extends SubsystemBase {
     limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
     cargoCam = CameraServer.getInstance().startAutomaticCapture(0);
     cargoCam.setConnectVerbose(0);
+    server = CameraServer.getInstance().addSwitchedCamera("Toggle Cam");
     server.setSource(limelightFeed);
     Shuffleboard.selectTab("Camera");
 
