@@ -23,6 +23,16 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 public class Drivetrain extends SubsystemBase {
   /**
    * Creates a new Drivetrain.
@@ -46,8 +56,9 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
+  private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
 
-  NetworkTableEntry leftRPM, rightRPM, robotAngle;
+  NetworkTableEntry leftRPM, rightRPM, robotAngle, drivetrainPosition, drivetrainSpeed;
 
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
@@ -63,6 +74,11 @@ public class Drivetrain extends SubsystemBase {
     leftFollower2.setInverted(true);
     rightFollower1.setInverted(true);
     rightFollower2.setInverted(true);
+
+    drivetrainSpeed = tuningTab.add("Drivetrain Speed", leftLead.getEncoder().getVelocity())
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 4).getEntry();
+    drivetrainPosition = tuningTab.add("Drivetrain Position", init_position - leftLead.getEncoder().getPosition())
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 4).getEntry();
   }
 
   @Override
@@ -70,6 +86,8 @@ public class Drivetrain extends SubsystemBase {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
     robotAngle.setDouble(init_angle - imu.getAngle());
+    drivetrainSpeed.setDouble(leftLead.getEncoder().getVelocity());
+    drivetrainPosition.setDouble(init_position - leftLead.getEncoder().getPosition());
     // This method will be called once per scheduler run
   }
 
