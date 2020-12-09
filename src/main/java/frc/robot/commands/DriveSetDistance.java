@@ -18,7 +18,7 @@ public class DriveSetDistance extends CommandBase {
   Drivetrain m_drive;
   double m_distance;
   double m_speed;
-  
+
   public DriveSetDistance(Drivetrain drive, double distance, double speed) {
     m_drive = drive;
     m_distance = distance;
@@ -49,6 +49,6 @@ public class DriveSetDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_drive.returnDrivetrainPosition() < m_distance;
+    return m_drive.returnDrivetrainPosition() > m_distance;
   }
 }
