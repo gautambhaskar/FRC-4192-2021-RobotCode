@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DistanceAuton;
+import frc.robot.commands.DriveForDistance;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
@@ -74,7 +75,8 @@ public class RobotContainer {
 
   // Autonomous Commands
   private final BasicAuton m_basicauton = new BasicAuton(m_drive);
-  private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
+  // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
+  private final DriveForDistance m_distanceauton = new DriveForDistance(m_drive, 2);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -127,7 +129,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     // return m_autoCommand;
-    return m_basicauton;
+    return m_distanceauton;
     // return null;
   }
 }
