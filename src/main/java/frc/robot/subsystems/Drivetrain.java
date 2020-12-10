@@ -63,6 +63,7 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
     init_angle = imu.getAngle();
+    init_position = leftLead.getEncoder().getPosition();
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();

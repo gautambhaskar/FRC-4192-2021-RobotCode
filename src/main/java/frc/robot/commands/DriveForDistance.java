@@ -22,9 +22,9 @@ public class DriveForDistance extends PIDCommand {
   public DriveForDistance(Drivetrain m_drive, double m_distance) {
     super(
         // The controller that the command will use
-        new PIDController(0.005, 0, 0), // work with D to slow bot down.
+        new PIDController(0.15, 0, 0.01), // work with D to slow bot down.
         // This should return the measurement
-        () -> m_drive.returnDrivetrainPosition(),
+        () -> -m_drive.returnDrivetrainPosition(),
         // This should return the setpoint (can also be a constant)
         () -> m_distance,
         // This uses the output

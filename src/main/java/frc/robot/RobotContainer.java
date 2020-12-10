@@ -76,7 +76,7 @@ public class RobotContainer {
   // Autonomous Commands
   private final BasicAuton m_basicauton = new BasicAuton(m_drive);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
-  private final DriveForDistance m_distanceauton = new DriveForDistance(m_drive, 2);
+  private final DriveForDistance m_distanceauton = new DriveForDistance(m_drive, 40);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
