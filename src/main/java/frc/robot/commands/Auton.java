@@ -13,16 +13,16 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class RotatationAuton extends SequentialCommandGroup {
+public class Auton extends SequentialCommandGroup {
   /**
    * Creates a new RotatationAuton.
    */
   private final Drivetrain m_drive;
 
-  public RotatationAuton(Drivetrain drive) {
+  public Auton(Drivetrain drive) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new SetRotate(drive, 30), new SetRotate(drive, -30));
+    super(new DriveStraightForTime(drive, 0.5, 5), new SetRotate(drive, 30), new SetRotate(drive, -30));
     m_drive = drive;
   }
 }

@@ -13,10 +13,11 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DriveStraight;
+import frc.robot.commands.DriveStraightForTime;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
-import frc.robot.commands.RotatationAuton;
+import frc.robot.commands.Auton;
 import frc.robot.commands.RotateInPlace;
 import frc.robot.commands.RunHood;
 import frc.robot.commands.IndexIn;
@@ -82,7 +83,7 @@ public class RobotContainer {
   private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
 
   // Autonomous
-  private final RotatationAuton m_rotationAuton = new RotatationAuton(m_drive);
+  private final Auton m_autonomous = new Auton(m_drive);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -147,6 +148,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     // return m_autoCommand;
-    return m_rotationAuton;
+    return m_autonomous;
   }
 }
