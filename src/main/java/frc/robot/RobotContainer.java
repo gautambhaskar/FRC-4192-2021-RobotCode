@@ -16,6 +16,7 @@ import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
+import frc.robot.commands.RotatationAuton;
 import frc.robot.commands.RotateInPlace;
 import frc.robot.commands.RunHood;
 import frc.robot.commands.IndexIn;
@@ -23,6 +24,7 @@ import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
 import frc.robot.commands.UnjamBall;
 import frc.robot.commands.RunShooter;
+import frc.robot.commands.SetRotate;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -78,6 +80,9 @@ public class RobotContainer {
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
+
+  // Autonomous
+  private final RotatationAuton m_rotationAuton = new RotatationAuton(m_drive);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -142,6 +147,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     // return m_autoCommand;
-    return null;
+    return m_rotationAuton;
   }
 }
