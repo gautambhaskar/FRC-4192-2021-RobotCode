@@ -61,8 +61,6 @@ public class Turret extends SubsystemBase {
   private double camMode;
 
   private HttpCamera limelightFeed;
-  private MjpegServer server;
-  private UsbCamera cargoCam;
 
   NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput, turretAngle;
   NetworkTableEntry turretPosition, turretVelocity, turretDirection;
@@ -77,24 +75,18 @@ public class Turret extends SubsystemBase {
     limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
 
     limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
-    cargoCam = CameraServer.getInstance().startAutomaticCapture(0);
-    cargoCam.setConnectVerbose(0);
-    server = CameraServer.getInstance().addSwitchedCamera("Toggle Cam");
-    server.setSource(cargoCam);
 
     Shuffleboard.selectTab("Camera");
 
     cameraTab.add("Camera Feed", limelightFeed).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 0).withSize(3,
         3);
-    cameraTab.add("Fisheye Feed", server.getSource()).withWidget(BuiltInWidgets.kCameraStream).withPosition(4, 0)
-        .withSize(3, 3);
 
     visionMode = cameraTab.add("Camera Mode", "Camera").getEntry();
 
     turretSetOutput = tab.add("turret set output", 0).getEntry();
     turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
 
-    turretPosition = tab.add("turret angular position", turretEncoder.getDistance()/43).getEntry();
+    turretPosition = tab.add("turret angular position", turretEncoder.getDistance() / 43).getEntry();
     turretVelocity = tab.add("turret angular velocity", turretEncoder.getRate()).getEntry();
     turretDirection = tab.add("turret direction", turretEncoder.getDirection()).getEntry();
 
@@ -113,7 +105,7 @@ public class Turret extends SubsystemBase {
     limelightX.setDouble(x);
     limelightY.setDouble(y);
 
-    turretPosition.setDouble(turretEncoder.getDistance()/43);
+    turretPosition.setDouble(turretEncoder.getDistance() / 43);
     turretVelocity.setDouble(turretEncoder.getRate());
     turretDirection.setBoolean(turretEncoder.getDirection());
   }
@@ -161,7 +153,7 @@ public class Turret extends SubsystemBase {
   }
 
   public double[] getPostitionAndVelocity() {
-    double position = turretEncoder.getDistance()/43;
+    double position = turretEncoder.getDistance() / 43;
     double velocity = turretEncoder.getRate();
 
     double[] info = { position, velocity };

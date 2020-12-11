@@ -24,11 +24,13 @@ import frc.robot.commands.TurretTurn;
 import frc.robot.commands.UnjamBall;
 import frc.robot.commands.RunShooter;
 import frc.robot.commands.BasicAuton;
+import frc.robot.commands.TestMotor;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.TestingSystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -51,6 +53,7 @@ public class RobotContainer {
   private final ShootingSystem m_ShootingSystem = new ShootingSystem();
   private final Index m_Index = new Index();
   private final Turret m_Turret = new Turret();
+  private final TestingSystem m_motor = new TestingSystem();
 
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
@@ -72,6 +75,7 @@ public class RobotContainer {
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
+  private final TestMotor m_testMotor = new TestMotor(m_motor, 0.2);
 
   // Autonomous Commands
   private final BasicAuton m_basicauton = new BasicAuton(m_drive);
@@ -88,6 +92,7 @@ public class RobotContainer {
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
+  JoystickButton driverStartButton = new JoystickButton(driveController, Constants.startButton);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
   Trigger joystickYOnly = new Trigger(
@@ -119,6 +124,7 @@ public class RobotContainer {
     driverBackButton.whenHeld(m_unjamBalls);
     driverYButton.toggleWhenPressed(m_alignWithTarget);
     joystickYOnly.whileActiveOnce(m_driveStraight);
+    driverStartButton.whenHeld(m_testMotor);
   }
 
   /**
