@@ -1,42 +1,42 @@
-package frc.robot.subsystems;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
-// import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.networktables.NetworkTableEntry;
-// import edu.wpi.first.wpilibj.DriverStation;
-// import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 
-public class RotateConstantSpeed extends SubsystemBase {
+public class RotateFixedSpeed extends CommandBase {
   /**
-   * Creates a new Drivetrain.
+   * Creates a new RotateFixedSpeed.
    */
-
-  private static final ADIS16448_IMU imu = new ADIS16448_IMU();
-  private double init_angle;
-
-  private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless);
-  private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless);
-  private final CANSparkMax leftFollower1 = new CANSparkMax(Constants.leftFollower1, MotorType.kBrushless);
-  private final CANSparkMax leftFollower2 = new CANSparkMax(Constants.leftFollower2, MotorType.kBrushless);
-  private final CANSparkMax rightFollower1 = new CANSparkMax(Constants.rightFollower1, MotorType.kBrushless);
-  private final CANSparkMax rightFollower2 = new CANSparkMax(Constants.rightFollower2, MotorType.kBrushless);
-
-  private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftLead, leftFollower1, leftFollower2);
-  private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightLead, rightFollower1,
-      rightFollower2);
-
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
-
-  public void arcadeDrive(double fwd, double turn) {
-    m_drive.arcadeDrive(fwd, turn); // <<<<<<Need to invert motors instead >>>>>>>
+  public RotateFixedSpeed() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    m_drive.arcadeDrive(Constants.indexSpeed, Constants.indexSpeed);
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}
