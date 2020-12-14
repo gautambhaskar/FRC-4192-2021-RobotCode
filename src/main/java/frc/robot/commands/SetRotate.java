@@ -35,7 +35,7 @@ public class SetRotate extends PIDCommand {
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(2);
+    getController().setTolerance(1);
     m_drive.recalibrateAngle();
     addRequirements(m_drive);
   }
