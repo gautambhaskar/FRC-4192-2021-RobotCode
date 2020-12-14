@@ -15,10 +15,9 @@ public class TestingSystem extends SubsystemBase {
   /**
    * Creates a new TestingSystem.
    */
-  private final CANSparkMax m_motor;
+  private final CANSparkMax m_motor = new CANSparkMax(15, MotorType.kBrushless);
 
   public TestingSystem() {
-    m_motor = new CANSparkMax(15, MotorType.kBrushless);
   }
 
   @Override
