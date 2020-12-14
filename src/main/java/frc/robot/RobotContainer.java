@@ -15,6 +15,7 @@ import frc.robot.commands.BasicDriveAuton;
 import frc.robot.commands.BasicTeleOp;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DriveStraight;
+import frc.robot.commands.GyroDriveAuton;
 import frc.robot.commands.HoodRotate;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
@@ -85,6 +86,7 @@ public class RobotContainer {
 
   // My Autonomous Commands
   private final BasicDriveAuton m_basicDriveAuton = new BasicDriveAuton(m_drive, 2);
+  private final GyroDriveAuton m_gyroDriveAuton = new GyroDriveAuton(m_drive, 2);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -145,5 +147,6 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     // return m_autoCommand;
     return m_basicDriveAuton;
+    // return m_gyroDriveAuton;
   }
 }
