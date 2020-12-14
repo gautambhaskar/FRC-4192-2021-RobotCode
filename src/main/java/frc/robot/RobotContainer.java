@@ -75,7 +75,7 @@ public class RobotContainer {
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
-  private final TestMotor m_testMotor = new TestMotor(m_motor, 0.2);
+  private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
 
   // Autonomous Commands
   private final BasicAuton m_basicauton = new BasicAuton(m_drive);
