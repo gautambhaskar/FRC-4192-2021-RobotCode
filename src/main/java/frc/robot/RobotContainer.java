@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DefaultDrive;
+import frc.robot.commands.DriveForTime;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
@@ -117,15 +118,15 @@ public class RobotContainer {
     driverYButton.toggleWhenPressed(m_alignWithTarget);
     joystickYOnly.whileActiveOnce(m_driveStraight);
   }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
+  private final DriveForTime m_driveForTime = new DriveForTime(m_drive, 20);
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     // return m_autoCommand;
-    return null;
+    return m_driveForTime;
   }
 }
