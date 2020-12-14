@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.AlignWithTarget;
+import frc.robot.commands.BasicDriveAuton;
 import frc.robot.commands.BasicTeleOp;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DriveStraight;
@@ -82,6 +83,9 @@ public class RobotContainer {
   private final HoodRotate m_hoodRaise = new HoodRotate(m_hood, Constants.hoodRotateSpeed);
   private final HoodRotate m_hoodLower = new HoodRotate(m_hood, -Constants.hoodRotateSpeed);
 
+  // My Autonomous Commands
+  private final BasicDriveAuton m_basicDriveAuton = new BasicDriveAuton(m_drive, 2);
+
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
   Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
@@ -140,6 +144,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     // return m_autoCommand;
-    return null;
+    return m_basicDriveAuton;
   }
 }
