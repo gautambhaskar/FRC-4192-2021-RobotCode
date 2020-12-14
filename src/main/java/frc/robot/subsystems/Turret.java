@@ -86,7 +86,7 @@ public class Turret extends SubsystemBase {
     turretSetOutput = tab.add("turret set output", 0).getEntry();
     turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
 
-    turretPosition = tab.add("turret angular position", turretEncoder.getDistance() / 43).getEntry();
+    turretPosition = tab.add("turret angular position", turretEncoder.getDistance() / 45).getEntry();
     turretVelocity = tab.add("turret angular velocity", turretEncoder.getRate()).getEntry();
     turretDirection = tab.add("turret direction", turretEncoder.getDirection()).getEntry();
 
@@ -105,7 +105,7 @@ public class Turret extends SubsystemBase {
     limelightX.setDouble(x);
     limelightY.setDouble(y);
 
-    turretPosition.setDouble(turretEncoder.getDistance() / 43);
+    turretPosition.setDouble(turretEncoder.getDistance() / 45);
     turretVelocity.setDouble(turretEncoder.getRate());
     turretDirection.setBoolean(turretEncoder.getDirection());
   }
