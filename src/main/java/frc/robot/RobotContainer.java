@@ -25,6 +25,7 @@ import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
 import frc.robot.commands.UnjamBall;
 import frc.robot.commands.RunShooter;
+import frc.robot.commands.SetRotate;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -86,7 +87,8 @@ public class RobotContainer {
 
   // My Autonomous Commands
   private final BasicDriveAuton m_basicDriveAuton = new BasicDriveAuton(m_drive, 2);
-  private final GyroDriveAuton m_gyroDriveAuton = new GyroDriveAuton(m_drive, 2);
+  private final GyroDriveAuton m_gyroDriveAuton = new GyroDriveAuton(m_drive, 5);
+  private final SetRotate m_setRotate = new SetRotate(m_drive, 30);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -148,5 +150,6 @@ public class RobotContainer {
     // return m_autoCommand;
     return m_basicDriveAuton;
     // return m_gyroDriveAuton;
+    // return m_setRotate;
   }
 }
