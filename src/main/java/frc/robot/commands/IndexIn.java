@@ -29,7 +29,7 @@ public class IndexIn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    tab.add("Index engaged", true);
+    //tab.add("Index engaged", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +42,7 @@ public class IndexIn extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_index.run(0);
-    tab.add("Index engaged", false);
+    //tab.add("Index engaged", false);
   }
 
   // Returns true when the command should end.

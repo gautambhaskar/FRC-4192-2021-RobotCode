@@ -21,12 +21,13 @@ public class Index extends SubsystemBase {
   /**
    * Creates a new Index.
    */
-  private final CANSparkMax indexMotor = new CANSparkMax(Constants.index, MotorType.kBrushless);
+  //private final CANSparkMax indexMotor = new CANSparkMax(Constants.index, MotorType.kBrushless);
   private ShuffleboardTab subsystemTab = Shuffleboard.getTab("Subsystems");
 
   private NetworkTableEntry indexEngaged;
 
   public Index() {
+
     indexEngaged = subsystemTab.add("Index engaged", false).getEntry();
   }
 
@@ -36,7 +37,7 @@ public class Index extends SubsystemBase {
   }
 
   public void run(double indexSpeed) {
-    indexMotor.set(indexSpeed);
+    //indexMotor.set(indexSpeed);
     if (indexSpeed != 0) {
       indexEngaged.setBoolean(true);
     } else {

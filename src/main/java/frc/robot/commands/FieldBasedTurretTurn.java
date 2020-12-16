@@ -28,7 +28,7 @@ public class FieldBasedTurretTurn extends PIDCommand {
         // This should return the measurement
         () -> m_turret.getNativePosition(),
         // This should return the setpoint (can also be a constant)
-        () -> -m_drive.returnNativeAngle(),
+        () -> m_drive.returnNativeAngle(),
         // This uses the output
         output -> {
           if (output > fieldBasedTurretPID.maxSpeed) {

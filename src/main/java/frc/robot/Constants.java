@@ -48,7 +48,7 @@ public final class Constants {
     // Speeds
     public static double intakeSpeed = 0.5;
     public static double outtakeSlowlySpeed = 0.3;
-    public static double indexSpeed = 0.3;
+    public static double indexSpeed = 1;
     public static double feederSpeed = -3000;
     public static double shooterSpeed = 4000;
     public static double hoodRotateSpeed = 0.3;
@@ -91,7 +91,7 @@ public final class Constants {
     }
 
     public static class turretPID {
-        public static double kP = 0.03;
+        public static double kP = 0.1;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0;
@@ -116,7 +116,7 @@ public final class Constants {
         public static double kFF = 0;
         public static double kMax = 0;
         public static double kMin = 0;
-        public static double maxSpeed = 0.2;
+        public static double maxSpeed = 0.4;
     }
 
     public static void distributePID(double[] constants, CANPIDController controller) {

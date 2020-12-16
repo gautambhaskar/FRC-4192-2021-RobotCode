@@ -32,6 +32,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class Turret extends SubsystemBase {
@@ -66,8 +67,10 @@ public class Turret extends SubsystemBase {
   NetworkTableEntry turretPosition, turretVelocity, turretDirection;
 
   private double init_original_position;
+  private CANEncoder turretNoSensor;
 
   public Turret() {
+    turretNoSensor = turretMotor.getEncoder(EncoderType.kNoSensor, 0);
     table = NetworkTableInstance.getDefault().getTable("limelight");
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
