@@ -65,6 +65,8 @@ public class Turret extends SubsystemBase {
   NetworkTableEntry limelightX, limelightY, limelightA, visionMode, turretSetOutput, turretAppliedOutput, turretAngle;
   NetworkTableEntry turretPosition, turretVelocity, turretDirection;
 
+  private double init_original_position;
+
   public Turret() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
     tx = table.getEntry("tx");
@@ -85,6 +87,8 @@ public class Turret extends SubsystemBase {
 
     turretSetOutput = tab.add("turret set output", 0).getEntry();
     turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
+
+    init_original_position = turretEncoder.getDistance() / 45;
 
     turretPosition = tab.add("turret angular position", turretEncoder.getDistance() / 45).getEntry();
     turretVelocity = tab.add("turret angular velocity", turretEncoder.getRate()).getEntry();
@@ -152,14 +156,14 @@ public class Turret extends SubsystemBase {
     }
   }
 
-  public double[] getPostitionAndVelocity() {
-    double position = turretEncoder.getDistance() / 43;
-    double velocity = turretEncoder.getRate();
-
-    double[] info = { position, velocity };
-    return info;
+  public double getNativePosition() {
+    return ((init_original_position) - (turretEncoder.getDistance() / 43));
   }
-
+  
+  public double getVelocity(){
+    return turretEncoder.getRate() / 43;
+  } 
+  
   public boolean getDirection() {
     boolean direction = turretEncoder.getDirection();
     return direction;

@@ -108,6 +108,16 @@ public final class Constants {
         public static double kMin = -1;
         public static double autonMaxSpeed = 0.7;
     }
+    
+    public static class fieldBasedTurretPID {
+        public static double kP = 0.05;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double kFF = 0;
+        public static double kMax = 0;
+        public static double kMin = 0;
+        public static double maxSpeed = 0.2;
+    }
 
     public static void distributePID(double[] constants, CANPIDController controller) {
         controller.setP(constants[0]);

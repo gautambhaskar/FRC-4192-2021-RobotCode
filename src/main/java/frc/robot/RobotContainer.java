@@ -25,6 +25,7 @@ import frc.robot.commands.UnjamBall;
 import frc.robot.commands.RunShooter;
 import frc.robot.commands.BasicAuton;
 import frc.robot.commands.TestMotor;
+import frc.robot.commands.TurretAlignmentMacro;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShootingSystem;
@@ -74,7 +75,8 @@ public class RobotContainer {
   private final RunShooter m_runShooter = new RunShooter(m_ShootingSystem);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
-  private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
+  // private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
+  private final TurretAlignmentMacro m_turretMacro = new TurretAlignmentMacro(m_drive, m_Turret);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
 
   // Autonomous Commands
@@ -122,7 +124,7 @@ public class RobotContainer {
     aButton.whenHeld(m_outtakeSlowlyCommand);
     systemsYButton.toggleWhenPressed(m_runShooter);
     driverBackButton.whenHeld(m_unjamBalls);
-    driverYButton.toggleWhenPressed(m_alignWithTarget);
+    driverYButton.toggleWhenPressed(m_turretMacro);
     joystickYOnly.whileActiveOnce(m_driveStraight);
     driverStartButton.whenHeld(m_testMotor);
   }
