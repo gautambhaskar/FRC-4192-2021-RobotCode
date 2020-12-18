@@ -68,8 +68,8 @@ public final class Constants {
 
     public static class unjamBalls {
         public static double ind_power = 0.2;
-        public static double s_power = 0.2;
-        public static double f_power = 0.2;
+        public static double s_power = 0.6;
+        public static double f_power = 0.6;
     }
 
     public static class shooterPID {
@@ -91,7 +91,7 @@ public final class Constants {
     }
 
     public static class turretPID {
-        public static double kP = 0.1;
+        public static double kP = 0.03;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0;
@@ -100,7 +100,7 @@ public final class Constants {
     }
 
     public static class drivePID {
-        public static double kP = .05;
+        public static double kP = .03;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0;
@@ -116,7 +116,7 @@ public final class Constants {
         public static double kFF = 0;
         public static double kMax = 0;
         public static double kMin = 0;
-        public static double maxSpeed = 0.4;
+        public static double maxSpeed = 0.2;
     }
 
     public static void distributePID(double[] constants, CANPIDController controller) {
