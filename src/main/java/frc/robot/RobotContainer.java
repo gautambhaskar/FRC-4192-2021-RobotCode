@@ -100,7 +100,7 @@ public class RobotContainer {
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
   Trigger joystickYOnly = new Trigger(
-      () -> Math.abs(driveController.getX(Hand.kRight)) < 0.2 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05
+      () -> Math.abs(driveController.getX(Hand.kRight)) < 0.05 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05
           && driveController.getTriggerAxis(Hand.kRight) < 0.6 && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
 
   public RobotContainer() {
@@ -126,7 +126,8 @@ public class RobotContainer {
     aButton.whenHeld(m_outtakeSlowlyCommand);
     systemsYButton.toggleWhenPressed(m_shooterMacro);
     driverBackButton.whenHeld(m_unjamBalls);
-    joystickYOnly.whileActiveOnce(m_driveStraight);
+    joystickYOnly.whileActiveOnce(m_driveStraight, false);
+    //joystickYOnly.whileActiveOnce(m_driveStraight);
     driverStartButton.whenHeld(m_testMotor);
   }
 
