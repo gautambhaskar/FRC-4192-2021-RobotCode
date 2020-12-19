@@ -17,6 +17,7 @@ import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
+import frc.robot.commands.RotateTheRobot;
 import frc.robot.commands.IndexIn;
 import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
@@ -64,6 +65,8 @@ public class RobotContainer {
   private final IndexIn m_indexInCommand = new IndexIn(m_Index, Constants.indexSpeed);
   private final IndexOut m_indexOutCommand = new IndexOut(m_Index, Constants.indexSpeed);
   private final HoodRotateAtSpeed m_hoodRotateAtSpeedCommand = new hoodRotateAtSpeed(m_ShootingSystem, Constants.hoodRotateSpeed = 0.3);
+  private final RotateTheRobot m_rotateLeft = new RotateTheRobot(m_drive, -Constants.rotateDrivtrainAngle);
+  private final RotateTheRobot m_rotateRight = new RotateTheRobot(m_drive, Constants.rotateDrivtrainAngle);
   private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret,
       () -> systemsController.getTriggerAxis(Hand.kLeft) * 7 / 10);
   private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret,
@@ -85,6 +88,8 @@ public class RobotContainer {
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
   JoystickButton driverXButton = new JoystickButton(driveController, Constants.xButton);
+  JoystickButton subsystemsLeftBumper = new Joystick(systemsController, Constants.leftBumper);
+  JoystickButton subsystemsRightBumper = new Joystick(systemsController, Constants.rightBumper);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
   Trigger joystickYOnly = new Trigger(
@@ -117,6 +122,8 @@ public class RobotContainer {
     driverBackButton.whenHeld(m_unjamBalls);
     driverYButton.toggleWhenPressed(m_alignWithTarget);
     joystickYOnly.whileActiveOnce(m_driveStraight);
+    subsystemsLeftBumper.whenHeld(m_rotateLeft);
+    subsystemsLeftBumper.whenHeld(m_rotateRight);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
