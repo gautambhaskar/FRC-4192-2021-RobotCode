@@ -22,7 +22,7 @@ public class DistanceAuton extends SequentialCommandGroup {
   public DistanceAuton(Drivetrain drive) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DriveSetDistance(drive, 10, 0.5), new DriveSetDistance(drive, 5, -0.3));
+    super(new DriveSetDistance(drive, 10, 0.5), new DriveSetDistance(drive, 5, -0.3), new SetRotate(drive, 90));
     m_drive = drive;
   }
 }
