@@ -108,6 +108,7 @@ public final class Constants {
         public static double kMin = -1;
         public static double rotate_kP = 0.05;
         public static double autonMaxSpeed = 0.7;
+        public static double tolerance = 0.05;
     }
 
     public static class fieldBasedTurretPID {

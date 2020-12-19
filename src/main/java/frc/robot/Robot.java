@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.subsystems.Turret;
@@ -33,6 +35,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  TrajectoryConfig test = new TrajectoryConfig(0.8, 0.2);
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -48,6 +51,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Branch", "main");
     m_robotContainer = new RobotContainer();
     CameraServer.getInstance().startAutomaticCapture();
+
   }
 
   /**
