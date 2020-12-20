@@ -42,12 +42,12 @@ public class Robot extends TimedRobot {
    * for any initialization code.
    */
 
-  @Override
-  public void robotInit() {
-    // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our
-    // autonomous chooser on the dashboard.
-    SmartDashboard.putNumber("Code Version No.", 1.0);
+    @Override
+    public void robotInit() {
+      // Instantiate our RobotContainer. This will perform all our button bindings,
+      // and put our
+      // autonomous chooser on the dashboard.
+      SmartDashboard.putNumber("Code Version No.", 1.0);
     SmartDashboard.putString("Branch", "main");
     m_robotContainer = new RobotContainer();
     CameraServer.getInstance().startAutomaticCapture();
@@ -123,6 +123,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    
   }
 
   @Override
