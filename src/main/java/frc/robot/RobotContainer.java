@@ -18,6 +18,7 @@ import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
 import frc.robot.commands.RotateTheRobot;
+import frc.robot.commands.RotateToAngle;
 import frc.robot.commands.IndexIn;
 import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
@@ -67,6 +68,7 @@ public class RobotContainer {
   private final HoodRotateAtSpeed m_hoodRotateAtSpeedCommand = new hoodRotateAtSpeed(m_ShootingSystem, Constants.hoodRotateSpeed = 0.3);
   private final RotateTheRobot m_rotateLeft = new RotateTheRobot(m_drive, -Constants.rotateDrivtrainAngle);
   private final RotateTheRobot m_rotateRight = new RotateTheRobot(m_drive, Constants.rotateDrivtrainAngle);
+  private final RotateToAngle m_rotateToAngle = new RotateTheRobot(m_drive, 60);
   private final TurretTurn m_turretTurnLeft = new TurretTurn(m_Turret,
       () -> systemsController.getTriggerAxis(Hand.kLeft) * 7 / 10);
   private final TurretTurn m_turretTurnRight = new TurretTurn(m_Turret,
@@ -90,6 +92,7 @@ public class RobotContainer {
   JoystickButton driverXButton = new JoystickButton(driveController, Constants.xButton);
   JoystickButton subsystemsLeftBumper = new Joystick(systemsController, Constants.leftBumper);
   JoystickButton subsystemsRightBumper = new Joystick(systemsController, Constants.rightBumper);
+  JoystckButton driverStartButton = new Joystick(driveController, Constants.startButton);
   Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
   Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
   Trigger joystickYOnly = new Trigger(
@@ -124,6 +127,7 @@ public class RobotContainer {
     joystickYOnly.whileActiveOnce(m_driveStraight);
     subsystemsLeftBumper.whenHeld(m_rotateLeft);
     subsystemsLeftBumper.whenHeld(m_rotateRight);
+    driverStartButton.whenReleased(m_rotateToAngle);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
