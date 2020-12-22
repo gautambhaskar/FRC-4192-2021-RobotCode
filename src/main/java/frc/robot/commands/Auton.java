@@ -22,7 +22,7 @@ public class Auton extends SequentialCommandGroup {
   public Auton(Drivetrain drive) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DriveStraightForTime(drive, 0.5, 5), new SetRotate(drive, 30), new SetRotate(drive, -30));
+    super(new SetRotate(drive, 30));
     m_drive = drive;
   }
 }

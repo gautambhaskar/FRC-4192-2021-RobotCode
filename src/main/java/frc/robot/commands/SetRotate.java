@@ -23,7 +23,7 @@ public class SetRotate extends PIDCommand {
   public SetRotate(Drivetrain m_drive, double rotation) {
     super(
         // The controller that the command will use
-        new PIDController(drivePID.rotatekP, 0, 0.0005),
+        new PIDController(drivePID.rotatekP, 0, 0.00025),
         // This should return the measurement
         () -> m_drive.returnAngle(),
         // This should return the setpoint (can also be a constant)
@@ -35,7 +35,7 @@ public class SetRotate extends PIDCommand {
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    getController().setTolerance(1);
+    getController().setTolerance(0.5);
     m_drive.recalibrateAngle();
     addRequirements(m_drive);
   }
