@@ -17,12 +17,13 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 // import edu.wpi.first.wpilibj.DriverStation;
 // import edu.twpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
+import frc.robot.Constants.drivePID;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -76,7 +77,6 @@ public class Drivetrain extends SubsystemBase {
     //leftFollower2.setInverted(true);
     rightFollower1.setInverted(true);
     //rightFollower2.setInverted(true);
-
     drivetrainSpeed = tuningTab.add("Drivetrain Speed", leftLead.getEncoder().getVelocity()).withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 4).getEntry();
     drivetrainPosition = tuningTab.add("Drivetrain Position", init_position - leftLead.getEncoder().getPosition()).withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 4).getEntry();
   }
@@ -91,28 +91,45 @@ public class Drivetrain extends SubsystemBase {
     drivetrainPosition.setDouble(init_position - leftLead.getEncoder().getPosition());
     // This method will be called once per scheduler run
   }
-
+  
+  //makes the current angle the initial angle
   public void recalibrateAngle() {
     init_angle = imu.getAngle();
   }
-
+    
+  //makes a method to drive with parameters for forward speed and rotation
   public void arcadeDrive(double fwd, double turn) {
-    m_drive.arcadeDrive(fwd, turn); // <<<<<<Need to invert motors instead >>>>>>>
+    m_drive.arcadeDrive(fwd, turn);
   }
-
+  
+  //sets up a tank drive given the voltage supplied to either side
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    m_leftMotors.setVoltage(leftVolts);
+    m_rightMotors.setVoltage(-rightVolts);
+    m_drive.feed();
+  }
+  
+  //gives the curent offset from the calibrated/recalibrated angle 
   public double returnAngle() {
     return (init_angle - imu.getAngle()); // Replace 0 w sensor val
   }
 
+  //gives the current offset from the original angle
   public double returnNativeAngle() {
     return (init_original_angle - imu.getAngle());
   }
-
-  public double returnDrivetrainPosition() {
+  
+  // shows the distance the robot has traveled relative to starting position
+  public double returnDrivetrainPosition() { 
     return (init_position - leftLead.getEncoder().getPosition());
   }
   
+  //sets the current position as the new initial position
   public void recalibratePosition() {
     init_position = leftLead.getEncoder().getPosition();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(leftLead.getEncoder().getVelocity() * drivePID.wheelConversionFactor, rightLead.getEncoder().getVelocity() * drivePID.wheelConversionFactor);
   }
 }

@@ -42,15 +42,18 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  // runs the intake wheels/motors
   public void intake(double intakeSpeed) {
     intakeMotor.set(intakeSpeed);
   }
 
+  // lifts up intake by activating pneumatics
   public void raise() {
     intakeSolenoid.set(Value.kReverse);
     intakeEngaged.setBoolean(true);
   }
 
+  // brings down intake by releasing pneumatics
   public void lower() {
     intakeSolenoid.set(Value.kForward);
     intakeEngaged.setBoolean(false);

@@ -9,6 +9,8 @@ package frc.robot;
 
 import com.revrobotics.CANPIDController;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -109,9 +111,19 @@ public final class Constants {
         public static double rotate_kP = 0.05;
         public static double autonMaxSpeed = 0.7;
         public static double tolerance = 0.05;
+        public static double kB = 2.0;
+        public static double kZeta = 0.7;
+        // find values after characterization
+        public static double kS = 0;
+        public static double kV = 0;
+        public static double kA = 0;
+        public static final double kTrackwidthMeters = 0;
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+        public static double wheelConversionFactor = 0; // need to test to find value
+        public static double kPDriveVel = 0; // find after characterization
     }
 
-    public static class fieldBasedTurretPID {
+     public static class fieldBasedTurretPID {
         public static double kP = 0.05;
         public static double kI = 0;
         public static double kD = 0;

@@ -70,34 +70,46 @@ public class ShootingSystem extends SubsystemBase {
     shooterRightMotor.follow(shooterLeftMotor, true);
     // feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature,
     // 8192));
+
+    //Creates list for FeederPID constants and ShooterPID constants
     shuffleFeederPID = tuningTab.getLayout("Feeder PID", BuiltInLayouts.kList).withSize(1, 5);
     shuffleShooterPID = tuningTab.getLayout("Shooter PID", BuiltInLayouts.kList).withSize(1, 5);
 
+    //ShooterPID Constants
     kP = shuffleShooterPID.add("Shooter kP", shooterPID.kP).getEntry();
     kI = shuffleShooterPID.add("Shooter kI", shooterPID.kI).getEntry();
     kD = shuffleShooterPID.add("Shooter kD", shooterPID.kD).getEntry();
     kFF = shuffleShooterPID.add("Shooter kFF", shooterPID.kFF).getEntry();
     kMin = shuffleShooterPID.add("Shooter kMin", shooterPID.kMin).getEntry();
     kMax = shuffleShooterPID.add("Shooter kMax", shooterPID.kMax).getEntry();
+    
+    //Creates an array of old ShooterPIDConstants to be compared with new constants
     s_pastPIDconstants = new double[] { shooterPID.kP, shooterPID.kI, shooterPID.kD, shooterPID.kFF, shooterPID.kMin,
         shooterPID.kMax };
 
+    //FeederPIDConstants
     f_kP = shuffleFeederPID.add("Feeder kP", feederPID.kP).getEntry();
     f_kI = shuffleFeederPID.add("Feeder kI", feederPID.kI).getEntry();
     f_kD = shuffleFeederPID.add("Feeder kD", feederPID.kD).getEntry();
     f_kFF = shuffleFeederPID.add("Feeder kFF", feederPID.kFF).getEntry();
     f_kMin = shuffleFeederPID.add("Feeder kMin", feederPID.kMin).getEntry();
     f_kMax = shuffleFeederPID.add("Feeder kMax", feederPID.kMax).getEntry();
+    
+    //Creates an array of old ShooterPIDConstants to be compared with new constants
     f_pastPIDconstants = new double[] { feederPID.kP, feederPID.kI, feederPID.kD, feederPID.kFF, feederPID.kMin,
         feederPID.kMax };
-
-    newShooterPID = new double[6]; // If doesn't work, put outside constructor.
+        
+    //NewShooterPID array to be compared with old ShooterPIDConstants    
+    newShooterPID = new double[6];
+    // NewFeederPID array to be compared with old ShooterPIDConstants
     newFeederPID = new double[6];
-
+    
+    //Graph of shooterSpeed
     shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 0).getEntry();
     shooterSetpoint = shuffleShooterPID.add("Shooter Setpoint", Constants.shooterSpeed).getEntry();
     feederSetpoint = shuffleFeederPID.add("Feeder Setpoint", Constants.feederSpeed).getEntry();
+    //Graph of FeederSpeed
     feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
   }
@@ -105,14 +117,12 @@ public class ShootingSystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    //Update the ShooterSpeed and FeederSpeed Graphs
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
 
-    // Grab numbers from SmartDashboard and set to motors
-
-    // TEST THIS!!! CHECK "SOURCES" AND PULL VALUE TO A WIDGET FOR THE PID
-    // CONTROLLER. CHECK IF YOU CAN MANIPULATE VALUES DIRECTLY WHEN IN TEST MODE...
-
+    //Check for New PIDConstants from the Shuffleboard
     newShooterPID[0] = kP.getDouble(0);
     newShooterPID[1] = kI.getDouble(0);
     newShooterPID[2] = kD.getDouble(0);
@@ -127,7 +137,7 @@ public class ShootingSystem extends SubsystemBase {
     newFeederPID[4] = f_kMin.getDouble(0);
     newFeederPID[5] = f_kMax.getDouble(0);
 
-    // Puts new values into old array
+    //Checks if PID constants have updated. If they have, replaces constants in old array and updates constants on controller
     if (Arrays.equals(newShooterPID, s_pastPIDconstants) == false) {
       s_pastPIDconstants = newShooterPID.clone();// clone works?
       Constants.distributePID(newShooterPID, shooterController);
@@ -138,11 +148,10 @@ public class ShootingSystem extends SubsystemBase {
     }
   }
 
+  
   public void startShooter() {
     shooterController.setReference(shooterSetpoint.getDouble(0), ControlType.kVelocity);
-    // feederController.setReference(feederSpd, ControlType.kVelocity);
     feederController.setReference(feederSetpoint.getDouble(0), ControlType.kVelocity);
-    // feederMotor.set(0.7);
   }
 
   public void setPower(double s_power, double f_power) {

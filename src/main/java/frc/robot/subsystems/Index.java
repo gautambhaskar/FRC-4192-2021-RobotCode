@@ -27,7 +27,6 @@ public class Index extends SubsystemBase {
   private NetworkTableEntry indexEngaged;
 
   public Index() {
-
     indexEngaged = subsystemTab.add("Index engaged", false).getEntry();
   }
 
@@ -36,7 +35,8 @@ public class Index extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void run(double indexSpeed) {
+  public void run(double indexSpeed) { 
+    // runs motor and changes the value of the widget based on index status
     //indexMotor.set(indexSpeed);
     if (indexSpeed != 0) {
       indexEngaged.setBoolean(true);
