@@ -143,7 +143,7 @@ public class Turret extends SubsystemBase {
     turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
   }
 
-  //gives the objects X offset from the center of the limelight crosshair
+  // gives the objects X offset from the center of the limelight crosshair
   public double limelightOffset() {
     return tx.getDouble(0.0);
   }
@@ -161,16 +161,16 @@ public class Turret extends SubsystemBase {
     }
   }
 
-  //the angular offset of turret from the original angle on robot start-up
+  // the angular offset of turret from the original angle on robot start-up
   public double getNativePosition() {
     return ((init_original_position) - (turretEncoder.getDistance() / 43));
   }
-  
-  //returns the velocity of the turret
-  public double getVelocity(){
+
+  // returns the velocity of the turret
+  public double getVelocity() {
     return turretEncoder.getRate() / 43;
-  } 
-  
+  }
+
   public boolean getDirection() {
     boolean direction = turretEncoder.getDirection();
     return direction;
