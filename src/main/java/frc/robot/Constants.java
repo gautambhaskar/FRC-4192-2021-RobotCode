@@ -101,6 +101,9 @@ public final class Constants {
         public static double kMin = -0.8;
     }
 
+    //Trajectory Mapping
+    public static boolean trajectoryMapping = true;
+
     public static class drivePID {
         public static double kP = .05;
         public static double kI = 0;
@@ -111,16 +114,26 @@ public final class Constants {
         public static double rotate_kP = 0.05;
         public static double autonMaxSpeed = 0.7;
         public static double tolerance = 0.05;
+
+
         public static double kB = 2.0;
         public static double kZeta = 0.7;
-        // find values after characterization
-        public static double kS = 0;
-        public static double kV = 0;
-        public static double kA = 0;
-        public static final double kTrackwidthMeters = 0;
+
+        //Measure values and insert
+        public static final double kTrackwidthMeters = 0; 
+        public static final double positionConversionFactor = 0; // (pi*diameter) in meters
+
+        //Pick something reasonable like '3'.
+        public static final double kMaxSpeedMetersPerSecond = 0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+
+        // find values through Drive Characterization
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+        public static final double kPDriveVel = 0;
+
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
-        public static double wheelConversionFactor = 0; // need to test to find value
-        public static double kPDriveVel = 0; // find after characterization
     }
 
      public static class fieldBasedTurretPID {

@@ -9,6 +9,7 @@ package frc.robot;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -18,8 +19,14 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import frc.robot.Constants.drivePID;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DefaultDrive;
@@ -150,24 +157,20 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    String trajectoryJSON = "paths/Unnamed.wpilib.json";
-    try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-      // RamseteCommand ramseteCommand = new RamseteCommand(trajectory, ,
-      // new RamseteController(drivePID.kB, drivePID.kZeta),
-      // new SimpleMotorFeedforward(drivePID.kS, drivePID.kV, drivePID.kA),
-      // drivePID.kDriveKinematics, m_drive::getWheelSpeeds, new
-      // PIDController(drivePID.kPDriveVel, 0, 0),
-      // new PIDController(drivePID.kPDriveVel, 0, 0), m_drive::tankDriveVolts,
-      // m_drive);
-    } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-    }
+    if (Constants.trajectoryMapping) {
 
-    // An ExampleCommand will run in autonomous
-    // return m_autoCommand;
-    return m_distanceauton;
-    // return null;
+      RamseteCommand ramseteCommand = new RamseteCommand(Robot.testTrajectory, m_drive::returnPose,
+          new RamseteController(drivePID.kB, drivePID.kZeta),
+          new SimpleMotorFeedforward(drivePID.kS, drivePID.kV, drivePID.kA), drivePID.kDriveKinematics,
+          m_drive::returnWheelSpeeds, new PIDController(drivePID.kPDriveVel, 0, 0),
+          new PIDController(drivePID.kPDriveVel, 0, 0),
+          // RamseteCommand passes volts to the callback
+          m_drive::tankDrive, m_drive);
+
+      // Run path following command, then stop at the end.
+      return ramseteCommand.andThen(() -> m_drive.tankDrive(0, 0));
+    } else {
+      return m_distanceauton;
+    }
   }
 }
