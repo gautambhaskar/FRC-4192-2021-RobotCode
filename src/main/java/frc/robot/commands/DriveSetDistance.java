@@ -49,6 +49,6 @@ public class DriveSetDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_drive.returnDrivetrainPosition() > m_distance;
+    return Math.abs(m_drive.returnDrivetrainPosition() - m_distance) < 10;
   }
 }

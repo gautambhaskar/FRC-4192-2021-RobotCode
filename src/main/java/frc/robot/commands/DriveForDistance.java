@@ -37,9 +37,9 @@ public class DriveForDistance extends PIDCommand {
             m_drive.arcadeDrive(output, -drivePID.kP * m_drive.returnAngle());
           }
         });
-    m_drive.recalibratePosition();
-    m_drive.recalibrateAngle();
     addRequirements(m_drive);
+    m_drive.recalibrateAngle();
+    m_drive.recalibratePosition();
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     getController().setTolerance(drivePID.tolerance);

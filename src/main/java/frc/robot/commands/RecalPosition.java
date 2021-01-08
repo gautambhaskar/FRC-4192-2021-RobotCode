@@ -7,24 +7,26 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ShootingSystem;
-import frc.robot.subsystems.Turret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class DistanceAuton extends SequentialCommandGroup {
-  /**
-   * Creates a new DistanceAuton.
-   */
+public class RecalPosition extends InstantCommand {
+
   private Drivetrain m_drive;
 
-  public DistanceAuton(Drivetrain drive, Turret turret, ShootingSystem shooter) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new DriveForDistance(drive, 40), new SetRotate(drive, 90), new ShootingMacro(drive, turret, shooter));
+  public RecalPosition(Drivetrain drive) {
     m_drive = drive;
+    addRequirements(m_drive);
+    // Use addRequirements() here to declare subsystem dependencies.
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    m_drive.recalibratePosition();
+    m_drive.recalibrateAngle();
   }
 }
