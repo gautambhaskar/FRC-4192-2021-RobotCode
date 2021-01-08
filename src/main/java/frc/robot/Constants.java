@@ -9,6 +9,8 @@ package frc.robot;
 
 import com.revrobotics.CANPIDController;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -99,6 +101,9 @@ public final class Constants {
         public static double kMin = -0.8;
     }
 
+    //Trajectory Mapping
+    public static boolean trajectoryMapping = true;
+
     public static class drivePID {
         public static double kP = .05;
         public static double kI = 0;
@@ -108,10 +113,34 @@ public final class Constants {
         public static double kMin = -1;
         public static double rotate_kP = 0.015;
         public static double autonMaxSpeed = 0.7;
+<<<<<<< HEAD
         public static double tolerance = 1;
+=======
+        public static double tolerance = 0.05;
+
+
+        public static double kB = 2.0;
+        public static double kZeta = 0.7;
+
+        //Measure values and insert
+        public static final double kTrackwidthMeters = 0; 
+        public static final double positionConversionFactor = 0; // (pi*diameter) in meters
+
+        //Pick something reasonable like '3'.
+        public static final double kMaxSpeedMetersPerSecond = 0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+
+        // find values through Drive Characterization
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+        public static final double kPDriveVel = 0;
+
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+>>>>>>> f4fcda1e5dc7b48f81a67fb77b2d64aab4b6ac2b
     }
 
-    public static class fieldBasedTurretPID {
+     public static class fieldBasedTurretPID {
         public static double kP = 0.05;
         public static double kI = 0;
         public static double kD = 0;

@@ -25,6 +25,7 @@ public class TestingSystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  // runs motor with power spd
   public void runMotor(double spd) {
     m_motor.set(spd);
   }

@@ -7,9 +7,27 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import frc.robot.Constants.drivePID;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DistanceAuton;
@@ -34,6 +52,7 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.TestingSystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -138,9 +157,20 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    // return m_autoCommand;
-    return m_distanceauton;
-    // return null;
+    if (Constants.trajectoryMapping) {
+
+      RamseteCommand ramseteCommand = new RamseteCommand(Robot.testTrajectory, m_drive::returnPose,
+          new RamseteController(drivePID.kB, drivePID.kZeta),
+          new SimpleMotorFeedforward(drivePID.kS, drivePID.kV, drivePID.kA), drivePID.kDriveKinematics,
+          m_drive::returnWheelSpeeds, new PIDController(drivePID.kPDriveVel, 0, 0),
+          new PIDController(drivePID.kPDriveVel, 0, 0),
+          // RamseteCommand passes volts to the callback
+          m_drive::tankDrive, m_drive);
+
+      // Run path following command, then stop at the end.
+      return ramseteCommand.andThen(() -> m_drive.tankDrive(0, 0));
+    } else {
+      return m_distanceauton;
+    }
   }
 }

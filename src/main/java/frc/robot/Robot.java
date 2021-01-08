@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import java.util.List;
 import java.util.Timer;
 
 import com.revrobotics.CANSparkMax;
@@ -14,15 +15,23 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.cameraserver.CameraServer;
 //import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.subsystems.Turret;
+import frc.robot.Constants.drivePID;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,22 +44,46 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  TrajectoryConfig test = new TrajectoryConfig(0.8, 0.2);
 
+  public static Trajectory testTrajectory;
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
 
-    @Override
-    public void robotInit() {
-      // Instantiate our RobotContainer. This will perform all our button bindings,
-      // and put our
-      // autonomous chooser on the dashboard.
-      SmartDashboard.putNumber("Code Version No.", 1.0);
+  @Override
+  public void robotInit() {
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
+    // autonomous chooser on the dashboard.
+    SmartDashboard.putNumber("Code Version No.", 1.0);
     SmartDashboard.putString("Branch", "main");
     m_robotContainer = new RobotContainer();
     CameraServer.getInstance().startAutomaticCapture();
+
+    // Generate Trajectory
+    // Create a voltage constraint to ensure we don't accelerate too fast
+    var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+        new SimpleMotorFeedforward(drivePID.kS, drivePID.kV, drivePID.kA), drivePID.kDriveKinematics, 10);
+
+    // Create config for trajectory
+    TrajectoryConfig config = new TrajectoryConfig(drivePID.kMaxSpeedMetersPerSecond,
+        drivePID.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(drivePID.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
+
+    // An example trajectory to follow. All units in meters.
+    testTrajectory = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(3, 0, new Rotation2d(0)),
+        // Pass config
+        config);
 
   }
 
@@ -123,7 +156,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    
+
   }
 
   @Override

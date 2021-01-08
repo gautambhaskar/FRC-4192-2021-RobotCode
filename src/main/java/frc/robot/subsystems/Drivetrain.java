@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
+import com.revrobotics.CANEncoder;
 // import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -17,12 +18,16 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 // import edu.wpi.first.wpilibj.DriverStation;
 // import edu.twpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
+import frc.robot.Constants.drivePID;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -38,22 +43,25 @@ public class Drivetrain extends SubsystemBase {
   /**
    * Creates a new Drivetrain.
    */
-
-  private static final ADIS16448_IMU imu = new ADIS16448_IMU();
   private double init_angle, init_original_angle;
   private double init_position;
 
-  private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless); //1
-  private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless); //5
-  private final CANSparkMax leftFollower1 = new CANSparkMax(Constants.leftFollower1, MotorType.kBrushless); //2
-  //private final CANSparkMax leftFollower2 = new CANSparkMax(Constants.leftFollower2, MotorType.kBrushless); //3
-  private final CANSparkMax rightFollower1 = new CANSparkMax(Constants.rightFollower1, MotorType.kBrushless); //6
-  //private final CANSparkMax rightFollower2 = new CANSparkMax(Constants.rightFollower2, MotorType.kBrushless); //7 
+  private final CANSparkMax leftLead = new CANSparkMax(Constants.leftLeader, MotorType.kBrushless); // 1
+  private final CANSparkMax rightLead = new CANSparkMax(Constants.rightLeader, MotorType.kBrushless); // 5
+  private final CANSparkMax leftFollower1 = new CANSparkMax(Constants.leftFollower1, MotorType.kBrushless); // 2
+  // private final CANSparkMax leftFollower2 = new
+  // CANSparkMax(Constants.leftFollower2, MotorType.kBrushless); //3
+  private final CANSparkMax rightFollower1 = new CANSparkMax(Constants.rightFollower1, MotorType.kBrushless); // 6
+  // private final CANSparkMax rightFollower2 = new
+  // CANSparkMax(Constants.rightFollower2, MotorType.kBrushless); //7
 
   private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftLead, leftFollower1);
   private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightLead, rightFollower1);
 
+  private static final ADIS16448_IMU imu = new ADIS16448_IMU();
+
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+  private final DifferentialDriveOdometry m_odometry;
 
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
@@ -66,19 +74,29 @@ public class Drivetrain extends SubsystemBase {
     init_original_angle = imu.getAngle();
     init_position = leftLead.getEncoder().getPosition();
 
+    leftLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
+    leftLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
+    rightLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
+    rightLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
+
+    leftLead.setInverted(true);
+    leftLead.getEncoder().setPosition(0);
+    rightLead.getEncoder().setPosition(0);
+    rightLead.setInverted(true);
+    leftFollower1.setInverted(true);
+    // leftFollower2.setInverted(true);
+    rightFollower1.setInverted(true);
+    // rightFollower2.setInverted(true);
+
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(returnNativeAngle()));
+
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
     robotAngle = tab.add("Robot Angle", init_angle - imu.getAngle()).getEntry();
-    leftLead.setInverted(true);
-    leftLead.getEncoder().setPosition(0);
-    rightLead.setInverted(true);
-    leftFollower1.setInverted(true);
-    //leftFollower2.setInverted(true);
-    rightFollower1.setInverted(true);
-    //rightFollower2.setInverted(true);
-
-    drivetrainSpeed = tuningTab.add("Drivetrain Speed", leftLead.getEncoder().getVelocity()).withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 4).getEntry();
-    drivetrainPosition = tuningTab.add("Drivetrain Position", init_position - leftLead.getEncoder().getPosition()).withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 4).getEntry();
+    drivetrainSpeed = tuningTab.add("Drivetrain Speed", leftLead.getEncoder().getVelocity())
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 4).getEntry();
+    drivetrainPosition = tuningTab.add("Drivetrain Position", init_position - leftLead.getEncoder().getPosition())
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 4).getEntry();
   }
 
   @Override
@@ -90,29 +108,81 @@ public class Drivetrain extends SubsystemBase {
     drivetrainSpeed.setDouble(leftLead.getEncoder().getVelocity());
     drivetrainPosition.setDouble(init_position - leftLead.getEncoder().getPosition());
     // This method will be called once per scheduler run
+
+    m_odometry.update(Rotation2d.fromDegrees(returnNativeAngle()), leftLead.getEncoder().getPosition(),
+        rightLead.getEncoder().getPosition());
   }
 
-  public void recalibrateAngle() {
-    init_angle = imu.getAngle();
-  }
-
+  // makes a method to drive with parameters for forward speed and rotation
   public void arcadeDrive(double fwd, double turn) {
-    m_drive.arcadeDrive(fwd, turn); // <<<<<<Need to invert motors instead >>>>>>>
+    m_drive.arcadeDrive(fwd, turn);
   }
 
+  // sets up a tank drive given the voltage supplied to either side
+  public void tankDrive(double leftVolts, double rightVolts) {
+    m_leftMotors.setVoltage(leftVolts);
+    m_rightMotors.setVoltage(-rightVolts);
+    m_drive.feed();
+  }
+
+  // gives the curent offset from the calibrated/recalibrated angle
   public double returnAngle() {
     return (init_angle - imu.getAngle()); // Replace 0 w sensor val
   }
 
+  public Pose2d returnPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  // gives the current offset from the original angle
   public double returnNativeAngle() {
     return (init_original_angle - imu.getAngle());
   }
 
+  // shows the distance the robot has traveled relative to starting position
   public double returnDrivetrainPosition() {
     return (init_position - leftLead.getEncoder().getPosition());
   }
-  
+
+  public double returnAverageEncoderDistance() {
+    return (leftLead.getEncoder().getPosition() + rightLead.getEncoder().getPosition()) / 2.0;
+  }
+
+  public CANEncoder returnLeftEncoder() {
+    return leftLead.getEncoder();
+  }
+
+  public CANEncoder returnRightEncoder() {
+    return rightLead.getEncoder();
+  }
+
+  public double returnAngularRate() {
+    return imu.getRate();
+  }
+
+  public DifferentialDriveWheelSpeeds returnWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(leftLead.getEncoder().getVelocity(),
+        rightLead.getEncoder().getVelocity());
+  }
+
+  // makes the current angle the initial angle
+  public void recalibrateAngle() {
+    init_angle = imu.getAngle();
+  }
+
+  // sets the current position as the new initial position
   public void recalibratePosition() {
     init_position = leftLead.getEncoder().getPosition();
   }
+
+  public void resetEncoders() {
+    leftLead.getEncoder().setPosition(0);
+    rightLead.getEncoder().setPosition(0);
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(returnNativeAngle()));
+  }
+
 }
