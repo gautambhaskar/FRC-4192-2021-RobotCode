@@ -21,6 +21,8 @@ import frc.robot.commands.IndexOut;
 import frc.robot.commands.TurretTurn;
 import frc.robot.commands.UnjamBall;
 import frc.robot.commands.RunShooter;
+import frc.robot.commands.RotateDrive;
+import frc.robot.commands.RunHood;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShootingSystem;
@@ -49,6 +51,8 @@ public class RobotContainer {
   private final Index m_Index = new Index();
   private final Turret m_Turret = new Turret();
 
+  private final Hood m_Hood = new Hood(); //Initalized Hood Object
+
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
       () -> driveController.getX(Hand.kRight));
@@ -70,6 +74,10 @@ public class RobotContainer {
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   private final AlignWithTarget m_alignWithTarget = new AlignWithTarget(m_Turret);
+  private final RotateDrive m_RotateDriveCommand = new RotateDrive (m_drive, Constants.r); //Rotate Drive
+  
+  private final RunHood m_RubnHood = RunHood (m_Hood, Constants.hoodRotateSpeed); // Initialized RunHood command
+
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -78,6 +86,9 @@ public class RobotContainer {
   JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
   JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
+  
+  JoystickButton xButton = new JoystickButton(driveController, Constants.xButton); //Rotate Drive
+
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
@@ -112,6 +123,11 @@ public class RobotContainer {
     driverBackButton.whenHeld(m_unjamBalls);
     driverYButton.toggleWhenPressed(m_alignWithTarget);
     joystickYOnly.whileActiveOnce(m_driveStraight);
+    xButton.whileActiveOnce(m_RotateDriveCommand);
+
+    bButton.whenHeld(m_RubnHood); //Button Binding for hood
+
+
   }
 
   /**
