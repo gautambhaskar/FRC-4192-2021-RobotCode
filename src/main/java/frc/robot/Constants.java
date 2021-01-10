@@ -99,6 +99,9 @@ public final class Constants {
         public static double kFF = 0;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
+        //test these values for turret soft limit
+        public static double leftPositionLimit = 0; 
+        public static double rightPositionLimit = 0;
     }
 
     // Trajectory Mapping
