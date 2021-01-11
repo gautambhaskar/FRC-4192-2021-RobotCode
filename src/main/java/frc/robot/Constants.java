@@ -113,9 +113,6 @@ public final class Constants {
         public static double kMin = -1;
         public static double rotate_kP = 0.015;
         public static double autonMaxSpeed = 0.7;
-<<<<<<< HEAD
-        public static double tolerance = 1;
-=======
         public static double tolerance = 0.05;
 
 
@@ -137,7 +134,6 @@ public final class Constants {
         public static final double kPDriveVel = 0;
 
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
->>>>>>> f4fcda1e5dc7b48f81a67fb77b2d64aab4b6ac2b
     }
 
      public static class fieldBasedTurretPID {
