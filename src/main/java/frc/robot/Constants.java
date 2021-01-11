@@ -99,9 +99,12 @@ public final class Constants {
         public static double kFF = 0;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
+        //test these values for turret soft limit
+        public static double leftPositionLimit = 0; 
+        public static double rightPositionLimit = 0;
     }
 
-    //Trajectory Mapping
+    // Trajectory Mapping
     public static boolean trajectoryMapping = true;
 
     public static class drivePID {
@@ -115,15 +118,14 @@ public final class Constants {
         public static double autonMaxSpeed = 0.7;
         public static double tolerance = 0.05;
 
-
         public static double kB = 2.0;
         public static double kZeta = 0.7;
 
-        //Measure values and insert
-        public static final double kTrackwidthMeters = 0; 
+        // Measure values and insert
+        public static final double kTrackwidthMeters = 0;
         public static final double positionConversionFactor = 0; // (pi*diameter) in meters
 
-        //Pick something reasonable like '3'.
+        // Pick something reasonable like '3'.
         public static final double kMaxSpeedMetersPerSecond = 0;
         public static final double kMaxAccelerationMetersPerSecondSquared = 0;
 
@@ -133,10 +135,15 @@ public final class Constants {
         public static final double kA = 0;
         public static final double kPDriveVel = 0;
 
+<<<<<<< HEAD
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+=======
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
+                kTrackwidthMeters);
+>>>>>>> 649f0bc5ad53c74ec8c766cca7ff4f537b9c234f
     }
 
-     public static class fieldBasedTurretPID {
+    public static class fieldBasedTurretPID {
         public static double kP = 0.05;
         public static double kI = 0;
         public static double kD = 0;
