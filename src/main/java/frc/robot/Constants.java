@@ -50,7 +50,7 @@ public final class Constants {
     // Speeds
     public static double intakeSpeed = 0.5;
     public static double outtakeSlowlySpeed = 0.3;
-    public static double indexSpeed = 1;
+    public static double indexSpeed = 0.8;
     public static double feederSpeed = -3000;
     public static double shooterSpeed = 4000;
     public static double hoodRotateSpeed = 0.3;
@@ -135,12 +135,8 @@ public final class Constants {
         public static final double kA = 0;
         public static final double kPDriveVel = 0;
 
-<<<<<<< HEAD
-        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
-=======
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
                 kTrackwidthMeters);
->>>>>>> 649f0bc5ad53c74ec8c766cca7ff4f537b9c234f
     }
 
     public static class fieldBasedTurretPID {

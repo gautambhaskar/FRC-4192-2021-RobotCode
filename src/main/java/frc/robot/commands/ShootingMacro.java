@@ -22,6 +22,6 @@ public class ShootingMacro extends ParallelCommandGroup {
   public ShootingMacro(Drivetrain m_drive, Turret m_turret, ShootingSystem m_shooter) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new TurretAlignmentMacro(m_drive, m_turret), new RunShooter(m_shooter));
+    super(new TurretAlignmentMacro(m_drive, m_turret), new ReverseShoot(m_shooter));
   }
 }
