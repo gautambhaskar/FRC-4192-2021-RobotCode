@@ -163,4 +163,8 @@ public class ShootingSystem extends SubsystemBase {
     shooterController.setReference(0, ControlType.kVoltage);
     feederController.setReference(0, ControlType.kVoltage);
   }
+
+  public double shooterSpeed() {
+    return shooterLeftMotor.getEncoder().getVelocity();
+  }
 }

@@ -81,6 +81,7 @@ public final class Constants {
         public static double kFF = 0.0002;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
+        public static double shooterSpeedMinimum = 3800;
     }
 
     public static class feederPID {
@@ -136,6 +137,8 @@ public final class Constants {
         public static final double kA = 0;
         public static final double kPDriveVel = 0;
 
+
+
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
                 kTrackwidthMeters);
     }
@@ -157,4 +160,5 @@ public final class Constants {
         controller.setFF(constants[3]);
         controller.setOutputRange(constants[4], constants[5]);
     }
+
 }

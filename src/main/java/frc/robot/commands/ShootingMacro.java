@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.subsystems.Turret;
 
@@ -19,9 +20,9 @@ public class ShootingMacro extends ParallelCommandGroup {
   /**
    * Creates a new ShootingMacro.
    */
-  public ShootingMacro(Drivetrain m_drive, Turret m_turret, ShootingSystem m_shooter) {
+  public ShootingMacro(Drivetrain m_drive, Turret m_turret, ShootingSystem m_shooter, Index m_index) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new TurretAlignmentMacro(m_drive, m_turret), new ReverseShoot(m_shooter));
+    super(new TurretAlignmentMacro(m_drive, m_turret), new ReverseShoot(m_shooter, m_index));
   }
 }
