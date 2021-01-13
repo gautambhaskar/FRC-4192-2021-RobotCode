@@ -7,12 +7,19 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Hood extends SubsystemBase {
   /**
    * Creates a new Hood.
    */
+  private final CANSparkMax hoodMotor = new CANSparkMax(Constants.hood, MotorType.kBrushless);
+
+
   public Hood() {
 
   }
@@ -20,5 +27,9 @@ public class Hood extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void runMotor(double output) {
+    hoodMotor.set(output);
   }
 }
