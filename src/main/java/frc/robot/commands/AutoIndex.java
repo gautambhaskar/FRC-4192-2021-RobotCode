@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.shooterPID;
@@ -12,16 +14,15 @@ import frc.robot.subsystems.ShootingSystem;
 
 public class AutoIndex extends CommandBase {
   /** Creates a new AutoIndex. */
-  private ShootingSystem shooter;
   private Index index;
   private boolean alreadyRun;
+  private Timer timer = new Timer();
 
-  public AutoIndex(ShootingSystem m_shooter, Index m_index) {
-    shooter = m_shooter;
+  public AutoIndex(Index m_index) {
     index = m_index;
     alreadyRun = false;
 
-    addRequirements(m_shooter, m_index);
+    addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -32,10 +33,14 @@ public class AutoIndex extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (shooter.shooterSpeed()>shooterPID.shooterSpeedMinimum && alreadyRun==false) {
+    if (SmartDashboard.getNumber("Shooter Speed", 0)>shooterPID.shooterSpeedMinimum && alreadyRun==false) {
       index.run(Constants.indexSpeed);
+      timer.start();
       alreadyRun = true;
-    } else if (shooter.shooterSpeed()<shooterPID.shooterSpeedMinimum) {
+    } else if (SmartDashboard.getNumber("Shooter Speed", 0)>shooterPID.shooterSpeedMinimum && alreadyRun==true && timer.get()>Constants.indexRunTime){
+      index.run(0);
+      alreadyRun = false;
+    } else if (SmartDashboard.getNumber("Shooter Speed", 0)<shooterPID.shooterSpeedMinimum) {
       alreadyRun = false;
       index.run(0);
     }else {

@@ -16,6 +16,6 @@ public class RunShooterWithAutoIndex extends ParallelCommandGroup {
   public RunShooterWithAutoIndex(Index index, ShootingSystem shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new RunShooter(shooter), new AutoIndex(shooter, index));
+    addCommands(new RunShooter(shooter), new AutoIndex(index));
   }
 }

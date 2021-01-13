@@ -55,6 +55,7 @@ public final class Constants {
     public static double shooterSpeed = 4000;
     public static double hoodRotateSpeed = 0.3;
     public static double turretTurn = 0.7;
+    public static double indexRunTime = 0.25;
 
     // Buttons
     public static int aButton = 1;
@@ -81,7 +82,7 @@ public final class Constants {
         public static double kFF = 0.0002;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
-        public static double shooterSpeedMinimum = 3800;
+        public static double shooterSpeedMinimum = 3700;
     }
 
     public static class feederPID {
