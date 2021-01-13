@@ -92,10 +92,8 @@ public class Turret extends SubsystemBase {
     turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
 
     init_original_position = turretEncoder.getDistance() / 45;
-    turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward,
-        (float) init_original_position + (float) turretPID.rightPositionLimit);
-    turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse,
-        (float) init_original_position + (float) turretPID.leftPositionLimit);
+    //turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, (float) init_original_position + (float) turretPID.rightPositionLimit);
+    //turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, (float) init_original_position + (float) turretPID.leftPositionLimit);
 
     turretPosition = tab.add("turret angular position", turretEncoder.getDistance() / 45).getEntry();
     turretVelocity = tab.add("turret angular velocity", turretEncoder.getRate()).getEntry();

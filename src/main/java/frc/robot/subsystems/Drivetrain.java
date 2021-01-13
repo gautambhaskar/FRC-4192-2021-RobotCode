@@ -74,10 +74,10 @@ public class Drivetrain extends SubsystemBase {
     init_original_angle = imu.getAngle();
     init_position = leftLead.getEncoder().getPosition();
 
-    leftLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
-    leftLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
-    rightLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
-    rightLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
+    //leftLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
+    //leftLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
+    //rightLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
+    //rightLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
 
     leftLead.setInverted(true);
     leftLead.getEncoder().setPosition(0);
