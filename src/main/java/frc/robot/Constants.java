@@ -99,13 +99,14 @@ public final class Constants {
         public static double kFF = 0;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
-        //test these values for turret soft limit
-        public static double leftPositionLimit = 0; 
+
+        // find these values for turret soft limit
+        public static double leftPositionLimit = 0;
         public static double rightPositionLimit = 0;
     }
 
     // Trajectory Mapping
-    public static boolean trajectoryMapping = true;
+    public static boolean trajectoryMapping = false;
 
     public static class drivePID {
         public static double kP = .05;
@@ -114,7 +115,7 @@ public final class Constants {
         public static double kFF = 0;
         public static double kMax = 1;
         public static double kMin = -1;
-        public static double rotate_kP = 0.015;
+        public static double rotate_kP = 0.02;
         public static double autonMaxSpeed = 0.7;
         public static double tolerance = 0.05;
 
