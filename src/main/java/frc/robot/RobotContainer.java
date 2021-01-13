@@ -98,8 +98,8 @@ public class RobotContainer {
   private final RunShooter m_runShooter = new RunShooter(m_ShootingSystem);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_Index, m_ShootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
-  private final RunHood m_runHoodForward = new RunHood(m_Hood, 0.4);
-  private final RunHood m_runHoodBackward = new RunHood(m_Hood, -0.4);
+  private final RunHood m_runHoodForward = new RunHood(m_Hood, 0.2);
+  private final RunHood m_runHoodBackward = new RunHood(m_Hood, -0.2);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_Turret);
   private final TurretAlignmentMacro m_turretMacro = new TurretAlignmentMacro(m_drive, m_Turret);
