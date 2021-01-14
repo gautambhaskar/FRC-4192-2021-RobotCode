@@ -76,7 +76,7 @@ public final class Constants {
     }
 
     public static class shooterPID {
-        public static double kP = 0.0004;
+        public static double kP = 0.001;
         public static double kI = 0.000001;
         public static double kD = 0;
         public static double kFF = 0.0002;
@@ -137,8 +137,6 @@ public final class Constants {
         public static final double kV = 0;
         public static final double kA = 0;
         public static final double kPDriveVel = 0;
-
-
 
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
                 kTrackwidthMeters);

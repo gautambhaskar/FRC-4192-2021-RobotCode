@@ -24,5 +24,6 @@ public class ShootingMacro extends ParallelCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
     super(new TurretAlignmentMacro(m_drive, m_turret), new ReverseShoot(m_shooter, m_index));
+    //For reference: ReverseShoot() is a combination of reversing the feeder to unjam and the main shooting operation.
   }
 }

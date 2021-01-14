@@ -43,7 +43,7 @@ public class AutoIndex extends CommandBase {
     } else if (SmartDashboard.getNumber("Shooter Speed", 0)<shooterPID.shooterSpeedMinimum) {
       alreadyRun = false;
       index.run(0);
-    }else {
+    } else {
       index.run(0);
     }
   }
