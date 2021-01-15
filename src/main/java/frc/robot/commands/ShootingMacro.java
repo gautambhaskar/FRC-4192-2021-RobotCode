@@ -8,7 +8,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.subsystems.Turret;
@@ -16,14 +18,13 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class ShootingMacro extends ParallelCommandGroup {
+public class ShootingMacro extends SequentialCommandGroup {
   /**
    * Creates a new ShootingMacro.
    */
-  public ShootingMacro(Drivetrain m_drive, Turret m_turret, ShootingSystem m_shooter, Index m_index) {
+  public ShootingMacro(Drivetrain m_drive, Turret m_turret, ShootingSystem m_shooter, Index m_index, Hood m_hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new TurretAlignmentMacro(m_drive, m_turret), new ReverseShoot(m_shooter, m_index));
-    //For reference: ReverseShoot() is a combination of reversing the feeder to unjam and the main shooting operation.
+    super(new TurretAlignmentMacro(m_drive, m_turret, m_hood), new ShootBalls(m_shooter, m_index));
   }
 }

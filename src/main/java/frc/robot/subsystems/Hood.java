@@ -7,21 +7,35 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.shooterModel;
 
 public class Hood extends SubsystemBase {
   /**
    * Creates a new Hood.
    */
   private final CANSparkMax hoodMotor = new CANSparkMax(Constants.hood, MotorType.kBrushless);
-
-
+  private final CANPIDController hoodController = hoodMotor.getPIDController();
+  private final CANEncoder hoodEncoder = hoodMotor.getEncoder();
+  
+  private double initPosition;
+  
   public Hood() {
 
+    //set PID Constants on hoodController
+    hoodController.setP(shooterModel.kP);
+    hoodController.setI(shooterModel.kI);
+    hoodController.setD(shooterModel.kD);
+    hoodController.setFF(shooterModel.kFF);
+    hoodController.setOutputRange(shooterModel.kMin, shooterModel.kMax);
+
+    initPosition = hoodEncoder.getPosition();
   }
 
   @Override
@@ -31,5 +45,11 @@ public class Hood extends SubsystemBase {
 
   public void runMotor(double output) {
     hoodMotor.set(output);
+  }
+  public CANPIDController getPIDController() {
+    return hoodController;
+  }
+  public double getPosition() {
+    return (hoodEncoder.getPosition()-initPosition);
   }
 }

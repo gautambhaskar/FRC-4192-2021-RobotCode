@@ -152,12 +152,17 @@ public final class Constants {
         public static double maxSpeed = 0.2;
     }
 
-    public static void distributePID(double[] constants, CANPIDController controller) {
-        controller.setP(constants[0]);
-        controller.setI(constants[1]);
-        controller.setD(constants[2]);
-        controller.setFF(constants[3]);
-        controller.setOutputRange(constants[4], constants[5]);
-    }
-
+    //gather data and find line of best fit (limelightArea (distance from target) (x) vs. hood position (y))
+    public static class shooterModel {
+        public static double a = 0;
+        public static double b = 0;
+        public static double c = 0;
+        public static double kP = 0;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double kFF = 0;
+        public static double kMin = 0;
+        public static double kMax = 0;
+        public static double tolerance = 0.1; 
+    } 
 }

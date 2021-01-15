@@ -102,14 +102,14 @@ public class RobotContainer {
   private final RunHood m_runHoodBackward = new RunHood(m_Hood, -0.2);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_Turret);
-  private final TurretAlignmentMacro m_turretMacro = new TurretAlignmentMacro(m_drive, m_Turret);
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_Turret, m_ShootingSystem, m_Index);
+  private final TurretAlignmentMacro m_turretMacro = new TurretAlignmentMacro(m_drive, m_Turret, m_Hood);
+  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_Turret, m_ShootingSystem, m_Index, m_Hood);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
 
   // Autonomous Commands
   private final BasicAuton m_basicauton = new BasicAuton(m_drive);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
-  private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive, m_Turret, m_ShootingSystem, m_Index);
+  private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive, m_Turret, m_ShootingSystem, m_Index, m_Hood);
 
   // Triggers
   Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);

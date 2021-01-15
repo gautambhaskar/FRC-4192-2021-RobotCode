@@ -4,18 +4,18 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.ShootingSystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ReverseShoot extends SequentialCommandGroup {
-  /** Creates a new ReverseShoot. */
-  public ReverseShoot(ShootingSystem m_shooter, Index m_index) {
+public class FireInTheHole extends ParallelCommandGroup {
+  /** Creates a new RunShooterWithAutoIndex. */
+  public FireInTheHole(Index index, ShootingSystem shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ReverseFeeder(m_shooter), new RunShooterWithAutoIndex(m_index, m_shooter));
+    addCommands(new RunShooter(shooter), new AutoIndex(index));
   }
 }

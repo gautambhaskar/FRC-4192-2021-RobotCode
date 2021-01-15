@@ -149,6 +149,9 @@ public class Turret extends SubsystemBase {
   public double limelightOffset() {
     return tx.getDouble(0.0);
   }
+  public double limelightArea() {
+    return ta.getDouble(0.0);
+  }
 
   // turns the turret toward the target based on encoder values
   public void startAlign() {

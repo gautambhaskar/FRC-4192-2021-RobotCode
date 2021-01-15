@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Turret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,9 +19,9 @@ public class TurretAlignmentMacro extends SequentialCommandGroup {
   /**
    * Creates a new TurretAlignmentMacro.
    */
-  public TurretAlignmentMacro(Drivetrain m_drive, Turret m_turret) {
+  public TurretAlignmentMacro(Drivetrain m_drive, Turret m_turret, Hood m_hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new FieldBasedTurretTurn(m_drive, m_turret), new AlignWithTarget(m_turret));
+    super(new FieldBasedTurretTurn(m_drive, m_turret), new AlignWithTarget(m_turret), new AlignHood(m_turret, m_hood));
   }
 }
