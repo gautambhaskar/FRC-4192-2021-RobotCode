@@ -60,31 +60,31 @@ public class ShootingSystem extends SubsystemBase {
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
 
-  private NetworkTableEntry shooterSpeed, feederSpeed, shooterSetpoint, feederSetpoint;
+  private NetworkTableEntry shooterSpeed, feederSpeed;
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
     // feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature,
     // 8192));
 
-    //Set shooter PID values on controller
+    // Set shooter PID values on controller
     shooterController.setP(shooterPID.kP);
     shooterController.setI(shooterPID.kI);
     shooterController.setD(shooterPID.kD);
     shooterController.setFF(shooterPID.kFF);
     shooterController.setOutputRange(shooterPID.kMin, shooterPID.kMax);
-    
-    //Set feeder PID values on controller
+
+    // Set feeder PID values on controller
     feederController.setP(feederPID.kP);
     feederController.setI(feederPID.kI);
     feederController.setD(feederPID.kD);
     feederController.setFF(feederPID.kFF);
     feederController.setOutputRange(feederPID.kMin, feederPID.kMax);
-  
-    //Graph of shooterSpeed
+
+    // Graph of shooterSpeed
     shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 0).getEntry();
-    //Graph of feederSpeed
+    // Graph of feederSpeed
     feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
   }
@@ -93,12 +93,12 @@ public class ShootingSystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    //Update the ShooterSpeed and FeederSpeed Graphs
+    // Update the ShooterSpeed and FeederSpeed Graphs
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
     SmartDashboard.putNumber("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity());
   }
-  
+
   public void startShooter() {
     shooterController.setReference(Constants.shooterSpeed, ControlType.kVelocity);
     feederController.setReference(Constants.feederSpeed, ControlType.kVelocity);
