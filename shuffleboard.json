@@ -48,7 +48,8 @@
               "Graph/Visible time": 30.0,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0
+              "Y-axis/Lower bound": -1.0,
+              "Visible data/SmartDashboard/Shooter Speed": true
             }
           },
           "0,0": {
@@ -278,6 +279,17 @@
               "_source0": "network_table:///SmartDashboard/Branch",
               "_title": "Branch"
             }
+          },
+          "9,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Drivetrain Angle Diff",
+              "_title": "Drivetrain Angle Diff"
+            }
           }
         }
       }
@@ -361,6 +373,36 @@
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[16,0]/Value",
                   "_title": "DoubleSolenoid[16,0]/Value"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[6]",
+                  "_title": "/LiveWindow/Ungrouped/PIDController[6]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[2]",
+                  "_title": "/LiveWindow/Ungrouped/PIDController[2]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[3]",
+                  "_title": "/LiveWindow/Ungrouped/PIDController[3]"
+                },
+                {
+                  "_type": "Encoder",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Encoder[0]",
+                  "_title": "/LiveWindow/Ungrouped/Encoder[0]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[4]",
+                  "_title": "/LiveWindow/Ungrouped/PIDController[4]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[5]",
+                  "_title": "/LiveWindow/Ungrouped/PIDController[5]"
                 }
               ]
             }
@@ -425,6 +467,6 @@
     "x": 0.0,
     "y": 0.0,
     "width": 1650.2857666015625,
-    "height": 790.2857055664062
+    "height": 794.8571166992188
   }
 }
