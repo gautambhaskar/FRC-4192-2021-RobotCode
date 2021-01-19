@@ -100,6 +100,21 @@ public class ShootingSystem extends SubsystemBase {
   }
 
   public void startShooter() {
+    
+    // Set shooter PID values on controller
+    shooterController.setP(shooterPID.kP);
+    shooterController.setI(shooterPID.kI);
+    shooterController.setD(shooterPID.kD);
+    shooterController.setFF(shooterPID.kFF);
+    shooterController.setOutputRange(shooterPID.kMin, shooterPID.kMax);
+
+    // Set feeder PID values on controller
+    feederController.setP(feederPID.kP);
+    feederController.setI(feederPID.kI);
+    feederController.setD(feederPID.kD);
+    feederController.setFF(feederPID.kFF);
+    feederController.setOutputRange(feederPID.kMin, feederPID.kMax);
+    
     shooterController.setReference(Constants.shooterSpeed, ControlType.kVelocity);
     feederController.setReference(Constants.feederSpeed, ControlType.kVelocity);
   }
