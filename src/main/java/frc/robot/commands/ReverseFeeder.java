@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShootingSystem;
@@ -34,6 +35,7 @@ public class ReverseFeeder extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     x_shooter.setPower(0, 0);
+    DriverStation.reportError("reverseFeeder finished", true);
   }
 
   // Returns true when the command should end.
