@@ -13,9 +13,11 @@ public class ReverseFeeder extends CommandBase {
   /** Creates a new ReverseFeeder. */
   private ShootingSystem x_shooter;
   private Timer timer = new Timer();
+
   public ReverseFeeder(ShootingSystem m_shooter) {
     x_shooter = m_shooter;
     addRequirements(m_shooter);
+    timer.start();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
