@@ -9,9 +9,9 @@
     "rightMotorPorts": [5,6],
     # Set motors to inverted or not
     # If doing drive test, treat this as the left side of the drivetrain
-    "motorsInverted": [1,2],
+    "motorsInverted": [True,False],
     # Only if you are doing drive (leave empty "[]" if not)
-    "rightMotorsInverted": [5,6],
+    "rightMotorsInverted": [True,False],
     # Encoder edges-per-revolution (*NOT* cycles per revolution!)
     # **Note pass an EPR of 1 for the NEO Integrated encoder as the SparkMax
     # already handles this conversion**
@@ -46,11 +46,7 @@
     # "0" (Pigeon CAN ID or AnalogGyro channel),
     # "new WPI_TalonSRX(3)" (Pigeon on a Talon SRX),
     # "" (NavX using default SPI, ADXRS450 using onboard CS0, or no gyro)
-    "gyroPort": "SPI.Port.kMXP", # CHECK ROBOT
+    "gyroPort": "0", # CHECK ROBOT
 }
-
-
-
-
 
 
