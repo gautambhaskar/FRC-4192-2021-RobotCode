@@ -16,6 +16,6 @@ public class FireInTheHole extends ParallelCommandGroup {
   public FireInTheHole(Index index, ShootingSystem shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new RunShooter(shooter), new AutoIndex(index));
+    super(new RunShooter(shooter), new AutoIndex(index));
   }
 }
