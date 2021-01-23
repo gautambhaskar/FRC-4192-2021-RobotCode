@@ -16,13 +16,13 @@ public class AlignHood extends CommandBase {
   private Turret turret;
   private Hood hood;
   private double area;
-  private double hoodPosition;
+  private double hoodSetpoint;
   
   public AlignHood(Turret m_turret, Hood m_hood) {
     turret = m_turret;
     hood = m_hood;
     area = turret.limelightArea();
-    hoodPosition = shooterModel.a * (Math.pow(area,2)) + shooterModel.b * (area) + shooterModel.c;
+    hoodSetpoint = shooterModel.a * (Math.pow(area,2)) + shooterModel.b * (area) + shooterModel.c;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_turret, m_hood);
   }
@@ -30,8 +30,7 @@ public class AlignHood extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    hood.getPIDController().setReference(hoodPosition, ControlType.kPosition);
-    
+    hood.getPIDController().setReference(hoodSetpoint, ControlType.kPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,11 +41,13 @@ public class AlignHood extends CommandBase {
   
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    hood.getPIDController().setReference(0, ControlType.kVoltage);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(hoodPosition-hood.getPosition()) < shooterModel.tolerance;
+    return Math.abs(hoodSetpoint-hood.getPosition()) < shooterModel.tolerance;
   }
 }

@@ -23,7 +23,7 @@
     # Note that the Data Port is the 10 pin port on the top of the SparkMax
     # Setting this to False indicates you want to use the 6 pin encoder port
     # which is located in the front of the SparkMax
-    "useDataPort": True, # CHECK ROBOT
+    "useDataPort": False, # CHECK ROBOT
     # Encoder ports (leave empty "[]" if not needed)
     # Specifying encoder ports indicates you want to use Rio-side encoders
     # If doing drive test, treat this as the left side of the drivetrain
@@ -37,7 +37,7 @@
     "rightEncoderInverted": True, # NOT SURE
     # ** The following is only if you are using a gyro for the DriveTrain test**
     # Gyro type (one of "NavX", "Pigeon", "ADXRS450", "AnalogGyro", or "None")
-    "gyroType": "ADXRS450", # NOT SURE
+    "gyroType": "AnalogGyro", # NOT SURE
     # Whatever you put into the constructor of your gyro
     # Could be:
     # "SPI.Port.kMXP" (MXP SPI port for NavX or ADXRS450),
