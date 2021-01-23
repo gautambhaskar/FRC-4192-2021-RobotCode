@@ -154,9 +154,9 @@ public final class Constants {
 
     //gather data and find line of best fit (limelightArea (distance from target) (x) vs. hood position (y))
     public static class shooterModel {
-        public static double a = 0;
-        public static double b = 0;
-        public static double c = 0;
+        public static double a = 0.03;
+        public static double b = -0.57;
+        public static double c = -0.95;
         public static double kP = 0;
         public static double kI = 0;
         public static double kD = 0;
