@@ -4,44 +4,41 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
+import com.revrobotics.ControlType;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShootingSystem;
+import frc.robot.subsystems.Hood;
 
-public class ReverseFeeder extends CommandBase {
-  /** Creates a new ReverseFeeder. */
-  private ShootingSystem x_shooter;
-  private Timer timer = new Timer();
-
-  public ReverseFeeder(ShootingSystem m_shooter) {
-    x_shooter = m_shooter;
-    addRequirements(m_shooter);
+public class ResetHood extends CommandBase {
+  /** Creates a new ResetHood. */
+  private Hood m_hood;
+  public ResetHood(Hood hood) {
+    addRequirements(hood);
+    m_hood = hood;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.start();
+    m_hood.getPIDController().setP(0.3);
+    m_hood.getPIDController().setReference(-3.38, ControlType.kPosition);
+    m_hood.getPIDController().setOutputRange(-0.4, 0.4);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    x_shooter.setPower(0, 3);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    x_shooter.setPower(0, 0);
-    DriverStation.reportError("reverseFeeder finished", true);
+    m_hood.getPIDController().setReference(0, ControlType.kVoltage);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > 1;
+    return Math.abs(m_hood.getPosition() - (-2.24))<0.25;
   }
 }

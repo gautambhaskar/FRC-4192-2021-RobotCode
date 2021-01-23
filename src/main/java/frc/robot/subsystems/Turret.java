@@ -166,6 +166,10 @@ public class Turret extends SubsystemBase {
     }
   }
 
+  public boolean finishedAligning() {
+    return Math.abs(tx.getDouble(0.0))<1;
+  }
+
   // the angular offset of turret from the original angle on robot start-up
   public double getNativePosition() {
     return ((init_original_position) - (turretEncoder.getDistance() / 43));

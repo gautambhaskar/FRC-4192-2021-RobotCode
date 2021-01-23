@@ -95,7 +95,7 @@ public final class Constants {
     }
 
     public static class turretPID {
-        public static double kP = 0.03;
+        public static double kP = 0.08;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0;

@@ -36,6 +36,7 @@ import frc.robot.commands.DriveStraight;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.OuttakeSlowly;
 import frc.robot.commands.PrecisionDrive;
+import frc.robot.commands.ResetHood;
 import frc.robot.commands.RunHood;
 import frc.robot.commands.IndexIn;
 import frc.robot.commands.IndexOut;
@@ -100,6 +101,7 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   private final RunHood m_runHoodForward = new RunHood(m_Hood, 0.2);
   private final RunHood m_runHoodBackward = new RunHood(m_Hood, -0.2);
+  private final ResetHood m_resetHood = new ResetHood(m_Hood);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_Turret);
   private final TurretAlignmentMacro m_turretMacro = new TurretAlignmentMacro(m_drive, m_Turret, m_Hood);
@@ -148,7 +150,8 @@ public class RobotContainer {
     rightTriggerSubsystems.whileActiveOnce(m_turretTurnRight);
     leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft);
     systemsStartButton.whenHeld(m_indexInCommand);
-    systemsBackButton.whenHeld(m_indexOutCommand);
+    //systemsBackButton.whenHeld(m_indexOutCommand);
+    systemsBackButton.whenPressed(m_resetHood);
     leftBumper.toggleWhenPressed(m_intakeCommand);
     aButton.whenHeld(m_outtakeSlowlyCommand);
     systemsYButton.toggleWhenPressed(m_shooterMacro);

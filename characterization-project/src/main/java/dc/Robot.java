@@ -154,16 +154,16 @@ public class Robot extends TimedRobot {
     stick = new Joystick(0);
     
     // create left motor
-    CANSparkMax leftMotor = setupCANSparkMax(1, Sides.LEFT, 1);
+    CANSparkMax leftMotor = setupCANSparkMax(1, Sides.LEFT, true);
 
-    CANSparkMax leftFollowerID2 = setupCANSparkMax(2, Sides.FOLLOWER, 2);
-    leftFollowerID2.follow(leftMotor, 2);
+    CANSparkMax leftFollowerID2 = setupCANSparkMax(2, Sides.FOLLOWER, false);
+    leftFollowerID2.follow(leftMotor, false);
         
     
 
-    CANSparkMax rightMotor = setupCANSparkMax(5, Sides.RIGHT, 5);
-    CANSparkMax rightFollowerID6 = setupCANSparkMax(6, Sides.FOLLOWER, 6);
-    rightFollowerID6.follow(rightMotor, 6);
+    CANSparkMax rightMotor = setupCANSparkMax(5, Sides.RIGHT, true);
+    CANSparkMax rightFollowerID6 = setupCANSparkMax(6, Sides.FOLLOWER, false);
+    rightFollowerID6.follow(rightMotor, false);
     drive = new DifferentialDrive(leftMotor, rightMotor);
     drive.setDeadband(0);
 
@@ -173,7 +173,7 @@ public class Robot extends TimedRobot {
 
     // Note that the angle from the NavX and all implementors of WPILib Gyro
     // must be negated because getAngle returns a clockwise positive angle
-    Gyro gyro = new AnalogGyro(SPI.Port.kMXP);
+    Gyro gyro = new AnalogGyro(0);
     gyroAngleRadians = () -> -1 * Math.toRadians(gyro.getAngle());
 
     // Set the update rate instead of using flush because of a ntcore bug
