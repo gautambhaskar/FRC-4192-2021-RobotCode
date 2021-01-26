@@ -48,7 +48,7 @@ public class Drivetrain extends SubsystemBase {
   private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftLead, leftFollower1);
   private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightLead, rightFollower1);
 
-  private static final ADIS16448_IMU imu = new ADIS16448_IMU();
+  // private static final ADIS16448_IMU imu = new ADIS16448_IMU();
 
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
   private final DifferentialDriveOdometry m_odometry;
@@ -60,14 +60,14 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
-    init_angle = imu.getAngle();
-    init_original_angle = imu.getAngle();
+    // init_angle = imu.getAngle();
+    // init_original_angle = imu.getAngle();
     init_position = leftLead.getEncoder().getPosition();
 
-    //leftLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
-    //leftLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
-    //rightLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
-    //rightLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
+    // leftLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
+    // leftLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
+    // rightLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
+    // rightLead.getEncoder().setVelocityConversionFactor(drivePID.positionConversionFactor);
 
     leftLead.setInverted(true);
     leftLead.getEncoder().setPosition(0);
@@ -82,7 +82,7 @@ public class Drivetrain extends SubsystemBase {
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
-    robotAngle = tab.add("Robot Angle", init_angle - imu.getAngle()).getEntry();
+    // robotAngle = tab.add("Robot Angle", init_angle - imu.getAngle()).getEntry();
     drivetrainSpeed = tuningTab.add("Drivetrain Speed", leftLead.getEncoder().getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 4).getEntry();
     drivetrainPosition = tuningTab.add("Drivetrain Position", init_position - leftLead.getEncoder().getPosition())
@@ -93,7 +93,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
-    robotAngle.setDouble(init_angle - imu.getAngle());
+    // robotAngle.setDouble(init_angle - imu.getAngle());
     SmartDashboard.putNumber("Drivetrain Angle Diff", returnAngle());
     drivetrainSpeed.setDouble(leftLead.getEncoder().getVelocity());
     drivetrainPosition.setDouble(init_position - leftLead.getEncoder().getPosition());
@@ -117,7 +117,8 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the curent offset from the calibrated/recalibrated angle
   public double returnAngle() {
-    return (init_angle - imu.getAngle()); // Replace 0 w sensor val
+    return 0;
+    // return (init_angle - imu.getAngle()); // Replace 0 w sensor val
   }
 
   public Pose2d returnPose() {
@@ -126,7 +127,8 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the current offset from the original angle
   public double returnNativeAngle() {
-    return (init_original_angle - imu.getAngle());
+    return 0;
+    // return (init_original_angle - imu.getAngle());
   }
 
   // shows the distance the robot has traveled relative to starting position
@@ -147,17 +149,17 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double returnAngularRate() {
-    return imu.getRate();
+    return 0;
+    // return imu.getRate();
   }
 
   public DifferentialDriveWheelSpeeds returnWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(leftLead.getEncoder().getVelocity(),
-        rightLead.getEncoder().getVelocity());
+    return new DifferentialDriveWheelSpeeds(leftLead.getEncoder().getVelocity(), rightLead.getEncoder().getVelocity());
   }
 
   // makes the current angle the initial angle
   public void recalibrateAngle() {
-    init_angle = imu.getAngle();
+    // init_angle = imu.getAngle();
   }
 
   // sets the current position as the new initial position

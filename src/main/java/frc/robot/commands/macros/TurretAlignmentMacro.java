@@ -26,7 +26,8 @@ public class TurretAlignmentMacro extends SequentialCommandGroup {
   public TurretAlignmentMacro(Drivetrain m_drive, Turret m_turret, Hood m_hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new FieldBasedTurretTurn(m_drive, m_turret), new ResetHood(m_hood), new AlignWithTarget(m_turret),
-        new AlignHood(m_turret, m_hood));
+    super(new ResetHood(m_hood), new AlignWithTarget(m_turret), new AlignHood(m_turret, m_hood)); // new
+                                                                                                  // FieldBasedTurretTurn(m_drive,
+                                                                                                  // m_turret),
   }
 };
