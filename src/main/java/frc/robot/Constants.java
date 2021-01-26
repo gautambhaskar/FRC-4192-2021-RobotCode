@@ -152,18 +152,19 @@ public final class Constants {
         public static double maxSpeed = 0.2;
     }
 
-    //gather data and find line of best fit (limelightArea (distance from target) (x) vs. hood position (y))
+    // gather data and find line of best fit (limelightArea (distance from target)
+    // (x) vs. hood position (y))
     public static class shooterModel {
         public static double a = 0.03;
         public static double b = -0.57;
         public static double c = -0.95;
-        public static double kP = 0.3;
-        public static double kI = 0;
+        public static double kP = 0.5;
+        public static double kI = 0; // Consider increasing to 0.05
         public static double kD = 0;
         public static double kFF = 0;
         public static double kMin = -0.4;
         public static double kMax = 0.4;
         public static double tolerance = 0.25;
         public static double resetPosition = -3.38;
-    } 
+    }
 }
