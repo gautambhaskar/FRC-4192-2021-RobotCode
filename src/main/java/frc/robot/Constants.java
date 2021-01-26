@@ -159,12 +159,12 @@ public final class Constants {
         public static double b = -0.57;
         public static double c = -0.95;
         public static double kP = 0.5;
-        public static double kI = 0.008; // Consider increasing to 0.05
+        public static double kI = 0; // Consider increasing to 0.05
         public static double kD = 0;
         public static double kFF = 0;
-        public static double kMin = -0.4;
-        public static double kMax = 0.4;
-        public static double tolerance = 0.1;
-        public static double resetPosition = -3.31;
+        public static double kMin = -0.3;
+        public static double kMax = 0.3;
+        public static double tolerance = 0.05;
+        public static double resetPosition = -4.14;
     }
 }
