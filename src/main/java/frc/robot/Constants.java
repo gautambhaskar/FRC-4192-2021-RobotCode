@@ -76,13 +76,13 @@ public final class Constants {
     }
 
     public static class shooterPID {
-        public static double kP = 0.002;
+        public static double kP = 0.001;
         public static double kI = 0.000001;
         public static double kD = 0;
         public static double kFF = 0.0002;
-        public static double kMax = 0.8;
-        public static double kMin = -0.8;
-        public static double shooterSpeedMinimum = 3900;
+        public static double kMax = 0.9;
+        public static double kMin = -0.9;
+        public static double shooterSpeedMinimum = 3700;
     }
 
     public static class feederPID {
@@ -159,12 +159,12 @@ public final class Constants {
         public static double b = -0.57;
         public static double c = -0.95;
         public static double kP = 0.5;
-        public static double kI = 0; // Consider increasing to 0.05
+        public static double kI = 0.05; // Consider increasing to 0.05
         public static double kD = 0;
         public static double kFF = 0;
-        public static double kMin = -0.3;
-        public static double kMax = 0.3;
-        public static double tolerance = 0.05;
-        public static double resetPosition = -4.14;
+        public static double kMin = -0.15;
+        public static double kMax = 0.15;
+        public static double tolerance = 0.1;
+        public static double resetPosition = -3.9;
     }
 }
