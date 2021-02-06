@@ -17,12 +17,12 @@ public class AlignHood extends CommandBase {
   private Hood hood;
   private double area;
   private double hoodSetpoint;
-  
+
   public AlignHood(Turret m_turret, Hood m_hood) {
     turret = m_turret;
     hood = m_hood;
     area = turret.limelightArea();
-    hoodSetpoint = shooterModel.a * (Math.pow(area,2)) + shooterModel.b * (area) + shooterModel.c;
+    hoodSetpoint = shooterModel.a * (Math.pow(area, 2)) + shooterModel.b * (area) + shooterModel.c;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_turret, m_hood);
   }
@@ -38,7 +38,7 @@ public class AlignHood extends CommandBase {
   public void execute() {
 
   }
-  
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
@@ -48,6 +48,6 @@ public class AlignHood extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(hoodSetpoint-hood.getPosition()) < shooterModel.tolerance;
+    return Math.abs(hoodSetpoint - hood.getPosition()) < shooterModel.tolerance;
   }
 }

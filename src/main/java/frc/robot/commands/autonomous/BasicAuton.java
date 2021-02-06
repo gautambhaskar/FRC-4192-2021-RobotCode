@@ -9,7 +9,6 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.drive.DriveForDistance;
-import frc.robot.commands.drive.DriveSetDistance;
 import frc.robot.commands.drive.DriveSetTime;
 import frc.robot.subsystems.Drivetrain;
 

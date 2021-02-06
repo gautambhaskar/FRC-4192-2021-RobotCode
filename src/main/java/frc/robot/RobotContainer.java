@@ -10,6 +10,7 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -169,6 +170,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    /*
     if (Constants.trajectoryMapping) {
 
       RamseteCommand ramseteCommand = new RamseteCommand(Robot.testTrajectory, m_drive::returnPose,
@@ -184,5 +186,20 @@ public class RobotContainer {
     } else {
       return null;// m_distanceauton;
     }
+    */
+    if (new BooleanSupplier(()->path).getAsBoolean()==true) {
+      
+    } else {
+
+    }
+
+    /* Path A
+    
+    if(red object present == true) {
+      run RedSearchAutonA();
+    } else {
+      run BlueSearchAutonA();
+    }
+     */
   }
 }
