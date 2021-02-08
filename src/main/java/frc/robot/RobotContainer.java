@@ -187,11 +187,7 @@ public class RobotContainer {
       return null;// m_distanceauton;
     }
     */
-    if (new BooleanSupplier(()->path).getAsBoolean()==true) {
-      
-    } else {
-
-    }
+    return null;
 
     /* Path A
     

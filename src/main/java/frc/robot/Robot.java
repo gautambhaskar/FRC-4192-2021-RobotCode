@@ -12,13 +12,21 @@ import java.util.Timer;
 
 import com.revrobotics.CANSparkMax;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.vision.VisionThread;
 //import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -32,6 +40,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.subsystems.Turret;
 import frc.robot.Constants.drivePID;
+import frc.robot.GripPipeline;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,6 +55,16 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   public static Trajectory testTrajectory;
+  private static final int IMG_WIDTH = 320;
+  private static final int IMG_HEIGHT = 240;
+
+  private VisionThread visionThread;
+  private double centerX = 0.0;
+  private DifferentialDrive drive;
+
+  private final Object imgLock = new Object();
+  NetworkTableEntry s_centerX;
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -75,16 +94,29 @@ public class Robot extends TimedRobot {
             .addConstraint(autoVoltageConstraint);
 
     // An example trajectory to follow. All units in meters.
-    //testTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        //new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        //List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        //new Pose2d(3, 0, new Rotation2d(0)),
-        // Pass config
-        //config);
+    // testTrajectory = TrajectoryGenerator.generateTrajectory(
+    // Start at the origin facing the +X direction
+    // new Pose2d(0, 0, new Rotation2d(0)),
+    // Pass through these two interior waypoints, making an 's' curve path
+    // List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+    // End 3 meters straight ahead of where we started, facing forward
+    // new Pose2d(3, 0, new Rotation2d(0)),
+    // Pass config
+    // config);
 
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+
+    visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+      if (!pipeline.filterContoursOutput().isEmpty()) {
+        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+        synchronized (imgLock) {
+          centerX = r.x + (r.width / 2);
+        }
+      }
+    });
+    visionThread.start();
+    s_centerX = Shuffleboard.getTab("Camera Tab").add("GRIP centerX", 0).getEntry();
   }
 
   /**
@@ -98,6 +130,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
@@ -156,7 +189,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    double centerX;
+    synchronized (imgLock) {
+      centerX = this.centerX;
+    }
+    double turn = centerX - (IMG_WIDTH / 2);
+    s_centerX.setDouble(centerX);
 
+    edu.wpi.first.wpilibj.Timer.delay(1.0 / 20.0);
   }
 
   @Override
