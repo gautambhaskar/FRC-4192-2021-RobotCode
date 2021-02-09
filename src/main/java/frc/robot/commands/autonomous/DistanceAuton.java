@@ -31,7 +31,7 @@ public class DistanceAuton extends SequentialCommandGroup {
   public DistanceAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DriveSetDistance(drive, 77.25));
+    super(new DriveSetDistance(drive, 15));
     m_drive = drive;
   }
 }
