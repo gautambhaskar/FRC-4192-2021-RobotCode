@@ -111,7 +111,7 @@ public final class Constants {
     public static boolean trajectoryMapping = false;
 
     public static class drivePID {
-        public static double kP = .05;
+        public static double kP = .08;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0;
@@ -119,7 +119,8 @@ public final class Constants {
         public static double kMin = -1;
         public static double rotate_kP = 0.02;
         public static double autonMaxSpeed = 0.7;
-        public static double tolerance = 0.05;
+        public static double tolerance = 4;
+        public static double feetToRotations = 5.15;
 
         public static double kB = 2.0;
         public static double kZeta = 0.7;

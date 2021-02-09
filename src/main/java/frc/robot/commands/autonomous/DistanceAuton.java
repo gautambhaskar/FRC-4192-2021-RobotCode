@@ -9,6 +9,8 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.drive.DriveForDistance;
+import frc.robot.commands.drive.DriveSetDistance;
+import frc.robot.commands.drive.RecalPosition;
 import frc.robot.commands.drive.SetRotate;
 import frc.robot.commands.macros.ShootingMacro;
 import frc.robot.subsystems.Drivetrain;
@@ -29,8 +31,7 @@ public class DistanceAuton extends SequentialCommandGroup {
   public DistanceAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DriveForDistance(drive, 40), new SetRotate(drive, 90),
-        new ShootingMacro(drive, turret, shooter, index, hood));
+    super(new DriveSetDistance(drive, 77.25));
     m_drive = drive;
   }
 }
