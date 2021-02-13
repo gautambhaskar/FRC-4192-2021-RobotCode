@@ -64,6 +64,7 @@ public class Robot extends TimedRobot {
 
   private final Object imgLock = new Object();
   NetworkTableEntry s_centerX;
+  int frameCnt = 0;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -78,7 +79,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Code Version No.", 1.0);
     SmartDashboard.putString("Branch", "main");
     m_robotContainer = new RobotContainer();
-    CameraServer.getInstance().startAutomaticCapture();
 
     // Generate Trajectory
     // Create a voltage constraint to ensure we don't accelerate too fast
@@ -108,6 +108,7 @@ public class Robot extends TimedRobot {
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 
     visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
+      frameCnt++;
       if (!pipeline.filterContoursOutput().isEmpty()) {
         Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
         synchronized (imgLock) {
@@ -116,7 +117,7 @@ public class Robot extends TimedRobot {
       }
     });
     visionThread.start();
-    s_centerX = Shuffleboard.getTab("Camera Tab").add("GRIP centerX", 0).getEntry();
+    s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
   }
 
   /**
@@ -130,7 +131,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
@@ -171,6 +171,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    double centerX;
+    synchronized (imgLock) {
+      centerX = this.centerX;
+    }
+    s_centerX.setDouble(centerX);
+
+    edu.wpi.first.wpilibj.Timer.delay(1.0 / 20.0);
   }
 
   @Override
@@ -189,14 +196,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    double centerX;
-    synchronized (imgLock) {
-      centerX = this.centerX;
-    }
-    double turn = centerX - (IMG_WIDTH / 2);
-    s_centerX.setDouble(centerX);
 
-    edu.wpi.first.wpilibj.Timer.delay(1.0 / 20.0);
   }
 
   @Override
