@@ -109,20 +109,18 @@ public class Robot extends TimedRobot {
 
     visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
 
-    if (!pipeline.filterContoursOutput().isEmpty()) {
-    Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-    synchronized (imgLock) {
-    centerX = r.x + (r.width / 2);
-    frameCnt++;
-    }
-    }
+      if (!pipeline.filterContoursOutput().isEmpty()) {
+        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+        synchronized (imgLock) {
+          centerX = r.x + (r.width / 2);
+          frameCnt++;
+        }
+      }
     });
     visionThread.start();
     s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
-    s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count",
-    0).getEntry();
+    s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count", 0).getEntry();
 
-    
   }
 
   /**
@@ -179,8 +177,8 @@ public class Robot extends TimedRobot {
     double centerX;
     double frameCnt;
     synchronized (imgLock) {
-    centerX = this.centerX;
-    frameCnt = this.frameCnt;
+      centerX = this.centerX;
+      frameCnt = this.frameCnt;
     }
     s_centerX.setDouble(centerX);
     s_frameCnt.setDouble(frameCnt);
