@@ -104,23 +104,25 @@ public class Robot extends TimedRobot {
     // Pass config
     // config);
 
-    // UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    // camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 
-    // visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
+    visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
 
-    // if (!pipeline.filterContoursOutput().isEmpty()) {
-    // Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-    // synchronized (imgLock) {
-    // centerX = r.x + (r.width / 2);
-    // frameCnt++;
-    // }
-    // }
-    // });
-    // visionThread.start();
-    // s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
-    // s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count",
-    // 0).getEntry();
+    if (!pipeline.filterContoursOutput().isEmpty()) {
+    Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+    synchronized (imgLock) {
+    centerX = r.x + (r.width / 2);
+    frameCnt++;
+    }
+    }
+    });
+    visionThread.start();
+    s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
+    s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count",
+    0).getEntry();
+
+    
   }
 
   /**
@@ -174,16 +176,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    // double centerX;
-    // double frameCnt;
-    // synchronized (imgLock) {
-    // centerX = this.centerX;
-    // frameCnt = this.frameCnt;
-    // }
-    // s_centerX.setDouble(centerX);
-    // s_frameCnt.setDouble(frameCnt);
+    double centerX;
+    double frameCnt;
+    synchronized (imgLock) {
+    centerX = this.centerX;
+    frameCnt = this.frameCnt;
+    }
+    s_centerX.setDouble(centerX);
+    s_frameCnt.setDouble(frameCnt);
 
-    // edu.wpi.first.wpilibj.Timer.delay(1.0 / 20.0);
+    edu.wpi.first.wpilibj.Timer.delay(1.0 / 20.0);
   }
 
   @Override
