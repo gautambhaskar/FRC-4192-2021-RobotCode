@@ -106,17 +106,18 @@ public class Robot extends TimedRobot {
 
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-    
-    // visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-    //   if (!pipeline.filterContoursOutput().isEmpty()) {
-    //     Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-    //     synchronized (imgLock) {
-    //       centerX = r.x + (r.width / 2);
-    //     }
-    //   }
-    // });
-    // visionThread.start();
-    // s_centerX = Shuffleboard.getTab("Camera Tab").add("GRIP centerX", 0).getEntry();
+
+    visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
+      if (!pipeline.filterContoursOutput().isEmpty()) {
+        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+        synchronized (imgLock) {
+        centerX = r.x + (r.width / 2);
+      }
+    }
+    });
+    visionThread.start();
+    s_centerX = Shuffleboard.getTab("Camera Tab").add("GRIP centerX",
+    0).getEntry();
   }
 
   /**
