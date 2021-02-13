@@ -111,13 +111,12 @@ public class Robot extends TimedRobot {
       if (!pipeline.filterContoursOutput().isEmpty()) {
         Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
         synchronized (imgLock) {
-        centerX = r.x + (r.width / 2);
+          centerX = r.x + (r.width / 2);
+        }
       }
-    }
     });
     visionThread.start();
-    s_centerX = Shuffleboard.getTab("Camera Tab").add("GRIP centerX",
-    0).getEntry();
+    s_centerX = Shuffleboard.getTab("Camera Tab").add("GRIP centerX", 0).getEntry();
   }
 
   /**
