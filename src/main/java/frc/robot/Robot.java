@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
   private DifferentialDrive drive;
 
   private final Object imgLock = new Object();
-  NetworkTableEntry s_centerX;
+  NetworkTableEntry s_centerX, s_frameCnt;
   int frameCnt = 0;
 
   /**
@@ -108,16 +108,18 @@ public class Robot extends TimedRobot {
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 
     visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
-      frameCnt++;
+
       if (!pipeline.filterContoursOutput().isEmpty()) {
         Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
         synchronized (imgLock) {
           centerX = r.x + (r.width / 2);
+          frameCnt++;
         }
       }
     });
     visionThread.start();
     s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
+    s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count", 0).getEntry();
   }
 
   /**
@@ -172,10 +174,13 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     double centerX;
+    double frameCnt;
     synchronized (imgLock) {
       centerX = this.centerX;
+      frameCnt = this.frameCnt;
     }
     s_centerX.setDouble(centerX);
+    s_frameCnt.setDouble(frameCnt);
 
     edu.wpi.first.wpilibj.Timer.delay(1.0 / 20.0);
   }
