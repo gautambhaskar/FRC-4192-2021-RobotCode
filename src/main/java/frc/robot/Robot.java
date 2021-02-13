@@ -104,9 +104,10 @@ public class Robot extends TimedRobot {
     // Pass config
     // config);
 
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-
+    s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
+    s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count", 0).getEntry();
     visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
 
       if (!pipeline.filterContoursOutput().isEmpty()) {
@@ -118,9 +119,7 @@ public class Robot extends TimedRobot {
       }
     });
     visionThread.start();
-    s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
-    s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count", 0).getEntry();
-
+    
   }
 
   /**
@@ -179,11 +178,11 @@ public class Robot extends TimedRobot {
     synchronized (imgLock) {
       centerX = this.centerX;
       frameCnt = this.frameCnt;
+      s_centerX.setDouble(this.centerX);
+      s_frameCnt.setDouble(this.frameCnt);
     }
-    s_centerX.setDouble(centerX);
-    s_frameCnt.setDouble(frameCnt);
 
-    edu.wpi.first.wpilibj.Timer.delay(1.0 / 20.0);
+    edu.wpi.first.wpilibj.Timer.delay(1.0 / 5.0);
   }
 
   @Override
