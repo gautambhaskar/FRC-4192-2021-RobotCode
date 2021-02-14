@@ -168,4 +168,26 @@ public final class Constants {
         public static double tolerance = 0.1;
         public static double resetPosition = -3.9;
     }
+
+    public static class visionPosition {
+        public static class blueA {
+            public static double left = 0;
+            public static double right = 0;
+        }
+
+        public static class blueB {
+            public static double left = 0;
+            public static double right = 0;
+        }
+
+        public static class redA {
+            public static double left = 0;
+            public static double right = 0;
+        }
+
+        public static class redB {
+            public static double left = 0;
+            public static double right = 0;
+        }
+    }
 }

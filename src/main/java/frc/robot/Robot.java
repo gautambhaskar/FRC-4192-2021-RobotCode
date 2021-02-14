@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
@@ -18,6 +19,7 @@ import org.opencv.imgproc.Imgproc;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.vision.VisionThread;
 //import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -40,6 +42,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.subsystems.Turret;
 import frc.robot.Constants.drivePID;
+import org.opencv.core.MatOfPoint;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -58,12 +61,16 @@ public class Robot extends TimedRobot {
   private static final int IMG_HEIGHT = 240;
 
   private VisionThread visionThread;
+  private double maxCenterX = 0.0;
   private double centerX = 0.0;
+  private double area = 0.0;
   private DifferentialDrive drive;
 
   private final Object imgLock = new Object();
-  NetworkTableEntry s_centerX, s_frameCnt;
-  int frameCnt = 0;
+  NetworkTableEntry s_centerX, s_frameCnt, s_area;
+  int frameCnt = 0;  
+
+  
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -79,40 +86,29 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Branch", "main");
     m_robotContainer = new RobotContainer();
 
-    // Generate Trajectory
-    // Create a voltage constraint to ensure we don't accelerate too fast
-    var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-        new SimpleMotorFeedforward(drivePID.kS, drivePID.kV, drivePID.kA), drivePID.kDriveKinematics, 10);
-
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(drivePID.kMaxSpeedMetersPerSecond,
-        drivePID.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(drivePID.kDriveKinematics)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
-
-    // An example trajectory to follow. All units in meters.
-    // testTrajectory = TrajectoryGenerator.generateTrajectory(
-    // Start at the origin facing the +X direction
-    // new Pose2d(0, 0, new Rotation2d(0)),
-    // Pass through these two interior waypoints, making an 's' curve path
-    // List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-    // End 3 meters straight ahead of where we started, facing forward
-    // new Pose2d(3, 0, new Rotation2d(0)),
-    // Pass config
-    // config);
-
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
     s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count", 0).getEntry();
+    s_area = Shuffleboard.getTab("Camera").add("Grip area", 0).getEntry();
     visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
-
-      if (!pipeline.filterContoursOutput().isEmpty()) {
-        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+      ArrayList<MatOfPoint> contourList = pipeline.filterContoursOutput();
+      if (!contourList.isEmpty()) {
+        int numBalls = contourList.size();
+        double maxA = 0;
+        int maxIndex = 0;
+        for (int i = 0; i < numBalls; i++) {
+          Rect r = Imgproc.boundingRect(contourList.get(i));
+          double a = r.area();
+          if (a > maxA) {
+            maxA = a;
+            maxIndex = i;
+          }
+        }
+        Rect r = Imgproc.boundingRect(contourList.get(maxIndex));
         synchronized (imgLock) {
           centerX = r.x + (r.width / 2);
+          area = r.area();
           frameCnt++;
         }
       }
@@ -172,13 +168,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    double centerX;
-    double frameCnt;
     synchronized (imgLock) {
-      centerX = this.centerX;
-      frameCnt = this.frameCnt;
       s_centerX.setDouble(this.centerX);
       s_frameCnt.setDouble(this.frameCnt);
+      s_area.setDouble(this.area);
+      maxCenterX = this.centerX;
     }
 
     edu.wpi.first.wpilibj.Timer.delay(1.0 / 5.0);
@@ -214,5 +208,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public double getMaxCenterX() {
+    return maxCenterX;
   }
 }

@@ -29,6 +29,10 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import frc.robot.Constants.drivePID;
+import frc.robot.Constants.visionPosition.blueA;
+import frc.robot.Constants.visionPosition.blueB;
+import frc.robot.Constants.visionPosition.redA;
+import frc.robot.Constants.visionPosition.redB;
 import frc.robot.commands.turret.AlignWithTarget;
 import frc.robot.commands.drive.DefaultDrive;
 import frc.robot.commands.autonomous.DistanceAuton;
@@ -42,6 +46,7 @@ import frc.robot.commands.hood.RunHood;
 import frc.robot.commands.index.IndexIn;
 import frc.robot.commands.index.IndexOut;
 import frc.robot.commands.turret.TurretTurn;
+import frc.robot.commands.vision.VisionDefault;
 import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.shootingSystem.RunShooter;
 import frc.robot.commands.macros.ShootingMacro;
@@ -54,6 +59,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.TestingSystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -80,6 +86,7 @@ public class RobotContainer {
   private final Turret m_Turret = new Turret();
   private final TestingSystem m_motor = new TestingSystem();
   private final Hood m_Hood = new Hood();
+  private final Vision m_vision = new Vision();
 
   // Commands
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
@@ -103,6 +110,7 @@ public class RobotContainer {
   private final RunHood m_runHoodForward = new RunHood(m_Hood, 0.2);
   private final RunHood m_runHoodBackward = new RunHood(m_Hood, -0.2);
   private final ResetHood m_resetHood = new ResetHood(m_Hood);
+  private final VisionDefault m_visionDefault = new VisionDefault(m_vision);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_Turret);
   private final TurretAlignmentMacro m_turretMacro = new TurretAlignmentMacro(m_drive, m_Turret, m_Hood);
@@ -135,6 +143,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     m_drive.setDefaultCommand(m_driveCommand);
+    m_vision.setDefaultCommand(m_visionDefault);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -170,32 +179,28 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    double centerX = m_vision.getMaxCenterX();
+    if (centerX > blueA.left && centerX < blueA.right) {
+      return null;
+    }
+
+    else if (centerX > blueB.left && centerX < blueB.right) {
+      return null;
+    }
+
+    else if (centerX > redA.left && centerX < redA.right) {
+      return null;
+    }
+
+    else if (centerX > redB.left && centerX < redB.right) {
+      return null;
+    }
+
     /*
-    if (Constants.trajectoryMapping) {
-
-      RamseteCommand ramseteCommand = new RamseteCommand(Robot.testTrajectory, m_drive::returnPose,
-          new RamseteController(drivePID.kB, drivePID.kZeta),
-          new SimpleMotorFeedforward(drivePID.kS, drivePID.kV, drivePID.kA), drivePID.kDriveKinematics,
-          m_drive::returnWheelSpeeds, new PIDController(drivePID.kPDriveVel, 0, 0),
-          new PIDController(drivePID.kPDriveVel, 0, 0),
-          // RamseteCommand passes volts to the callback
-          m_drive::tankDrive, m_drive);
-
-      // Run path following command, then stop at the end.
-      return ramseteCommand.andThen(() -> m_drive.tankDrive(0, 0));
-    } else {
-      return null;// m_distanceauton;
-    }
-    */
-    return null;
-
-    /* Path A
-    
-    if(red object present == true) {
-      run RedSearchAutonA();
-    } else {
-      run BlueSearchAutonA();
-    }
+     * Path A
+     * 
+     * if(red object present == true) { run RedSearchAutonA(); } else { run
+     * BlueSearchAutonA(); }
      */
   }
 }
