@@ -4,22 +4,21 @@
 
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import frc.robot.Constants;
 import frc.robot.commands.drive.DriveForDistance;
-import frc.robot.commands.drive.RotateInPlace;
+import frc.robot.commands.intake.IntakeBalls;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class BlueSearchAutonB extends SequentialCommandGroup {
-  /** Creates a new BlueSearchAuton. */
-  public BlueSearchAutonB(Drivetrain m_drive, Intake m_intake) {
+public class DriveAndIntake extends ParallelRaceGroup {
+  /** Creates a new DriveAndIntake. */
+  public DriveAndIntake(Drivetrain m_drive, Intake m_intake, double m_distance) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DriveAndIntake(m_drive, m_intake, 0), new RotateInPlace(m_drive, -45), new DriveAndIntake(m_drive, m_intake, 0), new RotateInPlace(m_drive, 90), new DriveAndIntake(m_drive, m_intake, 0), 
-    new RotateInPlace(m_drive, -45), new DriveForDistance(m_drive, 0));
-    // Change zeroes to correct distances
+    addCommands(new DriveForDistance(m_drive, m_distance), new IntakeBalls(m_intake, Constants.intakeSpeed));
   }
 }

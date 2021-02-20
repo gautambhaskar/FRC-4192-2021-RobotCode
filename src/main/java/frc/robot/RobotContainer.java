@@ -36,6 +36,8 @@ import frc.robot.Constants.visionPosition.redB;
 import frc.robot.commands.turret.AlignWithTarget;
 import frc.robot.commands.drive.DefaultDrive;
 import frc.robot.commands.autonomous.DistanceAuton;
+import frc.robot.commands.autonomous.RedSearchAutonA;
+import frc.robot.commands.autonomous.RedSearchAutonB;
 import frc.robot.commands.drive.DriveForDistance;
 import frc.robot.commands.drive.DriveStraight;
 import frc.robot.commands.intake.IntakeBalls;
@@ -51,6 +53,8 @@ import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.shootingSystem.RunShooter;
 import frc.robot.commands.macros.ShootingMacro;
 import frc.robot.commands.autonomous.BasicAuton;
+import frc.robot.commands.autonomous.BlueSearchAutonA;
+import frc.robot.commands.autonomous.BlueSearchAutonB;
 import frc.robot.commands.testingSystem.TestMotor;
 import frc.robot.commands.macros.TurretAlignmentMacro;
 import frc.robot.subsystems.Drivetrain;
@@ -181,18 +185,24 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     double centerX = m_vision.getMaxCenterX();
     if (centerX > blueA.left && centerX < blueA.right) {
-      return null;
+      return new BlueSearchAutonA(m_drive, m_intake);
     }
 
     else if (centerX > blueB.left && centerX < blueB.right) {
-      return null;
+      return new BlueSearchAutonB(m_drive, m_intake);
+
     }
 
     else if (centerX > redA.left && centerX < redA.right) {
-      return null;
+      return new RedSearchAutonA(m_drive, m_intake);
     }
 
     else if (centerX > redB.left && centerX < redB.right) {
+      return new RedSearchAutonB(m_drive, m_intake);
+
+    } 
+    
+    else {
       return null;
     }
 
