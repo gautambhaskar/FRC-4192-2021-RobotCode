@@ -7,6 +7,7 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.Constants.drivePID;
 import frc.robot.commands.drive.DriveForDistance;
 import frc.robot.commands.drive.RotateInPlace;
 
@@ -18,9 +19,10 @@ public class BlueSearchAutonA extends SequentialCommandGroup {
   public BlueSearchAutonA(Drivetrain m_drive, Intake m_intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DriveAndIntake(m_drive, m_intake, 0), new RotateInPlace(m_drive, -71.6), new DriveAndIntake(m_drive, m_intake, 15.8*drivePID.feetToRotations), 
-    new RotateInPlace(m_drive, 98.2), new DriveAndIntake(m_drive, m_intake, 7.9*drivePID.feetToRotations), 
-    new RotateInPlace(m_drive, -26.6),new DriveAndIntake(m_drive, m_intake, 5.6*drivePID.feetToRotations));
+    addCommands(new DriveAndIntake(m_drive, m_intake, 0), new RotateInPlace(m_drive, -71.6),
+        new DriveAndIntake(m_drive, m_intake, 15.8 * drivePID.feetToRotations), new RotateInPlace(m_drive, 98.2),
+        new DriveAndIntake(m_drive, m_intake, 7.9 * drivePID.feetToRotations), new RotateInPlace(m_drive, -26.6),
+        new DriveAndIntake(m_drive, m_intake, 5.6 * drivePID.feetToRotations));
     // Change zeroes to correct distances
   }
 }
