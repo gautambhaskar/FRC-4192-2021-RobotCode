@@ -9,6 +9,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.commands.drive.DriveForDistance;
 import frc.robot.commands.drive.RotateInPlace;
 import frc.robot.subsystems.Intake;
+import frc.robot.Constants.drivePID;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -18,8 +19,11 @@ public class BlueSearchAutonB extends SequentialCommandGroup {
   public BlueSearchAutonB(Drivetrain m_drive, Intake m_intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DriveAndIntake(m_drive, m_intake, 0), new RotateInPlace(m_drive, -45), new DriveAndIntake(m_drive, m_intake, 0), new RotateInPlace(m_drive, 90), new DriveAndIntake(m_drive, m_intake, 0), 
-    new RotateInPlace(m_drive, -45), new DriveForDistance(m_drive, 0));
+    addCommands(new RotateInPlace(m_drive, 11.3),
+        new DriveAndIntake(m_drive, m_intake, 12.75 * drivePID.feetToRotations), new RotateInPlace(m_drive, -56.3),
+        new DriveAndIntake(m_drive, m_intake, 7.1 * drivePID.feetToRotations), new RotateInPlace(m_drive, 90),
+        new DriveAndIntake(m_drive, m_intake, 7.1 * drivePID.feetToRotations), new RotateInPlace(m_drive, -45),
+        new DriveForDistance(m_drive, 2.5 * drivePID.feetToRotations));
     // Change zeroes to correct distances
   }
 }
