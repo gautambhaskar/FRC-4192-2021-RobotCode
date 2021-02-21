@@ -68,9 +68,7 @@ public class Robot extends TimedRobot {
 
   private final Object imgLock = new Object();
   NetworkTableEntry s_centerX, s_frameCnt, s_area;
-  int frameCnt = 0;  
-
-  
+  int frameCnt = 0;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -84,8 +82,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     SmartDashboard.putNumber("Code Version No.", 1.0);
     SmartDashboard.putString("Branch", "main");
-    m_robotContainer = new RobotContainer();
-
+    m_robotContainer = new RobotContainer(() -> getMaxCenterX());
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
@@ -147,6 +144,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    synchronized (imgLock) {
+      s_centerX.setDouble(this.centerX);
+      s_frameCnt.setDouble(this.frameCnt);
+      s_area.setDouble(this.area);
+      maxCenterX = this.centerX;
+    }
+
+    edu.wpi.first.wpilibj.Timer.delay(1.0 / 5.0);
   }
 
   /**
@@ -155,6 +160,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    visionThread.interrupt();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -168,18 +174,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    synchronized (imgLock) {
-      s_centerX.setDouble(this.centerX);
-      s_frameCnt.setDouble(this.frameCnt);
-      s_area.setDouble(this.area);
-      maxCenterX = this.centerX;
-    }
 
-    edu.wpi.first.wpilibj.Timer.delay(1.0 / 5.0);
   }
 
   @Override
   public void teleopInit() {
+    visionThread.interrupt();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

@@ -26,14 +26,13 @@ public class Vision extends SubsystemBase {
   private double maxCenterX = 0.0;
   private double centerX = 0.0;
   private double area = 0.0;
-  private DifferentialDrive drive;
 
   private static final int IMG_WIDTH = 320;
   private static final int IMG_HEIGHT = 240;
 
   private final Object imgLock = new Object();
   NetworkTableEntry s_centerX, s_frameCnt, s_area;
-  int frameCnt = 0;  
+  int frameCnt = 0;
 
   public Vision() {
     init();
@@ -44,7 +43,7 @@ public class Vision extends SubsystemBase {
     // This method will be called once per scheduler run
 
   }
-  
+
   public void init() {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
@@ -86,8 +85,12 @@ public class Vision extends SubsystemBase {
 
     edu.wpi.first.wpilibj.Timer.delay(1.0 / 5.0);
   }
-  
+
   public double getMaxCenterX() {
     return maxCenterX;
+  }
+
+  public void stopThread() {
+    visionThread.interrupt();
   }
 }

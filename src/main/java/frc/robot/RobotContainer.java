@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -78,6 +79,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+ 
+  private final DoubleSupplier centerX;
+  
   // Controllers
   private final XboxController driveController = new XboxController(Constants.driveController);
   private final XboxController systemsController = new XboxController(Constants.systemsController);
@@ -123,6 +127,11 @@ public class RobotContainer {
 
   // Autonomous Commands
   private final BasicAuton m_basicauton = new BasicAuton(m_drive);
+  private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
+  private final BlueSearchAutonB autonBlueB = new BlueSearchAutonB(m_drive, m_intake);
+  private final RedSearchAutonA autonRedA = new RedSearchAutonA(m_drive, m_intake);
+  private final RedSearchAutonB autonRedB = new RedSearchAutonB(m_drive, m_intake);
+  private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
   private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive, m_Turret, m_ShootingSystem, m_Index, m_Hood);
 
@@ -145,9 +154,9 @@ public class RobotContainer {
       () -> Math.abs(driveController.getX(Hand.kRight)) < 0.05 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05
           && driveController.getTriggerAxis(Hand.kRight) < 0.6 && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
 
-  public RobotContainer() {
+  public RobotContainer(DoubleSupplier maxCenterX) {
     m_drive.setDefaultCommand(m_driveCommand);
-    m_vision.setDefaultCommand(m_visionDefault);
+    centerX = maxCenterX;
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -183,27 +192,24 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    double centerX = m_vision.getMaxCenterX();
-    if (centerX > blueA.left && centerX < blueA.right) {
-      return new BlueSearchAutonA(m_drive, m_intake);
+    if (centerX.getAsDouble() > blueA.left && centerX.getAsDouble() < blueA.right) {
+      return autonBlueA;
     }
 
-    else if (centerX > blueB.left && centerX < blueB.right) {
-      return new BlueSearchAutonB(m_drive, m_intake);
-
+    else if (centerX.getAsDouble() > blueB.left && centerX.getAsDouble() < blueB.right) {
+      return autonBlueB;
     }
 
-    else if (centerX > redA.left && centerX < redA.right) {
-      return new RedSearchAutonA(m_drive, m_intake);
+    else if (centerX.getAsDouble() > redA.left && centerX.getAsDouble() < redA.right) {
+      return autonRedA;
     }
 
-    else if (centerX > redB.left && centerX < redB.right) {
-      return new RedSearchAutonB(m_drive, m_intake);
+    else if (centerX.getAsDouble() > redB.left && centerX.getAsDouble() < redB.right) {
+      return autonRedB;
+    }
 
-    } 
-    
     else {
-      return null;
+      return zeroDistance;
     }
 
     /*
