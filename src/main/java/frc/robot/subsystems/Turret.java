@@ -7,13 +7,8 @@
 
 package frc.robot.subsystems;
 
-import java.util.Arrays;
-import java.util.Map;
-
 import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
 
@@ -26,40 +21,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.turretPID;
 import edu.wpi.cscore.HttpCamera;
-import edu.wpi.cscore.MjpegServer;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class Turret extends SubsystemBase {
   /**
    * Creates a new Turret.
    */
-  // PID Constants
-  private NetworkTableEntry kP, kI, kD, kFF, kMax, kMin;
-
   // Motor
   private final CANSparkMax turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushed);
-
-  // Controller
 
   // Encoder
   private final Encoder turretEncoder = new Encoder(0, 1);
 
-  // past PID constants
-  private double[] pastPIDconstants;
-
   // tabs
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
   private ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
-  private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
   private NetworkTable table;
   private NetworkTableEntry tx, ty, ta;
-  private double camMode;
 
   private HttpCamera limelightFeed;
 
@@ -92,8 +73,11 @@ public class Turret extends SubsystemBase {
     turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
 
     init_original_position = turretEncoder.getDistance() / 45;
-    //turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, (float) init_original_position + (float) turretPID.rightPositionLimit);
-    //turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, (float) init_original_position + (float) turretPID.leftPositionLimit);
+    // Code it in
+    // turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, (float)
+    // init_original_position + (float) turretPID.rightPositionLimit);
+    // turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, (float)
+    // init_original_position + (float) turretPID.leftPositionLimit);
 
     turretPosition = tab.add("turret angular position", turretEncoder.getDistance() / 45).getEntry();
     turretVelocity = tab.add("turret angular velocity", turretEncoder.getRate()).getEntry();
@@ -103,13 +87,9 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
-    camMode = getCamMode();
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
-    // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Turret Angular Position", initialPosition -
-    // turretMotor.getEncoder().getPosition());
     limelightA.setDouble(area);
     limelightX.setDouble(x);
     limelightY.setDouble(y);
@@ -117,25 +97,6 @@ public class Turret extends SubsystemBase {
     turretPosition.setDouble(turretEncoder.getDistance() / 45);
     turretVelocity.setDouble(turretEncoder.getRate());
     turretDirection.setBoolean(turretEncoder.getDirection());
-  }
-
-  // gets camMode
-  public double getCamMode() {
-    camMode = table.getEntry("camMode").getDouble(0);
-    return camMode;
-  }
-
-  // puts camera into smart dashboard
-  public void switchCameraMode() {
-    if (getCamMode() == 0) {
-      table.getEntry("camMode").setDouble(1);
-      visionMode.setString("Camera");
-      // cameraTab.add("Camera Mode", "Camera");
-    } else if (getCamMode() == 1) {
-      table.getEntry("camMode").setDouble(0);
-      visionMode.setString("Vision");
-      // cameraTab.add("Camera Mode", "Vision");
-    }
   }
 
   // Set Turret Speed
@@ -149,6 +110,7 @@ public class Turret extends SubsystemBase {
   public double limelightOffset() {
     return tx.getDouble(0.0);
   }
+
   public double limelightArea() {
     return ta.getDouble(0.0);
   }
@@ -167,7 +129,7 @@ public class Turret extends SubsystemBase {
   }
 
   public boolean finishedAligning() {
-    return Math.abs(tx.getDouble(0.0))<1;
+    return Math.abs(tx.getDouble(0.0)) < 1;
   }
 
   // the angular offset of turret from the original angle on robot start-up

@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.shooterPID;
 import frc.robot.subsystems.Index;
-import frc.robot.subsystems.ShootingSystem;
 
 public class AutoIndex extends CommandBase {
   /** Creates a new AutoIndex. */

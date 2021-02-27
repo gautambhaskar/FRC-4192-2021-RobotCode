@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import com.revrobotics.CANPIDController;
-
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**

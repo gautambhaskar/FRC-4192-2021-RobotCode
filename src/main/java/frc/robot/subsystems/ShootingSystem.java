@@ -8,13 +8,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,10 +20,6 @@ import frc.robot.Constants;
 //import frc.robot.Constants.shooterPID;
 import frc.robot.Constants.shooterPID;
 import frc.robot.Constants.feederPID;
-
-import java.util.Arrays;
-
-import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
@@ -42,11 +36,6 @@ public class ShootingSystem extends SubsystemBase {
   // Shooter Left 12
   // Shooter Right 13
   // Hood 14
-
-  // Constants
-  private NetworkTableEntry kP, kI, kD, kFF, kMax, kMin;
-  private NetworkTableEntry f_kP, f_kI, f_kD, f_kFF, f_kMax, f_kMin;
-  private ShuffleboardLayout shuffleFeederPID, shuffleShooterPID;
 
   // Motors
   private final CANSparkMax feederMotor = new CANSparkMax(Constants.feeder, MotorType.kBrushed);

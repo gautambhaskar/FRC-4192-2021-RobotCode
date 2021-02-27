@@ -7,54 +7,35 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.shooterModel;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Hood extends SubsystemBase {
   /**
    * Creates a new Hood.
    */
-  private final CANSparkMax hoodMotor = new CANSparkMax(Constants.hood, MotorType.kBrushless);
-  private final CANPIDController hoodController = hoodMotor.getPIDController();
-  private final CANEncoder hoodEncoder = hoodMotor.getEncoder();
-  
-  private double initPosition;
+  private final DoubleSolenoid hoodSolenoid = new DoubleSolenoid(0, 0, 0);
   private NetworkTableEntry hoodPositionEntry;
-  
+
   public Hood() {
-
-    //set PID Constants on hoodController
-    hoodController.setP(shooterModel.kP);
-    hoodController.setI(shooterModel.kI);
-    hoodController.setD(shooterModel.kD);
-    hoodController.setFF(shooterModel.kFF);
-    hoodController.setOutputRange(shooterModel.kMin, shooterModel.kMax);
-
-    initPosition = hoodEncoder.getPosition();
-    hoodPositionEntry = Shuffleboard.getTab("Data Tab").add("Hood Position", getPosition()).getEntry();
+    hoodPositionEntry = Shuffleboard.getTab("Data Tab").add("Hood Up?", false).getEntry();
   }
 
   @Override
   public void periodic() {
-    hoodPositionEntry.setDouble(getPosition());
     // This method will be called once per scheduler run
   }
 
-  public void runMotor(double output) {
-    hoodMotor.set(output);
+  public void up() {
+    hoodSolenoid.set(Value.kForward);
+    hoodPositionEntry.setBoolean(true);
   }
-  public CANPIDController getPIDController() {
-    return hoodController;
-  }
-  public double getPosition() {
-    return (hoodEncoder.getPosition()-initPosition);
+
+  public void down() {
+    hoodSolenoid.set(Value.kReverse);
+    hoodPositionEntry.setBoolean(false);
   }
 }

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.Constants.drivePID;
-import frc.robot.commands.drive.DriveForDistance;
 import frc.robot.commands.drive.RotateInPlace;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more

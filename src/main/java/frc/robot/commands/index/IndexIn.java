@@ -7,17 +7,12 @@
 
 package frc.robot.commands.index;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Index;
 
 public class IndexIn extends CommandBase {
   private final Index m_index;
   private final double m_indexSpeed;
-
-  private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
 
   public IndexIn(Index subsystem, double speed) {
     m_index = subsystem;

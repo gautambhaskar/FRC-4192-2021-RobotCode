@@ -13,7 +13,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -24,9 +23,6 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   private final CANSparkMax intakeMotor = new CANSparkMax(Constants.intake, MotorType.kBrushless);
-  private final DoubleSolenoid solenoid1 = new DoubleSolenoid(16, 3, 4);
-  private final DoubleSolenoid solenoid2 = new DoubleSolenoid(16, 2, 5);
-  private final DoubleSolenoid solenoid3 = new DoubleSolenoid(16, 1, 6);
   private final DoubleSolenoid intakeSolenoid = new DoubleSolenoid(16, 0, 7);
   private ShuffleboardTab subsystemTab = Shuffleboard.getTab("Subsystems");
 
