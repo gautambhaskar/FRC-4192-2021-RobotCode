@@ -93,7 +93,8 @@ public class RobotContainer {
   private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index,
       m_shootingSystem, m_hood);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
-  private final AlignHood m_alignHood = new AlignHood(m_hood, false);
+  private final AlignHood m_alignHood = new AlignHood(m_hood, true);
+  private final AlignHood m_alignHoodReverse = new AlignHood(m_hood, false);
 
   // Autonomous Commands
   private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
@@ -151,8 +152,8 @@ public class RobotContainer {
     joystickYOnly.whileActiveOnce(m_driveStraight, false);
     // joystickYOnly.whileActiveOnce(m_driveStraight);
     driverStartButton.whenHeld(m_testMotor);
-    systemsAButton.whenPressed(m_alignHood, true);
-    systemsBButton.whenPressed(m_alignHood, false);
+    systemsAButton.whenPressed(m_alignHood);
+    systemsBButton.whenPressed(m_alignHoodReverse);
   }
 
   /**
