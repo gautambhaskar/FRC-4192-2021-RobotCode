@@ -26,6 +26,7 @@ import frc.robot.commands.drive.DriveStraight;
 import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.OuttakeSlowly;
 import frc.robot.commands.drive.PrecisionDrive;
+import frc.robot.commands.hood.AlignHood;
 import frc.robot.commands.index.IndexIn;
 import frc.robot.commands.turret.TurretTurn;
 import frc.robot.commands.macros.UnjamBall;
@@ -92,6 +93,7 @@ public class RobotContainer {
   private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index,
       m_shootingSystem, m_hood);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
+  private final AlignHood m_alignHood = new AlignHood(m_hood, false);
 
   // Autonomous Commands
   private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
@@ -109,6 +111,7 @@ public class RobotContainer {
   JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton systemsXButton = new JoystickButton(systemsController, Constants.xButton);
   JoystickButton systemsAButton = new JoystickButton(systemsController, Constants.aButton);
+  JoystickButton systemsBButton = new JoystickButton(systemsController, Constants.bButton);
   JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
   JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
@@ -148,6 +151,8 @@ public class RobotContainer {
     joystickYOnly.whileActiveOnce(m_driveStraight, false);
     // joystickYOnly.whileActiveOnce(m_driveStraight);
     driverStartButton.whenHeld(m_testMotor);
+    systemsAButton.whenPressed(m_alignHood, true);
+    systemsBButton.whenPressed(m_alignHood, false);
   }
 
   /**
