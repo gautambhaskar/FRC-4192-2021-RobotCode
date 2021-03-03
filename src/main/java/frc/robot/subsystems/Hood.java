@@ -17,7 +17,7 @@ public class Hood extends SubsystemBase {
   /**
    * Creates a new Hood.
    */
-  private final DoubleSolenoid hoodSolenoid = new DoubleSolenoid(0, 0, 0);
+  private final DoubleSolenoid hoodSolenoid = new DoubleSolenoid(16, 1, 6);
   private NetworkTableEntry hoodPositionEntry;
 
   public Hood() {
