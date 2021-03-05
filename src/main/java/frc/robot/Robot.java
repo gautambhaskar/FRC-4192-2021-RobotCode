@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
     s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
     s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count", 0).getEntry();
     s_area = Shuffleboard.getTab("Camera").add("Grip area", 0).getEntry();
+
     visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
       ArrayList<MatOfPoint> contourList = pipeline.filterContoursOutput();
       if (!contourList.isEmpty()) {

@@ -6,6 +6,7 @@ package frc.robot.commands.macros;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.hood.AlignHood;
+import frc.robot.commands.shootingSystem.ReverseFeeder;
 import frc.robot.commands.turret.FieldBasedTurretTurn;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
@@ -22,7 +23,7 @@ public class CloseRangeShootingMacro extends SequentialCommandGroup {
       Hood m_hood) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new AlignHood(m_hood, false), new FieldBasedTurretTurn(m_drive, m_turret),
-        new ShootBalls(m_index, m_shooter));
+    addCommands(new AlignHood(m_hood, false), new FieldBasedTurretTurn(m_drive, m_turret), new ReverseFeeder(m_shooter),
+        new FireInTheHole(m_shooter, m_index));
   }
 }

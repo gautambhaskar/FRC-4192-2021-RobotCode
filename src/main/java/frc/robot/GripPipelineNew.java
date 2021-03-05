@@ -37,25 +37,25 @@ public class GripPipelineNew implements VisionPipeline {
 		// Step Blur0:
 		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Box Blur");
-		double blurRadius = 14.414414414414411;
+		double blurRadius = 0; // Original: 14.4144144
 		blur(blurInput, blurType, blurRadius, blurOutput);
 
 		// Step HSL_Threshold0:
 		Mat hslThresholdInput = blurOutput;
 		double[] hslThresholdHue = { 0.0, 53.1748726655348 };
-		double[] hslThresholdSaturation = { 85, 255.0 }; // Original: 91.72661870503596,255.0
-		double[] hslThresholdLuminance = { 0.0, 255.0 };
+		double[] hslThresholdSaturation = { 85, 255.0 };
+		double[] hslThresholdLuminance = { 76, 150 }; // Original: 0, 255 (Changed for fisheye lens)
 		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance,
 				hslThresholdOutput);
 
 		// Step Find_Contours0:
 		Mat findContoursInput = hslThresholdOutput;
-		boolean findContoursExternalOnly = false;
+		boolean findContoursExternalOnly = true; // Original: false
 		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 8000.0;
+		double filterContoursMinArea = 20; // Original: 8000
 		double filterContoursMinPerimeter = 0;
 		double filterContoursMinWidth = 0;
 		double filterContoursMaxWidth = 1000;
@@ -152,21 +152,21 @@ public class GripPipelineNew implements VisionPipeline {
 		int radius = (int) (doubleRadius + 0.5);
 		int kernelSize;
 		switch (type) {
-			case BOX:
-				kernelSize = 2 * radius + 1;
-				Imgproc.blur(input, output, new Size(kernelSize, kernelSize));
-				break;
-			case GAUSSIAN:
-				kernelSize = 6 * radius + 1;
-				Imgproc.GaussianBlur(input, output, new Size(kernelSize, kernelSize), radius);
-				break;
-			case MEDIAN:
-				kernelSize = 2 * radius + 1;
-				Imgproc.medianBlur(input, output, kernelSize);
-				break;
-			case BILATERAL:
-				Imgproc.bilateralFilter(input, output, -1, radius, radius);
-				break;
+		case BOX:
+			kernelSize = 2 * radius + 1;
+			Imgproc.blur(input, output, new Size(kernelSize, kernelSize));
+			break;
+		case GAUSSIAN:
+			kernelSize = 6 * radius + 1;
+			Imgproc.GaussianBlur(input, output, new Size(kernelSize, kernelSize), radius);
+			break;
+		case MEDIAN:
+			kernelSize = 2 * radius + 1;
+			Imgproc.medianBlur(input, output, kernelSize);
+			break;
+		case BILATERAL:
+			Imgproc.bilateralFilter(input, output, -1, radius, radius);
+			break;
 		}
 	}
 

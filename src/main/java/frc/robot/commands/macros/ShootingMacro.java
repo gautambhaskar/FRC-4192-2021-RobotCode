@@ -8,6 +8,7 @@
 package frc.robot.commands.macros;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.shootingSystem.ReverseFeeder;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Index;
@@ -24,6 +25,6 @@ public class ShootingMacro extends SequentialCommandGroup {
   public ShootingMacro(Drivetrain m_drive, Turret m_turret, ShootingSystem m_shooter, Index m_index, Hood m_hood) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new TurretAlignmentMacro(m_drive, m_turret, m_hood), new ShootBalls(m_index, m_shooter));
+    super(new TurretAlignmentMacro(m_drive, m_turret, m_hood), new ReverseFeeder(m_shooter),  new FireInTheHole(m_shooter, m_index));
   }
 }
