@@ -9,9 +9,12 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants.visionPosition.blueA;
 import frc.robot.Constants.visionPosition.blueB;
 import frc.robot.Constants.visionPosition.redA;
@@ -56,6 +59,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
 
   private final DoubleSupplier centerX;
+  ShuffleboardTab tab = Shuffleboard.getTab("Camera");
+  NetworkTableEntry pathChosen = tab.add("Path Chosen", "none").getEntry();
 
   // Controllers
   private final XboxController driveController = new XboxController(Constants.driveController);
@@ -63,6 +68,7 @@ public class RobotContainer {
 
   // Subsystems
   private final Drivetrain m_drive = new Drivetrain();
+
   private final Intake m_intake = new Intake();
   private final ShootingSystem m_shootingSystem = new ShootingSystem();
   private final Index m_index = new Index();
@@ -163,22 +169,27 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     if (centerX.getAsDouble() > blueA.left && centerX.getAsDouble() < blueA.right) {
+      pathChosen.setString("Blue A");
       return autonBlueA;
     }
 
     else if (centerX.getAsDouble() > blueB.left && centerX.getAsDouble() < blueB.right) {
+      pathChosen.setString("Blue B");
       return autonBlueB;
     }
 
     else if (centerX.getAsDouble() > redA.left && centerX.getAsDouble() < redA.right) {
+      pathChosen.setString("Red A");
       return autonRedA;
     }
 
     else if (centerX.getAsDouble() > redB.left && centerX.getAsDouble() < redB.right) {
+      pathChosen.setString("Red B");
       return autonRedB;
     }
 
     else {
+      pathChosen.setString("none");
       return zeroDistance;
     }
   }
