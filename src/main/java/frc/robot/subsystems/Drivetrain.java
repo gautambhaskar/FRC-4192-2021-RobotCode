@@ -84,7 +84,7 @@ public class Drivetrain extends SubsystemBase {
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
-    robotAngle = tab.add("Robot Angle", imu.getAngle()-init_angle).getEntry();
+    robotAngle = tab.add("Robot Angle", imu.getAngle() - init_angle).getEntry();
     drivetrainSpeed = tuningTab.add("Drivetrain Speed", leftLead.getEncoder().getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 4).getEntry();
     drivetrainPosition = tuningTab.add("Drivetrain Position", init_position - leftLead.getEncoder().getPosition())
@@ -95,10 +95,10 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
-    // robotAngle.setDouble(init_angle - imu.getAngle());
+    robotAngle.setDouble(imu.getAngle() - init_angle);
     SmartDashboard.putNumber("Drivetrain Angle Diff", returnAngle());
     drivetrainSpeed.setDouble(leftLead.getEncoder().getVelocity());
-    drivetrainPosition.setDouble(leftLead.getEncoder().getPosition()-init_position);
+    drivetrainPosition.setDouble(leftLead.getEncoder().getPosition() - init_position);
     // This method will be called once per scheduler run
 
     m_odometry.update(Rotation2d.fromDegrees(returnNativeAngle()), leftLead.getEncoder().getPosition(),
@@ -119,7 +119,7 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the curent offset from the calibrated/recalibrated angle
   public double returnAngle() {
-    return imu.getAngle()-init_angle;
+    return imu.getAngle() - init_angle;
     // return (init_angle - imu.getAngle()); // Replace 0 w sensor val
   }
 
@@ -129,13 +129,13 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the current offset from the original angle
   public double returnNativeAngle() {
-    return imu.getAngle()-init_original_angle;
+    return imu.getAngle() - init_original_angle;
     // return (init_original_angle - imu.getAngle());
   }
 
   // shows the distance the robot has traveled relative to starting position
   public double returnDrivetrainPosition() {
-    return (leftLead.getEncoder().getPosition()-init_position);
+    return (leftLead.getEncoder().getPosition() - init_position);
   }
 
   public double returnAverageEncoderDistance() {
