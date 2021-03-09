@@ -171,12 +171,12 @@ public final class Constants {
         public static class blueA {
             // 0.66 -> 211
             public static double left = 200;
-            public static double right = 240;
+            public static double right = 280;
         }
 
         public static class blueB {
             // 0.59 -> 189
-            public static double left = 176;
+            public static double left = 175;
             public static double right = 200;
         }
 
@@ -188,8 +188,8 @@ public final class Constants {
 
         public static class redB {
             // 0.306 -> 98
-            public static double left = 80;
-            public static double right = 120;
+            public static double left = 0;
+            public static double right = 140;
         }
     }
 }
