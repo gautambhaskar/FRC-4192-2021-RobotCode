@@ -84,7 +84,7 @@ public class Drivetrain extends SubsystemBase {
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
-    robotAngle = tab.add("Robot Angle", imu.getAngle() - init_angle).getEntry();
+    robotAngle = tab.add("Robot Angle", init_angle - imu.getAngle()).getEntry();
     drivetrainSpeed = tuningTab.add("Drivetrain Speed", leftLead.getEncoder().getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 4).getEntry();
     drivetrainPosition = tuningTab.add("Drivetrain Position", init_position - leftLead.getEncoder().getPosition())
@@ -95,7 +95,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
-    robotAngle.setDouble(imu.getAngle() - init_angle);
+    robotAngle.setDouble(init_angle - imu.getAngle());
     SmartDashboard.putNumber("Drivetrain Angle Diff", returnAngle());
     drivetrainSpeed.setDouble(leftLead.getEncoder().getVelocity());
     drivetrainPosition.setDouble(leftLead.getEncoder().getPosition() - init_position);
@@ -119,7 +119,7 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the curent offset from the calibrated/recalibrated angle
   public double returnAngle() {
-    return imu.getAngle() - init_angle;
+    return init_angle - imu.getAngle();
     // return (init_angle - imu.getAngle()); // Replace 0 w sensor val
   }
 
@@ -129,7 +129,7 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the current offset from the original angle
   public double returnNativeAngle() {
-    return imu.getAngle() - init_original_angle;
+    return init_original_angle - imu.getAngle();
     // return (init_original_angle - imu.getAngle());
   }
 
