@@ -35,6 +35,8 @@ public class GripPipelineNew implements VisionPipeline {
 	@Override
 	public void process(Mat source0) {
 		// Step Blur0:
+		Rect rectCrop = new Rect(160, 120, 150, 45);
+		source0 = new Mat(source0, rectCrop);
 		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Box Blur");
 		double blurRadius = 0; // Original: 14.4144144
