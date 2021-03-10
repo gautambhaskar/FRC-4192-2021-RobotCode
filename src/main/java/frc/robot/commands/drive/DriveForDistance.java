@@ -26,7 +26,7 @@ public class DriveForDistance extends PIDCommand {
         // This should return the measurement
         () -> m_drive.returnDrivetrainPosition(),
         // This should return the setpoint (can also be a constant)
-        () -> m_distance * drivePID.feetToRotations,
+        () -> m_distance,
         // This uses the output
         output -> {
           if (output > drivePID.autonMaxSpeed) {
@@ -38,8 +38,6 @@ public class DriveForDistance extends PIDCommand {
           }
         });
     addRequirements(m_drive);
-    m_drive.recalibrateAngle();
-    m_drive.recalibratePosition();
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     getController().setTolerance(drivePID.tolerance);
