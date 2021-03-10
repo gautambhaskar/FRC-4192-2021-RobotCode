@@ -44,9 +44,9 @@ public class GripPipelineNew implements VisionPipeline {
 
 		// Step HSL_Threshold0:
 		Mat hslThresholdInput = blurOutput;
-		double[] hslThresholdHue = { 0.0, 53.1748726655348 };
-		double[] hslThresholdSaturation = { 85, 255.0 };
-		double[] hslThresholdLuminance = { 76, 150 }; // Original: 0, 255 (Changed for fisheye lens)
+		double[] hslThresholdHue = { 0.0, 53.1748726655348 }; // 30,37 (NEW) -- robotics hallway carpet
+		double[] hslThresholdSaturation = { 85, 255.0 }; // 90,255 (NEW)
+		double[] hslThresholdLuminance = { 76, 150 }; // 96,149 (NEW)
 		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance,
 				hslThresholdOutput);
 
