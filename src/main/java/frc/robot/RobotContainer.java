@@ -33,6 +33,7 @@ import frc.robot.commands.hood.AlignHood;
 import frc.robot.commands.index.IndexIn;
 import frc.robot.commands.turret.TurretTurn;
 import frc.robot.commands.macros.UnjamBall;
+import frc.robot.commands.shootingSystem.RunShooter;
 import frc.robot.commands.macros.CloseRangeShootingMacro;
 import frc.robot.commands.macros.ShootingMacro;
 import frc.robot.commands.autonomous.BlueSearchAutonA;
@@ -101,6 +102,7 @@ public class RobotContainer {
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
   private final AlignHood m_alignHood = new AlignHood(m_hood, true);
   private final AlignHood m_alignHoodReverse = new AlignHood(m_hood, false);
+  private final RunShooter m_runShooter = new RunShooter(m_shootingSystem);
 
   // Autonomous Commands
   private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
@@ -160,6 +162,7 @@ public class RobotContainer {
     driverStartButton.whenHeld(m_testMotor);
     systemsAButton.whenPressed(m_alignHood);
     systemsBButton.whenPressed(m_alignHoodReverse);
+    systemsBackButton.toggleWhenPressed(m_runShooter);
   }
 
   /**
