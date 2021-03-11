@@ -77,7 +77,7 @@ public final class Constants {
         public static double kP = 0.0035;
         public static double kI = 0.000001;
         public static double kD = 0;
-        public static double kFF = 0;
+        public static double kFF = 0.025;
         public static double kMax = 0.9;
         public static double kMin = -0.9;
         public static double shooterSpeedMinimum = 4100;
