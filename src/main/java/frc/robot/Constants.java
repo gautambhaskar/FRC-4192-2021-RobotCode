@@ -50,7 +50,7 @@ public final class Constants {
     public static double outtakeSlowlySpeed = 0.3;
     public static double indexSpeed = 0.8;
     public static double feederSpeed = -3000;
-    public static double shooterSpeed = 4500;
+    public static double shooterSpeed = 4200;
     public static double hoodRotateSpeed = 0.3;
     public static double turretTurn = 0.7;
     public static double indexRunTime = 0.25;
@@ -80,7 +80,7 @@ public final class Constants {
         public static double kFF = 0.0002;
         public static double kMax = 0.9;
         public static double kMin = -0.9;
-        public static double shooterSpeedMinimum = 4300;
+        public static double shooterSpeedMinimum = 4100;
     }
 
     public static class feederPID {
