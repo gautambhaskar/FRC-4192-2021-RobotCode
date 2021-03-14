@@ -5,9 +5,12 @@
 package frc.robot.commands.index;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Globals;
 import frc.robot.Constants.shooterPID;
 import frc.robot.subsystems.Index;
 
@@ -33,15 +36,15 @@ public class AutoIndex extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (SmartDashboard.getNumber("Shooter Speed", 0) > shooterPID.shooterSpeedMinimum && alreadyRun == false) {
+    if (Globals.shooterSpeed > shooterPID.shooterSpeedMinimum && alreadyRun == false) {
       index.run(Constants.indexSpeed);
       timer.start();
       alreadyRun = true;
-    } else if (SmartDashboard.getNumber("Shooter Speed", 0) > shooterPID.shooterSpeedMinimum && alreadyRun == true
+    } else if (Globals.shooterSpeed > shooterPID.shooterSpeedMinimum && alreadyRun == true
         && timer.get() > Constants.indexRunTime) {
       index.run(0);
       alreadyRun = false;
-    } else if (SmartDashboard.getNumber("Shooter Speed", 0) < shooterPID.shooterSpeedMinimum) {
+    } else if (Globals.shooterSpeed < shooterPID.shooterSpeedMinimum) {
       alreadyRun = false;
       index.run(0);
     } else {

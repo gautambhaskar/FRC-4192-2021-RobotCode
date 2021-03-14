@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Globals;
 //import frc.robot.Constants.feederPID;
 //import frc.robot.Constants.shooterPID;
 import frc.robot.Constants.shooterPID;
@@ -48,8 +49,9 @@ public class ShootingSystem extends SubsystemBase {
 
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
+  private ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
 
-  private NetworkTableEntry shooterSpeed, feederSpeed;
+  private NetworkTableEntry shooterSpeed, feederSpeed, atSetpoint;
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
@@ -76,6 +78,8 @@ public class ShootingSystem extends SubsystemBase {
     // Graph of feederSpeed
     feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
+
+    atSetpoint = mainTab.add("At Setpoint", false).getEntry();
   }
 
   @Override
@@ -84,8 +88,16 @@ public class ShootingSystem extends SubsystemBase {
 
     // Update the ShooterSpeed and FeederSpeed Graphs
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
+    Globals.shooterSpeed = shooterLeftMotor.getEncoder().getVelocity();
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
-    SmartDashboard.putNumber("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity());
+
+    if (shooterLeftMotor.getEncoder().getVelocity() > shooterPID.shooterSpeedMinimum) {
+      atSetpoint.setBoolean(true);
+    } else {
+      atSetpoint.setBoolean(false);
+    }
+ 
+    
   }
 
   public void startShooter() {

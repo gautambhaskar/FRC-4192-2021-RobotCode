@@ -39,6 +39,7 @@ public class Turret extends SubsystemBase {
   // tabs
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
   private ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
+  private ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
   private NetworkTable table;
   private NetworkTableEntry tx, ty, ta;
 
@@ -62,9 +63,7 @@ public class Turret extends SubsystemBase {
 
     limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
 
-    Shuffleboard.selectTab("Camera");
-
-    cameraTab.add("Camera Feed", limelightFeed).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 0).withSize(3,
+    mainTab.add("Limelight Feed", limelightFeed).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 0).withSize(3,
         3);
 
     visionMode = cameraTab.add("Camera Mode", "Camera").getEntry();

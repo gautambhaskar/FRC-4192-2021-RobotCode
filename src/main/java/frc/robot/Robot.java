@@ -17,7 +17,9 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +47,8 @@ public class Robot extends TimedRobot {
   private double maxCenterX = 0.0;
   private double centerX = 0.0;
   private double area = 0.0;
+  private ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
+  private ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
 
   private final Object imgLock = new Object();
   NetworkTableEntry s_centerX, s_frameCnt, s_area;
@@ -60,14 +64,16 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    SmartDashboard.putNumber("Code Version No.", 1.0);
-    SmartDashboard.putString("Branch", "main");
+    Shuffleboard.selectTab("Main");
+    mainTab.add("Code Version No.", 1.0);
+    mainTab.add("Branch", "main");
     m_robotContainer = new RobotContainer(() -> getMaxCenterX());
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-    s_centerX = Shuffleboard.getTab("Camera").add("GRIP centerX", 0).getEntry();
-    s_frameCnt = Shuffleboard.getTab("Camera").add("GRIP frame count", 0).getEntry();
-    s_area = Shuffleboard.getTab("Camera").add("Grip area", 0).getEntry();
+    mainTab.add("Camera Feed", camera).withWidget(BuiltInWidgets.kCameraStream).withPosition(4, 0).withSize(3, 3);
+    s_centerX = cameraTab.add("GRIP centerX", 0).getEntry();
+    s_frameCnt = cameraTab.add("GRIP frame count", 0).getEntry();
+    s_area = cameraTab.add("Grip area", 0).getEntry();
 
     visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
       ArrayList<MatOfPoint> contourList = pipeline.filterContoursOutput();

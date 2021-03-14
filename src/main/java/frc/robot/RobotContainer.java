@@ -31,6 +31,7 @@ import frc.robot.commands.intake.OuttakeSlowly;
 import frc.robot.commands.drive.PrecisionDrive;
 import frc.robot.commands.hood.AlignHood;
 import frc.robot.commands.index.IndexIn;
+import frc.robot.commands.index.IndexOut;
 import frc.robot.commands.turret.TurretTurn;
 import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.shootingSystem.RunShooter;
@@ -60,8 +61,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
 
   private final DoubleSupplier centerX;
-  ShuffleboardTab tab = Shuffleboard.getTab("Camera");
-  NetworkTableEntry pathChosen = tab.add("Path Chosen", "none").getEntry();
+  ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
+  NetworkTableEntry pathChosen = mainTab.add("Path Chosen", "none").getEntry();
 
   // Controllers
   private final XboxController driveController = new XboxController(Constants.driveController);
@@ -87,7 +88,8 @@ public class RobotContainer {
   private final DriveStraight m_driveStraight = new DriveStraight(m_drive, () -> driveController.getY(Hand.kLeft));
   private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
-  private final IndexIn m_indexInCommand = new IndexIn(m_index, Constants.indexSpeed);
+  private final IndexIn m_indexIn = new IndexIn(m_index, Constants.indexSpeed);
+  private final IndexOut m_indexOut = new IndexOut(m_index, Constants.indexSpeed);
   private final TurretTurn m_turretTurnLeft = new TurretTurn(m_turret,
       () -> systemsController.getTriggerAxis(Hand.kLeft) * 7 / 10);
   private final TurretTurn m_turretTurnRight = new TurretTurn(m_turret,
@@ -113,21 +115,23 @@ public class RobotContainer {
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
-  Trigger rightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
-  Trigger leftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
-  JoystickButton leftBumper = new JoystickButton(driveController, Constants.leftBumper);
+  Trigger driverRightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
+  Trigger driverLeftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
+  JoystickButton driverLeftBumper = new JoystickButton(driveController, Constants.leftBumper);
+  JoystickButton driverRightBumper = new JoystickButton(driveController, Constants.rightBumper);
+  JoystickButton driverAButton = new JoystickButton(driveController, Constants.aButton);
+  JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
+  JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
+  JoystickButton driverXButton = new JoystickButton(driveController, Constants.xButton);
+  JoystickButton driverStartButton = new JoystickButton(driveController, Constants.startButton);
   JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
   JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton systemsXButton = new JoystickButton(systemsController, Constants.xButton);
   JoystickButton systemsAButton = new JoystickButton(systemsController, Constants.aButton);
   JoystickButton systemsBButton = new JoystickButton(systemsController, Constants.bButton);
-  JoystickButton aButton = new JoystickButton(driveController, Constants.aButton);
   JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
-  JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
-  JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
-  JoystickButton driverStartButton = new JoystickButton(driveController, Constants.startButton);
-  Trigger rightTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
-  Trigger leftTriggerSubsystems = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
+  Trigger systemsRightTrigger = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
+  Trigger systemsLeftTrigger = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
   Trigger joystickYOnly = new Trigger(
       () -> Math.abs(driveController.getX(Hand.kRight)) < 0.05 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05
           && driveController.getTriggerAxis(Hand.kRight) < 0.6 && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
@@ -146,23 +150,25 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    rightTrigger.whileActiveOnce(m_halfSpeedDrive);
-    leftTrigger.whileActiveOnce(m_quarterSpeedDrive);
-    rightTriggerSubsystems.whileActiveOnce(m_turretTurnRight);
-    leftTriggerSubsystems.whileActiveOnce(m_turretTurnLeft);
-    systemsStartButton.whenHeld(m_indexInCommand);
-    // systemsBackButton.whenHeld(m_indexOutCommand);
-    leftBumper.toggleWhenPressed(m_intakeCommand);
-    aButton.whenHeld(m_outtakeSlowlyCommand);
-    systemsYButton.toggleWhenPressed(m_shooterMacro);
-    systemsXButton.toggleWhenPressed(m_closeRangeMacro);
+    // Driver Controller
+    driverRightTrigger.whileActiveOnce(m_halfSpeedDrive);
+    driverLeftTrigger.whileActiveOnce(m_quarterSpeedDrive);
+    driverLeftBumper.toggleWhenPressed(m_intakeCommand);
+    driverRightBumper.toggleWhenPressed(m_shooterMacro);
+    driverXButton.toggleWhenPressed(m_closeRangeMacro);
     driverBackButton.whenHeld(m_unjamBalls);
-    joystickYOnly.whileActiveOnce(m_driveStraight, false);
-    // joystickYOnly.whileActiveOnce(m_driveStraight);
     driverStartButton.whenHeld(m_testMotor);
+    driverAButton.whenHeld(m_outtakeSlowlyCommand);
+    joystickYOnly.whileActiveOnce(m_driveStraight, false);
+
+    // Systems Controller (Manual Control)
+    systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
+    systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
+    systemsStartButton.whenHeld(m_indexIn);
     systemsAButton.whenPressed(m_alignHood);
     systemsBButton.whenPressed(m_alignHoodReverse);
-    systemsBackButton.toggleWhenPressed(m_runShooter);
+    systemsXButton.toggleWhenPressed(m_runShooter);
+    systemsBackButton.whenHeld(m_indexOut);
   }
 
   /**
