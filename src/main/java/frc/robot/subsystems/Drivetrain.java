@@ -136,7 +136,7 @@ public class Drivetrain extends SubsystemBase {
 
   // shows the distance the robot has traveled relative to starting position
   public double returnDrivetrainPosition() {
-    return -(leftLead.getEncoder().getPosition() - init_position);
+    return leftLead.getEncoder().getPosition() - init_position;
   }
 
   public double returnAverageEncoderDistance() {
