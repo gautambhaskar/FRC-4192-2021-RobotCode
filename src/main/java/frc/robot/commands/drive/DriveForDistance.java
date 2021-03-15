@@ -26,7 +26,7 @@ public class DriveForDistance extends PIDCommand {
         // This should return the measurement
         () -> m_drive.returnDrivetrainPosition(),
         // This should return the setpoint (can also be a constant)
-        () -> m_distance,
+        () -> -m_distance,
         // This uses the output
         output -> {
           if (output > drivePID.autonMaxSpeed) {
