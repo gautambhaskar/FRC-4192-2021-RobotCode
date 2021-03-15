@@ -29,12 +29,12 @@ public class DriveForDistance extends PIDCommand {
         () -> m_distance,
         // This uses the output
         output -> {
-          if (output > drivePID.autonMaxSpeed) {
+          if ((-1 * output) > drivePID.autonMaxSpeed) {
             m_drive.arcadeDrive(drivePID.autonMaxSpeed, drivePID.kP * m_drive.returnAngle());
-          } else if (output < -drivePID.autonMaxSpeed) {
+          } else if ((-1 * output) < -drivePID.autonMaxSpeed) {
             m_drive.arcadeDrive(-drivePID.autonMaxSpeed, drivePID.kP * m_drive.returnAngle());
           } else {
-            m_drive.arcadeDrive(output, drivePID.kP * m_drive.returnAngle());
+            m_drive.arcadeDrive((-1 * output), drivePID.kP * m_drive.returnAngle());
           }
         });
     addRequirements(m_drive);
