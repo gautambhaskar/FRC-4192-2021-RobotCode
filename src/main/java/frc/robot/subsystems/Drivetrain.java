@@ -96,7 +96,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
-    robotAngle.setDouble(init_angle - imu.getAngle());
+    returnAngle();
     SmartDashboard.putNumber("Drivetrain Angle Diff", returnAngle());
     drivetrainSpeed.setDouble(leftLead.getEncoder().getVelocity());
     drivetrainPosition.setDouble(returnDrivetrainPosition());
@@ -120,8 +120,8 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the curent offset from the calibrated/recalibrated angle
   public double returnAngle() {
-    return imu.getAngle() - init_angle;
-    // return (init_angle - imu.getAngle()); // Replace 0 w sensor val
+    // return imu.getAngle() - init_angle;
+    return init_angle - imu.getAngle(); // Replace 0 w sensor val
   }
 
   public Pose2d returnPose() {
@@ -130,8 +130,8 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the current offset from the original angle
   public double returnNativeAngle() {
-    return imu.getAngle() - init_original_angle;
-    // return (init_original_angle - imu.getAngle());
+    // return imu.getAngle() - init_original_angle;
+    return (init_original_angle - imu.getAngle());
   }
 
   // shows the distance the robot has traveled relative to starting position
