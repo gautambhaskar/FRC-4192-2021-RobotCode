@@ -109,9 +109,9 @@ public final class Constants {
     public static boolean trajectoryMapping = false;
 
     public static class drivePID {
-        public static double kP = .08;
-        public static double kI = 0;
-        public static double kD = 0;
+        public static double kP = -.08;
+        public static double kI = -0;
+        public static double kD = -0;
         public static double kFF = 0;
         public static double kMax = 1;
         public static double kMin = -1;
