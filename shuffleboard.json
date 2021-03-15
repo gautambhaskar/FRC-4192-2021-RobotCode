@@ -31,9 +31,11 @@
               "_source0": "network_table:///SmartDashboard/Feeder Speed",
               "_title": "Feeder Speed",
               "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul"
             }
           },
           "2,0": {
@@ -46,10 +48,11 @@
               "_source0": "network_table:///SmartDashboard/Shooter Speed",
               "_title": "Shooter Speed",
               "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/Shooter Speed": true
+              "Y-axis/Unit": "ul"
             }
           },
           "0,0": {
