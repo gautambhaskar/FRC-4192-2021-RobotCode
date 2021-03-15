@@ -22,19 +22,19 @@ public class DriveForDistance extends PIDCommand {
   public DriveForDistance(Drivetrain m_drive, double m_distance) {
     super(
         // The controller that the command will use
-        new PIDController(0.075, 0, 0.012), // work with D to slow bot down.
+        new PIDController(-0.075, 0, -0.012), // work with D to slow bot down.
         // This should return the measurement
         () -> m_drive.returnDrivetrainPosition(),
         // This should return the setpoint (can also be a constant)
         () -> m_distance,
         // This uses the output
         output -> {
-          if ((-1 * output) > drivePID.autonMaxSpeed) {
+          if ((output) > drivePID.autonMaxSpeed) {
             m_drive.arcadeDrive(drivePID.autonMaxSpeed, drivePID.kP * m_drive.returnAngle());
-          } else if ((-1 * output) < -drivePID.autonMaxSpeed) {
+          } else if ((output) < -drivePID.autonMaxSpeed) {
             m_drive.arcadeDrive(-drivePID.autonMaxSpeed, drivePID.kP * m_drive.returnAngle());
           } else {
-            m_drive.arcadeDrive((-1 * output), drivePID.kP * m_drive.returnAngle());
+            m_drive.arcadeDrive((output), drivePID.kP * m_drive.returnAngle());
           }
         });
     addRequirements(m_drive);
