@@ -31,7 +31,13 @@ public class SetRotate extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          m_drive.arcadeDrive(0, output);
+          if (output > drivePID.rotateMax) {
+            m_drive.arcadeDrive(0, drivePID.rotateMax);
+          } else if (output < -drivePID.rotateMax) {
+            m_drive.arcadeDrive(0, -drivePID.rotateMax);
+          } else {
+            m_drive.arcadeDrive(0, output);
+          }
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

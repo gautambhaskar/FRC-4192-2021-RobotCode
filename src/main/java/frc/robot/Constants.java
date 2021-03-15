@@ -120,6 +120,7 @@ public final class Constants {
         public static double autonMaxSpeed = 0.7;
         public static double tolerance = 4;
         public static double feetToRotations = 5.15;
+        public static double rotateMax = 0.4;
 
         public static double kB = 2.0;
         public static double kZeta = 0.7;
