@@ -177,29 +177,35 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    if (centerX.getAsDouble() > blueA.left && centerX.getAsDouble() < blueA.right) {
-      pathChosen.setString("Blue A");
-      return autonBlueA;
-    }
+    // if (centerX.getAsDouble() > blueA.left && centerX.getAsDouble() <
+    // blueA.right) {
+    // pathChosen.setString("Blue A");
+    // return autonBlueA;
+    // }
 
-    else if (centerX.getAsDouble() > blueB.left && centerX.getAsDouble() < blueB.right) {
-      pathChosen.setString("Blue B");
-      return autonBlueB;
-    }
+    // else if (centerX.getAsDouble() > blueB.left && centerX.getAsDouble() <
+    // blueB.right) {
+    // pathChosen.setString("Blue B");
+    // return autonBlueB;
+    // }
 
-    else if (centerX.getAsDouble() > redA.left && centerX.getAsDouble() < redA.right) {
-      pathChosen.setString("Red A");
-      return autonRedA;
-    }
+    // else if (centerX.getAsDouble() > redA.left && centerX.getAsDouble() <
+    // redA.right) {
+    // pathChosen.setString("Red A");
+    // return autonRedA;
+    // }
 
-    else if (centerX.getAsDouble() > redB.left && centerX.getAsDouble() < redB.right) {
-      pathChosen.setString("Red B");
-      return autonRedB;
-    }
+    // else if (centerX.getAsDouble() > redB.left && centerX.getAsDouble() <
+    // redB.right) {
+    // pathChosen.setString("Red B");
+    // return autonRedB;
+    // }
 
-    else {
-      pathChosen.setString("none");
-      return zeroDistance;
-    }
+    // else {
+    // pathChosen.setString("none");
+    // return zeroDistance;
+    // }
+    //
+    return autonRedA;
   }
 }
