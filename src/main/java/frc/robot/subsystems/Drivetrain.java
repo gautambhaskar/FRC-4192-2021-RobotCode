@@ -96,7 +96,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     leftRPM.setDouble(leftLead.getEncoder().getVelocity());
     rightRPM.setDouble(rightLead.getEncoder().getVelocity());
-    returnAngle();
+    robotAngle.setDouble(returnAngle());
     SmartDashboard.putNumber("Drivetrain Angle Diff", returnAngle());
     drivetrainSpeed.setDouble(leftLead.getEncoder().getVelocity());
     drivetrainPosition.setDouble(returnDrivetrainPosition());
