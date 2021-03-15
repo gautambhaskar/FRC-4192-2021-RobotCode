@@ -38,7 +38,6 @@ public class Turret extends SubsystemBase {
 
   // tabs
   private ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
-  private ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
   private ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
   private NetworkTable table;
   private NetworkTableEntry tx, ty, ta;
@@ -57,17 +56,14 @@ public class Turret extends SubsystemBase {
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");
-    limelightX = cameraTab.add("LimelightX", tx.getDouble(0)).getEntry();
-    limelightY = cameraTab.add("LimelightY", ty.getDouble(0)).getEntry();
-    limelightA = cameraTab.add("LimelightArea", ta.getDouble(0)).getEntry();
+    limelightX = mainTab.add("LimelightX", tx.getDouble(0)).getEntry();
+    limelightY = mainTab.add("LimelightY", ty.getDouble(0)).getEntry();
+    limelightA = mainTab.add("LimelightArea", ta.getDouble(0)).getEntry();
 
     limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
 
     mainTab.add("Limelight Feed", limelightFeed).withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 0).withSize(3,
         3);
-
-    visionMode = cameraTab.add("Camera Mode", "Camera").getEntry();
-
     turretSetOutput = tab.add("turret set output", 0).getEntry();
     turretAppliedOutput = tab.add("turret applied output", turretMotor.getAppliedOutput()).getEntry();
 
