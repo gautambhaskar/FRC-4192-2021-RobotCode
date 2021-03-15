@@ -140,7 +140,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double returnAverageEncoderDistance() {
-    return (leftLead.getEncoder().getPosition() + rightLead.getEncoder().getPosition()) / 2.0;
+    return -1 * (leftLead.getEncoder().getPosition() + rightLead.getEncoder().getPosition()) / 2.0;
   }
 
   public CANEncoder returnLeftEncoder() {
