@@ -99,7 +99,7 @@ public class Drivetrain extends SubsystemBase {
     robotAngle.setDouble(init_angle - imu.getAngle());
     SmartDashboard.putNumber("Drivetrain Angle Diff", returnAngle());
     drivetrainSpeed.setDouble(leftLead.getEncoder().getVelocity());
-    drivetrainPosition.setDouble(leftLead.getEncoder().getPosition() - init_position);
+    drivetrainPosition.setDouble(returnDrivetrainPosition());
     // This method will be called once per scheduler run
 
     m_odometry.update(Rotation2d.fromDegrees(returnNativeAngle()), leftLead.getEncoder().getPosition(),
