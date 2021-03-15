@@ -120,7 +120,7 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the curent offset from the calibrated/recalibrated angle
   public double returnAngle() {
-    return init_angle - imu.getAngle();
+    return imu.getAngle() - init_angle;
     // return (init_angle - imu.getAngle()); // Replace 0 w sensor val
   }
 
@@ -130,7 +130,7 @@ public class Drivetrain extends SubsystemBase {
 
   // gives the current offset from the original angle
   public double returnNativeAngle() {
-    return init_original_angle - imu.getAngle();
+    return imu.getAngle() - init_original_angle;
     // return (init_original_angle - imu.getAngle());
   }
 
