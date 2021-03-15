@@ -21,7 +21,7 @@ public class Hood extends SubsystemBase {
   private NetworkTableEntry hoodPositionEntry;
 
   public Hood() {
-    hoodPositionEntry = Shuffleboard.getTab("Subsystems").add("Hood Up?", false).getEntry();
+    hoodPositionEntry = Shuffleboard.getTab("Main").add("Hood Up?", false).getEntry();
   }
 
   @Override
