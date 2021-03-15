@@ -70,18 +70,15 @@ public class Drivetrain extends SubsystemBase {
     leftLead.setInverted(true);
     leftLead.setIdleMode(IdleMode.kCoast);
     leftLead.getEncoder().setPosition(0);
-    leftLead.getEncoder().setInverted(true);
-    rightLead.getEncoder().setInverted(true);
     rightLead.getEncoder().setPosition(0);
     rightLead.setIdleMode(IdleMode.kCoast);
     rightLead.setInverted(true);
     leftFollower1.setInverted(true);
     leftFollower1.setIdleMode(IdleMode.kCoast);
-    leftFollower1.getEncoder().setInverted(true);
     // leftFollower2.setInverted(true);
     rightFollower1.setInverted(true);
     rightFollower1.setIdleMode(IdleMode.kCoast);
-    rightFollower1.getEncoder().setInverted(true);
+
     // rightFollower2.setInverted(true);
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(returnNativeAngle()));
@@ -139,7 +136,7 @@ public class Drivetrain extends SubsystemBase {
 
   // shows the distance the robot has traveled relative to starting position
   public double returnDrivetrainPosition() {
-    return (leftLead.getEncoder().getPosition() - init_position);
+    return -(leftLead.getEncoder().getPosition() - init_position);
   }
 
   public double returnAverageEncoderDistance() {
