@@ -19,9 +19,10 @@ public class RedSearchAutonB extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new RotateInPlace(m_drive, -26.57),
-        new DriveAndIntake(m_drive, m_intake, 5.59 * drivePID.feetToRotations), new RotateInPlace(m_drive, 71.57),
-        new DriveAndIntake(m_drive, m_intake, 7.07 * drivePID.feetToRotations), new RotateInPlace(m_drive, -90),
-        new DriveAndIntake(m_drive, m_intake, 7.07 * drivePID.feetToRotations), new RotateInPlace(m_drive, 45));
-    // replace 0 with correct distances
+        new DriveAndIntake(m_drive, m_intake, 5.59 * drivePID.feetToRotations), new RotateInPlace(m_drive, 65),
+        new DriveAndIntake(m_drive, m_intake, 7.5 * drivePID.feetToRotations), new RotateInPlace(m_drive, -80),
+        new DriveAndIntake(m_drive, m_intake, 7.5 * drivePID.feetToRotations), new RotateInPlace(m_drive, 45),
+        new DriveAndIntake(m_drive, m_intake, 7.5 * drivePID.feetToRotations));
+        //Need to tune last DriveAndTake
   }
 }
