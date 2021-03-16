@@ -19,6 +19,7 @@ public class SetRotate extends PIDCommand {
   /**
    * Creates a new SetRotate.
    */
+  private Drivetrain drive;
 
   public SetRotate(Drivetrain m_drive, double rotation) {
     super(
@@ -39,6 +40,7 @@ public class SetRotate extends PIDCommand {
             m_drive.arcadeDrive(0, output);
           }
         });
+    drive = m_drive;
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     getController().setTolerance(5);
@@ -49,6 +51,7 @@ public class SetRotate extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return getController().atSetpoint() && (drive.returnLeftEncoder().getVelocity() < Math.abs(2))
+        && drive.returnRightEncoder().getVelocity() < Math.abs(2);
   }
 }
