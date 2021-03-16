@@ -18,13 +18,10 @@ public class RedSearchAutonA extends SequentialCommandGroup {
   public RedSearchAutonA(Drivetrain m_drive, Intake m_intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DriveAndIntake(m_drive, m_intake, 5 * drivePID.feetToRotations), new RotateInPlace(m_drive, 26));
-    //  new DriveAndIntake(m_drive, m_intake, 5.6 * drivePID.feetToRotations));
-    //, new
-    // RotateInPlace(m_drive, -98.13),
-    // new DriveAndIntake(m_drive, m_intake, 7.9 * drivePID.feetToRotations), new
-    // RotateInPlace(m_drive, 71.57),
-    // new DriveAndIntake(m_drive, m_intake, 12.5 * drivePID.feetToRotations));
-    // Replace 0 with correct distances
+    addCommands(new DriveAndIntake(m_drive, m_intake, 5 * drivePID.feetToRotations), new RotateInPlace(m_drive, 26),
+        new DriveAndIntake(m_drive, m_intake, 6.4 * drivePID.feetToRotations), new RotateInPlace(m_drive, -85.13),
+        new DriveAndIntake(m_drive, m_intake, 7.9 * drivePID.feetToRotations), new RotateInPlace(m_drive, 65),
+        new DriveAndIntake(m_drive, m_intake, 13.5 * drivePID.feetToRotations));
+
   }
 }
