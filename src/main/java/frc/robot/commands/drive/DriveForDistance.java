@@ -19,6 +19,8 @@ public class DriveForDistance extends PIDCommand {
   /**
    * Creates a new DriveForDistance.
    */
+  private Drivetrain drive;
+
   public DriveForDistance(Drivetrain m_drive, double m_distance) {
     super(
         // The controller that the command will use
@@ -37,6 +39,7 @@ public class DriveForDistance extends PIDCommand {
             m_drive.arcadeDrive((output), drivePID.kP * m_drive.returnAngle());
           }
         });
+    drive = m_drive;
     addRequirements(m_drive);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -46,6 +49,7 @@ public class DriveForDistance extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return getController().atSetpoint() && (drive.returnLeftEncoder().getVelocity() < Math.abs(2))
+        && drive.returnRightEncoder().getVelocity() < Math.abs(2);
   }
 }
