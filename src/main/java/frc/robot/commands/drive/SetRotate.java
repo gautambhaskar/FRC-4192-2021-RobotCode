@@ -51,7 +51,7 @@ public class SetRotate extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint() && (drive.returnLeftEncoder().getVelocity() < Math.abs(2))
-        && drive.returnRightEncoder().getVelocity() < Math.abs(2);
+    return getController().atSetpoint() && Math.abs(drive.returnLeftEncoder().getVelocity()) < 2
+        && Math.abs(drive.returnRightEncoder().getVelocity()) < 2;
   }
 }
