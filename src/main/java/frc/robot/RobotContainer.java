@@ -216,6 +216,6 @@ public class RobotContainer {
     // return zeroDistance;
     // }
     //
-    return autonRedB;
+    return autonRedA;
   }
 }
