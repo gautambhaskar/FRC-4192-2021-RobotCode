@@ -169,8 +169,8 @@ public class RobotContainer {
     systemsStartButton.whenHeld(m_indexIn);
     systemsAButton.whenPressed(m_alignHood);
     systemsBButton.whenPressed(m_alignHoodReverse);
-    // systemsXButton.toggleWhenPressed(m_runShooter);
-    systemsXButton.whenHeld(m_basicRunShooter);
+    systemsXButton.toggleWhenPressed(m_runShooter);
+    //systemsXButton.whenHeld(m_basicRunShooter);
     systemsBackButton.whenHeld(m_indexOut);
   }
 
