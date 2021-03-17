@@ -9,6 +9,8 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 
+import org.graalvm.compiler.nodes.ConstantNode;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -28,6 +30,7 @@ import frc.robot.commands.drive.DriveForDistance;
 import frc.robot.commands.drive.DriveStraight;
 import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.OuttakeSlowly;
+import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.drive.PrecisionDrive;
 import frc.robot.commands.hood.AlignHood;
 import frc.robot.commands.index.IndexIn;
@@ -107,6 +110,8 @@ public class RobotContainer {
   private final AlignHood m_alignHoodReverse = new AlignHood(m_hood, false);
   private final RunShooter m_runShooter = new RunShooter(m_shootingSystem);
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 0.5, 0.5);
+  private final SetIntake m_raiseIntake = new SetIntake(m_intake, true);
+  private final SetIntake m_lowerIntake = new SetIntake(m_intake, false);
 
   // Autonomous Commands
   private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
@@ -126,6 +131,8 @@ public class RobotContainer {
   JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
   JoystickButton driverXButton = new JoystickButton(driveController, Constants.xButton);
   JoystickButton driverStartButton = new JoystickButton(driveController, Constants.startButton);
+  JoystickButton systemsLeftBumper = new JoystickButton(systemsController, Constants.leftBumper);
+  JoystickButton systemsRightBumper = new JoystickButton(systemsController, Constants.rightBumper);
   JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
   JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
   JoystickButton systemsXButton = new JoystickButton(systemsController, Constants.xButton);
@@ -170,8 +177,10 @@ public class RobotContainer {
     systemsAButton.whenPressed(m_alignHood);
     systemsBButton.whenPressed(m_alignHoodReverse);
     systemsXButton.toggleWhenPressed(m_runShooter);
-    //systemsXButton.whenHeld(m_basicRunShooter);
+    // systemsXButton.whenHeld(m_basicRunShooter);
     systemsBackButton.whenHeld(m_indexOut);
+    systemsLeftBumper.toggleWhenPressed(m_raiseIntake);
+    systemsRightBumper.toggleWhenPressed(m_lowerIntake);
   }
 
   /**
