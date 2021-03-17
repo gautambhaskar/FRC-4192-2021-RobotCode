@@ -172,26 +172,26 @@ public final class Constants {
     public static class visionPosition {
         public static class blueA {
             // 0.66 -> 211
-            public static double left = 200;
-            public static double right = 280;
+            public static double left = 203;
+            public static double right = 216;
         }
 
         public static class blueB {
             // 0.59 -> 189
-            public static double left = 175;
-            public static double right = 200;
+            public static double left = 181;
+            public static double right = 192;
         }
 
         public static class redA {
             // 0.5 --> 160
-            public static double left = 140;
-            public static double right = 175;
+            public static double left = 147;
+            public static double right = 173;
         }
 
         public static class redB {
             // 0.306 -> 98
-            public static double left = 0;
-            public static double right = 140;
+            public static double left = 80;
+            public static double right = 107;
         }
     }
 }
