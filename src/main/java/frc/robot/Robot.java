@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
     s_frameCnt = cameraTab.add("GRIP frame count", 0).getEntry();
     s_area = cameraTab.add("Grip area", 0).getEntry();
 
-    visionThread = new VisionThread(camera, new GripPipelineNew(), pipeline -> {
+    visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
       ArrayList<MatOfPoint> contourList = pipeline.filterContoursOutput();
       if (!contourList.isEmpty()) {
         int numBalls = contourList.size();
