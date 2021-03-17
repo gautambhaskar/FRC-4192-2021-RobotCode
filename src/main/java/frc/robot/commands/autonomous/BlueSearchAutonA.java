@@ -21,7 +21,7 @@ public class BlueSearchAutonA extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new RotateInPlace(m_drive, 20),
         new DriveAndIntake(m_drive, m_intake, 14.5 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, -88),
-        new DriveAndIntake(m_drive, m_intake, 7.9 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, 92),
+        new DriveAndIntake(m_drive, m_intake, 7.9 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, 94),
         new DriveAndIntake(m_drive, m_intake, 5.6 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, -26.6),
         new DriveAndIntake(m_drive, m_intake, 6 * drivePID.feetToRotations, true));
 
