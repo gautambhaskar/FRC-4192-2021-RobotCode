@@ -19,11 +19,11 @@ public class BlueSearchAutonA extends SequentialCommandGroup {
   public BlueSearchAutonA(Drivetrain m_drive, Intake m_intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new RotateInPlace(m_drive, 25),
-        new DriveAndIntake(m_drive, m_intake, 15.8 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, -100),
-        new DriveAndIntake(m_drive, m_intake, 7.9 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, 98.14),
-        new DriveAndIntake(m_drive, m_intake, 5.6 * drivePID.feetToRotations, true), new RotateInPlace(m_drive, -26.6),
-        new DriveSetDistance(m_drive, 4 * drivePID.feetToRotations));
+    addCommands(new RotateInPlace(m_drive, 20),
+        new DriveAndIntake(m_drive, m_intake, 14.5 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, -88),
+        new DriveAndIntake(m_drive, m_intake, 7.9 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, 92),
+        new DriveAndIntake(m_drive, m_intake, 5.6 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, -26.6),
+        new DriveAndIntake(m_drive, m_intake, 6 * drivePID.feetToRotations, true));
 
     // Change zeroes to correct distances
   }
