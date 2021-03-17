@@ -26,7 +26,6 @@ public class BlueSearchAutonB extends SequentialCommandGroup {
         new DriveAndIntake(m_drive, m_intake, 7.1 * drivePID.feetToRotations, true), new RotateInPlace(m_drive, -45),
         new DriveSetDistance(m_drive, 2.5 * drivePID.feetToRotations));
 
-    //
     // Change zeroes to correct distances
   }
 }
