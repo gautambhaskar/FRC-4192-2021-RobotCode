@@ -87,7 +87,7 @@ public class RobotContainer {
   private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
       () -> driveController.getX(Hand.kRight), 0.3);
   private final DriveStraight m_driveStraight = new DriveStraight(m_drive, () -> driveController.getY(Hand.kLeft));
-  private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed);
+  private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed, true);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexIn = new IndexIn(m_index, Constants.indexSpeed);
   private final IndexOut m_indexOut = new IndexOut(m_index, Constants.indexSpeed);
