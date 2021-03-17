@@ -6,6 +6,7 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.drive.DriveSetDistance;
 import frc.robot.commands.drive.RotateInPlace;
 import frc.robot.subsystems.Intake;
 import frc.robot.Constants.drivePID;
@@ -19,10 +20,10 @@ public class RedSearchAutonB extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new RotateInPlace(m_drive, -26.57),
-        new DriveAndIntake(m_drive, m_intake, 5.59 * drivePID.feetToRotations), new RotateInPlace(m_drive, 65),
-        new DriveAndIntake(m_drive, m_intake, 7.5 * drivePID.feetToRotations), new RotateInPlace(m_drive, -80),
-        new DriveAndIntake(m_drive, m_intake, 7.5 * drivePID.feetToRotations), new RotateInPlace(m_drive, 45),
-        new DriveAndIntake(m_drive, m_intake, 7.5 * drivePID.feetToRotations));
-        //Need to tune last DriveAndTake
+        new DriveAndIntake(m_drive, m_intake, 5.59 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, 65),
+        new DriveAndIntake(m_drive, m_intake, 7.5 * drivePID.feetToRotations, false), new RotateInPlace(m_drive, -80),
+        new DriveAndIntake(m_drive, m_intake, 7.5 * drivePID.feetToRotations, true), new RotateInPlace(m_drive, 45),
+        new DriveSetDistance(m_drive, 7.5 * drivePID.feetToRotations));
+    // Need to tune last DriveAndTake
   }
 }

@@ -16,14 +16,16 @@ import frc.robot.subsystems.Intake;
 public class IntakeBalls extends CommandBase {
   private final Intake m_intake;
   private final double m_intakeSpeed;
+  private final boolean m_endRaise;
 
   /**
    * Creates a new IntakeBalls.
    */
 
-  public IntakeBalls(Intake subsystem, double speed) {
+  public IntakeBalls(Intake subsystem, double speed, boolean endRaise) {
     m_intake = subsystem;
     m_intakeSpeed = speed;
+    m_endRaise = endRaise;
     addRequirements(m_intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -44,7 +46,9 @@ public class IntakeBalls extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_intake.intake(0);
-    m_intake.raise();
+    if (m_endRaise) {
+      m_intake.raise();
+    }
   }
 
   // Returns true when the command should end.
