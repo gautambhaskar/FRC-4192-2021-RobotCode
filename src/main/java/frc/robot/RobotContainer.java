@@ -100,9 +100,10 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood);
+  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
+      -1);
   private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index,
-      m_shootingSystem, m_hood);
+      m_shootingSystem, m_hood, -1);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
   private final AlignHood m_alignHood = new AlignHood(m_hood, true);
   private final AlignHood m_alignHoodReverse = new AlignHood(m_hood, false);
@@ -187,28 +188,28 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    //Globals.pathChosen is set in Robot.java disabledPeriodic() 
+    // Globals.pathChosen is set in Robot.java disabledPeriodic()
     if (Globals.pathChosen == 1) {
-    return autonBlueA;
+      return autonBlueA;
     }
 
     else if (Globals.pathChosen == 2) {
-    pathChosen.setString("Blue B");
-    return autonBlueB;
+      pathChosen.setString("Blue B");
+      return autonBlueB;
     }
 
     else if (Globals.pathChosen == 3) {
-    pathChosen.setString("Red A");
-    return autonRedA;
+      pathChosen.setString("Red A");
+      return autonRedA;
     }
 
     else if (Globals.pathChosen == 4) {
-    pathChosen.setString("Red B");
-    return autonRedB;
+      pathChosen.setString("Red B");
+      return autonRedB;
     }
 
     else {
-    return zeroDistance;
+      return zeroDistance;
     }
   }
 }

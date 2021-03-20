@@ -16,10 +16,14 @@ public class AutoIndex extends CommandBase {
   private Index index;
   private boolean alreadyRun;
   private Timer timer = new Timer();
+  private int numBalls;
+  private int ballsShot;
 
-  public AutoIndex(Index m_index) {
+  public AutoIndex(Index m_index, int m_numBalls) {
     index = m_index;
     alreadyRun = false;
+    numBalls = m_numBalls;
+    ballsShot = 0;
 
     addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -37,6 +41,7 @@ public class AutoIndex extends CommandBase {
       index.run(Constants.indexSpeed);
       timer.start();
       alreadyRun = true;
+      ballsShot++;
     } else if (Globals.shooterSpeed > shooterPID.shooterSpeedMinimum && alreadyRun == true
         && timer.get() > Constants.indexRunTime) {
       index.run(0);
@@ -58,6 +63,10 @@ public class AutoIndex extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (numBalls == -1) {
+      return false;
+    } else {
+      return ballsShot >= numBalls;
+    }
   }
 }

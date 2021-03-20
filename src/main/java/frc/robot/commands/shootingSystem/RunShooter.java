@@ -35,7 +35,6 @@ public class RunShooter extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_shooter.stopShooter();
-    DriverStation.reportError("runShooter finished", true);
   }
 
   // Returns true when the command should end.

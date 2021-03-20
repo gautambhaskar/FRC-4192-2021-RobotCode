@@ -20,10 +20,10 @@ import frc.robot.subsystems.Turret;
 public class CloseRangeShootingMacro extends SequentialCommandGroup {
   /** Creates a new CloseRangeShootingMacro. */
   public CloseRangeShootingMacro(Drivetrain m_drive, Turret m_turret, Index m_index, ShootingSystem m_shooter,
-      Hood m_hood) {
+      Hood m_hood, int numBalls) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new AlignHood(m_hood, false), new FieldBasedTurretTurn(m_drive, m_turret), new ReverseFeeder(m_shooter),
-        new FireInTheHole(m_shooter, m_index));
+        new FireInTheHole(m_shooter, m_index, numBalls));
   }
 }
