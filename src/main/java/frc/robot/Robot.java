@@ -24,6 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.visionPosition.blueA;
+import frc.robot.Constants.visionPosition.blueB;
+import frc.robot.Constants.visionPosition.redA;
+import frc.robot.Constants.visionPosition.redB;
 
 import org.opencv.core.MatOfPoint;
 
@@ -49,6 +53,7 @@ public class Robot extends TimedRobot {
   private double area = 0.0;
   private ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
   private ShuffleboardTab cameraTab = Shuffleboard.getTab("Camera");
+  NetworkTableEntry pathChosen = mainTab.add("Path Chosen", "none").getEntry();
 
   private final Object imgLock = new Object();
   NetworkTableEntry s_centerX, s_frameCnt, s_area;
@@ -136,9 +141,36 @@ public class Robot extends TimedRobot {
       s_frameCnt.setDouble(this.frameCnt);
       s_area.setDouble(this.area);
       maxCenterX = this.centerX;
+      if (maxCenterX > blueA.left && maxCenterX < blueA.right) {
+        pathChosen.setString("Blue A");
+        Globals.pathChosen = 1;
+        }
+    
+        else if (maxCenterX > blueB.left && maxCenterX <
+        blueB.right) {
+        pathChosen.setString("Blue B");
+        Globals.pathChosen = 2;
+        }
+    
+        else if (maxCenterX > redA.left && maxCenterX < redA.right) {
+        pathChosen.setString("Red A");
+        Globals.pathChosen = 3;
+        }
+    
+        else if (maxCenterX > redB.left && maxCenterX <
+        redB.right) {
+        pathChosen.setString("Red B");
+        Globals.pathChosen = 4;
+        }
+    
+        else {
+        pathChosen.setString("none");
+        Globals.pathChosen = 0;
+        }
     }
 
     edu.wpi.first.wpilibj.Timer.delay(1.0 / 5.0);
+
   }
 
   /**

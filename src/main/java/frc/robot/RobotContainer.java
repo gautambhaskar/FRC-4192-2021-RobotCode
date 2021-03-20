@@ -187,32 +187,27 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    if (centerX.getAsDouble() > blueA.left && centerX.getAsDouble() <
-    blueA.right) {
-    pathChosen.setString("Blue A");
+    //Globals.pathChosen is set in Robot.java disabledPeriodic() 
+    if (Globals.pathChosen == 1) {
     return autonBlueA;
     }
 
-    else if (centerX.getAsDouble() > blueB.left && centerX.getAsDouble() <
-    blueB.right) {
+    else if (Globals.pathChosen == 2) {
     pathChosen.setString("Blue B");
     return autonBlueB;
     }
 
-    else if (centerX.getAsDouble() > redA.left && centerX.getAsDouble() <
-    redA.right) {
+    else if (Globals.pathChosen == 3) {
     pathChosen.setString("Red A");
     return autonRedA;
     }
 
-    else if (centerX.getAsDouble() > redB.left && centerX.getAsDouble() <
-    redB.right) {
+    else if (Globals.pathChosen == 4) {
     pathChosen.setString("Red B");
     return autonRedB;
     }
 
     else {
-    pathChosen.setString("none");
     return zeroDistance;
     }
   }
