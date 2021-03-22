@@ -96,8 +96,7 @@ public class ShootingSystem extends SubsystemBase {
     } else {
       atSetpoint.setBoolean(false);
     }
- 
-    
+
   }
 
   public void startShooter() {

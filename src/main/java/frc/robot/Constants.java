@@ -78,8 +78,8 @@ public final class Constants {
         public static double kI = 0.000001;
         public static double kD = 0;
         public static double kFF = 0;
-        public static double kMax = 0.9;
-        public static double kMin = -0.9;
+        public static double kMax = 0.95;
+        public static double kMin = -0.95;
         public static double shooterSpeedMinimum = 4100;
     }
 
@@ -88,8 +88,8 @@ public final class Constants {
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0.00026;
-        public static double kMax = 0.8;
-        public static double kMin = -0.8;
+        public static double kMax = 0.9;
+        public static double kMin = -0.9;
     }
 
     public static class turretPID {
