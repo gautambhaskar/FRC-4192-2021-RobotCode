@@ -64,8 +64,7 @@ public class RobotContainer {
 
   private final DoubleSupplier centerX;
   ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
-  NetworkTableEntry pathChosen = mainTab.add("Path Chosen", "none").getEntry();
-
+s
   // Controllers
   private final XboxController driveController = new XboxController(Constants.driveController);
   private final XboxController systemsController = new XboxController(Constants.systemsController);
@@ -194,17 +193,14 @@ public class RobotContainer {
     }
 
     else if (Globals.pathChosen == 2) {
-      pathChosen.setString("Blue B");
       return autonBlueB;
     }
 
     else if (Globals.pathChosen == 3) {
-      pathChosen.setString("Red A");
       return autonRedA;
     }
 
     else if (Globals.pathChosen == 4) {
-      pathChosen.setString("Red B");
       return autonRedB;
     }
 
