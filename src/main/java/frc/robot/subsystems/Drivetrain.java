@@ -108,7 +108,7 @@ public class Drivetrain extends SubsystemBase {
 
   // makes a method to drive with parameters for forward speed and rotation
   public void arcadeDrive(double fwd, double turn) {
-    m_drive.arcadeDrive(fwd, turn);
+    m_drive.arcadeDrive(0.8 * fwd, 0.8 * turn);
   }
 
   // sets up a tank drive given the voltage supplied to either side
