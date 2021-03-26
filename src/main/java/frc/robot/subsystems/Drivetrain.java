@@ -114,7 +114,7 @@ public class Drivetrain extends SubsystemBase {
   // sets up a tank drive given the voltage supplied to either side
   public void tankDrive(double leftVolts, double rightVolts) {
     m_leftMotors.setVoltage(leftVolts);
-    m_rightMotors.setVoltage(-rightVolts);
+    m_rightMotors.setVoltage(-rightVolts); 
     m_drive.feed();
   }
 
