@@ -11,6 +11,7 @@ package frc.robot.commands.intake;
 // import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Globals;
 import frc.robot.subsystems.Intake;
 
 public class IntakeBalls extends CommandBase {
@@ -39,7 +40,11 @@ public class IntakeBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.intake(m_intakeSpeed);
+    if (Globals.drivetrainDistanceReached) {
+      m_intake.intake(m_intakeSpeed);
+    } else {
+      m_intake.intake(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

@@ -9,6 +9,7 @@ package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Globals;
 import frc.robot.Constants.drivePID;
 import frc.robot.subsystems.Drivetrain;
 
@@ -37,6 +38,12 @@ public class DriveForDistance extends PIDCommand {
             m_drive.arcadeDrive(-drivePID.autonMaxSpeed, drivePID.kP * m_drive.returnAngle());
           } else {
             m_drive.arcadeDrive((output), drivePID.kP * m_drive.returnAngle());
+          }
+
+          if (m_drive.returnDrivetrainPosition() >= (m_distance / 2)) {
+            Globals.drivetrainDistanceReached = true;
+          } else {
+            Globals.drivetrainDistanceReached = false;
           }
         });
     drive = m_drive;

@@ -20,6 +20,7 @@ public class DriveAndIntake extends ParallelRaceGroup {
   public DriveAndIntake(Drivetrain m_drive, Intake m_intake, double m_distance, boolean endRaise) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    
     addCommands(new DriveSetDistance(m_drive, m_distance), new IntakeBalls(m_intake, Constants.intakeSpeed, endRaise));
   }
 }
