@@ -37,18 +37,25 @@ public class AutoIndex extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Shooter is up to speed and hasn't shot a ball since it sped up, then run
+    // index to fire a ball
     if (Globals.shooterSpeed > shooterPID.shooterSpeedMinimum && alreadyRun == false) {
       index.run(Constants.indexSpeed);
       timer.start();
       alreadyRun = true;
       ballsShot++;
+      // Once the index has run for long enough to fire a ball, stop running the index
     } else if (Globals.shooterSpeed > shooterPID.shooterSpeedMinimum && alreadyRun == true
         && timer.get() > Constants.indexRunTime) {
       index.run(0);
       alreadyRun = false;
+      // Once the shooter has lost speed due to shooting the ball, set alreadyRun to
+      // false
+      // so that the next time it gets up to speed, a ball can be fired again
     } else if (Globals.shooterSpeed < shooterPID.shooterSpeedMinimum) {
       alreadyRun = false;
       index.run(0);
+      // by default, set index to 0 speed.
     } else {
       index.run(0);
     }
