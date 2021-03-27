@@ -39,7 +39,6 @@ public class AlignWithTarget extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_turret.turn(0);
-    DriverStation.reportError("Turret Macro done", true);
   }
 
   // Returns true when the command should end.

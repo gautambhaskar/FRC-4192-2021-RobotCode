@@ -4,7 +4,7 @@
 
 package frc.robot.commands.macros;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.commands.shootingSystem.RunShooter;
 import frc.robot.commands.index.AutoIndex;
 import frc.robot.subsystems.Index;
@@ -13,11 +13,11 @@ import frc.robot.subsystems.ShootingSystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FireInTheHole extends ParallelCommandGroup {
+public class FireInTheHole extends ParallelRaceGroup {
   /** Creates a new RunShooterWithAutoIndex. */
   public FireInTheHole(ShootingSystem shooter, Index index, int numBalls) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    super(new RunShooter(shooter), new AutoIndex(index, numBalls));
+    addCommands(new RunShooter(shooter), new AutoIndex(index, numBalls));
   }
 }
