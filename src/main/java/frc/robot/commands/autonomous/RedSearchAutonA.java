@@ -7,7 +7,6 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.Constants.drivePID;
-import frc.robot.commands.drive.DriveSetDistance;
 import frc.robot.commands.drive.RotateInPlace;
 import frc.robot.subsystems.Intake;
 

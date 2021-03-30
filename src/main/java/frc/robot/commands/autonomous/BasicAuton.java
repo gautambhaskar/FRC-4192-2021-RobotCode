@@ -19,11 +19,9 @@ public class BasicAuton extends SequentialCommandGroup {
   /**
    * Creates a new BasicAuton.
    */
-  private Drivetrain m_drive;
 
   public BasicAuton(Drivetrain drive) { // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(new DriveForDistance(drive, 1), new DriveSetTime(drive, 2));
-    m_drive = drive;
   }
 }
