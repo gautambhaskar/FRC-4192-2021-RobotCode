@@ -7,7 +7,6 @@
 
 package frc.robot.commands.shootingSystem;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShootingSystem;
 

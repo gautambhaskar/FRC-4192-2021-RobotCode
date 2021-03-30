@@ -9,16 +9,11 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import frc.robot.Constants.visionPosition.blueA;
-import frc.robot.Constants.visionPosition.blueB;
-import frc.robot.Constants.visionPosition.redA;
-import frc.robot.Constants.visionPosition.redB;
 
 import frc.robot.commands.drive.DefaultDrive;
 

@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -144,29 +143,27 @@ public class Robot extends TimedRobot {
       if (maxCenterX > blueA.left && maxCenterX < blueA.right) {
         pathChosen.setString("Blue A");
         Globals.pathChosen = 1;
-        }
-    
-        else if (maxCenterX > blueB.left && maxCenterX <
-        blueB.right) {
+      }
+
+      else if (maxCenterX > blueB.left && maxCenterX < blueB.right) {
         pathChosen.setString("Blue B");
         Globals.pathChosen = 2;
-        }
-    
-        else if (maxCenterX > redA.left && maxCenterX < redA.right) {
+      }
+
+      else if (maxCenterX > redA.left && maxCenterX < redA.right) {
         pathChosen.setString("Red A");
         Globals.pathChosen = 3;
-        }
-    
-        else if (maxCenterX > redB.left && maxCenterX <
-        redB.right) {
+      }
+
+      else if (maxCenterX > redB.left && maxCenterX < redB.right) {
         pathChosen.setString("Red B");
         Globals.pathChosen = 4;
-        }
-    
-        else {
+      }
+
+      else {
         pathChosen.setString("none");
         Globals.pathChosen = 0;
-        }
+      }
     }
 
     edu.wpi.first.wpilibj.Timer.delay(1.0 / 5.0);
