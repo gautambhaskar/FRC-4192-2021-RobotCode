@@ -74,8 +74,8 @@ public final class Constants {
     }
 
     public static class shooterPID {
-        public static double kP = 0.06;
-        public static double kI = 0.00000;
+        public static double kP = 0.0008;
+        public static double kI = 0.000001;
         public static double kD = 0.00;
         public static double kFF = 0.000;
         public static double kMax = 0.95;
