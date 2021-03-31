@@ -30,12 +30,12 @@ public class Hood extends SubsystemBase {
   }
 
   public void up() {
-    hoodSolenoid.set(Value.kForward);
+    hoodSolenoid.set(Value.kReverse);
     hoodPositionEntry.setBoolean(true);
   }
 
   public void down() {
-    hoodSolenoid.set(Value.kReverse);
+    hoodSolenoid.set(Value.kForward);
     hoodPositionEntry.setBoolean(false);
   }
 }
