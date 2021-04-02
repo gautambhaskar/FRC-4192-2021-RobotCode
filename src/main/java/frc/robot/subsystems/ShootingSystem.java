@@ -42,8 +42,8 @@ public class ShootingSystem extends SubsystemBase {
   private final CANSparkMax shooterLeftMotor = new CANSparkMax(Constants.shooterLeft, MotorType.kBrushless);
   private final CANSparkMax shooterRightMotor = new CANSparkMax(Constants.shooterRight, MotorType.kBrushless);
 
-  //Flywheel Shaft Encoder
-  private final Encoder flywheelEncoder = new Encoder(5,6); 
+  // Flywheel Shaft Encoder
+  private final Encoder flywheelEncoder = new Encoder(5, 6);
 
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
@@ -82,8 +82,9 @@ public class ShootingSystem extends SubsystemBase {
     feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
 
-    //Graph of FlyWheelSpeed
-    flyWheelSpeed = tuningTab.add("FlyWheel Speed", flywheelEncoder.getRate()).withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 5).getEntry();
+    // Graph of FlyWheelSpeed
+    flyWheelSpeed = tuningTab.add("FlyWheel Speed", flywheelEncoder.getRate()).withWidget(BuiltInWidgets.kGraph)
+        .withSize(2, 2).withPosition(5, 5).getEntry();
 
     atSetpoint = mainTab.add("At Setpoint", false).getEntry();
   }
@@ -98,8 +99,8 @@ public class ShootingSystem extends SubsystemBase {
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
     flyWheelSpeed.setDouble(flywheelEncoder.getRate());
 
-
-    if (flywheelEncoder.getRate() > shooterPID.flyWheelSpeedMinimum && flywheelEncoder.getRate() < (shooterPID.flyWheelSpeedMinimum + 200)) {
+    if (flywheelEncoder.getRate() > shooterPID.flyWheelSpeedMinimum
+        && flywheelEncoder.getRate() < (shooterPID.flyWheelSpeedMinimum + 200)) {
       atSetpoint.setBoolean(true);
     } else {
       atSetpoint.setBoolean(false);
@@ -110,6 +111,10 @@ public class ShootingSystem extends SubsystemBase {
   public void startShooter() {
     shooterController.setReference(Constants.shooterSpeed, ControlType.kVelocity);
     feederController.setReference(Constants.feederSpeed, ControlType.kVelocity);
+  }
+
+  public double getFlywheelSpeed() {
+    return flywheelEncoder.getRate();
   }
 
   public void initializeShooter() {
