@@ -34,6 +34,7 @@ import frc.robot.commands.shootingSystem.BasicRunShooter;
 import frc.robot.commands.shootingSystem.RunShooter;
 import frc.robot.commands.macros.CloseRangeShootingMacro;
 import frc.robot.commands.macros.ShootingMacro;
+import frc.robot.commands.macros.TurretAlignmentMacro;
 import frc.robot.commands.autonomous.BlueSearchAutonA;
 import frc.robot.commands.autonomous.BlueSearchAutonB;
 import frc.robot.commands.testingSystem.TestMotor;
@@ -105,6 +106,7 @@ public class RobotContainer {
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 9);
   private final SetIntake m_raiseIntake = new SetIntake(m_intake, true);
   private final SetIntake m_lowerIntake = new SetIntake(m_intake, false);
+  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood);
 
   // Autonomous Commands
   private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
@@ -155,9 +157,9 @@ public class RobotContainer {
     // Driver Controller
     driverRightTrigger.whileActiveOnce(m_halfSpeedDrive);
     driverLeftTrigger.whileActiveOnce(m_quarterSpeedDrive);
-    driverLeftBumper.toggleWhenPressed(m_intakeCommand);
-    driverRightBumper.toggleWhenPressed(m_shooterMacro);
-    driverXButton.toggleWhenPressed(m_closeRangeMacro);
+    driverLeftBumper.toggleWhenPressed(m_raiseIntake);
+    driverRightBumper.toggleWhenPressed(m_lowerIntake);
+    driverXButton.toggleWhenPressed(m_intakeCommand);
     driverBackButton.whenHeld(m_unjamBalls);
     driverStartButton.whenHeld(m_testMotor);
     driverAButton.whenHeld(m_outtakeSlowlyCommand);
@@ -170,7 +172,7 @@ public class RobotContainer {
     systemsAButton.whenPressed(m_alignHood);
     systemsBButton.whenPressed(m_alignHoodReverse);
     systemsXButton.toggleWhenPressed(m_runShooter);
-    systemsYButton.toggleWhenPressed(m_basicRunShooter);
+    systemsYButton.toggleWhenPressed(m_turretAlignmentMacro);
     systemsBackButton.whenHeld(m_indexOut);
     systemsLeftBumper.toggleWhenPressed(m_raiseIntake);
     systemsRightBumper.toggleWhenPressed(m_lowerIntake);
