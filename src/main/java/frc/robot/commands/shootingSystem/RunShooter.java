@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShootingSystem;
 
 public class RunShooter extends CommandBase {
+  
   private final ShootingSystem m_shooter;
+  private final double m_shootingSpeed;
 
-  public RunShooter(ShootingSystem subsystem) {
+  public RunShooter(ShootingSystem subsystem, double shootingSpeed) {
     m_shooter = subsystem;
+    m_shootingSpeed = shootingSpeed;
     addRequirements(m_shooter);
   }
 
@@ -27,7 +30,7 @@ public class RunShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.startShooter();
+    m_shooter.startShooter(m_shootingSpeed);
   }
 
   // Called once the command ends or is interrupted.

@@ -20,6 +20,7 @@ import frc.robot.commands.drive.DefaultDrive;
 import frc.robot.commands.autonomous.RedSearchAutonA;
 import frc.robot.commands.autonomous.RedSearchAutonB;
 import frc.robot.commands.drive.DriveForDistance;
+import frc.robot.commands.drive.DriveSetDistance;
 import frc.robot.commands.drive.DriveStraight;
 import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.OuttakeSlowly;
@@ -31,6 +32,7 @@ import frc.robot.commands.index.IndexOut;
 import frc.robot.commands.turret.TurretTurn;
 import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.shootingSystem.BasicRunShooter;
+import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
 import frc.robot.commands.shootingSystem.RunShooter;
 import frc.robot.commands.macros.CloseRangeShootingMacro;
 import frc.robot.commands.macros.ShootingMacro;
@@ -95,18 +97,20 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
-      -1);
-  private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index,
-      m_shootingSystem, m_hood, -1);
+  // private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
+  //     -1);
+  // private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index,
+  //     m_shootingSystem, m_hood, -1);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
   private final AlignHood m_alignHood = new AlignHood(m_hood, true);
   private final AlignHood m_alignHoodReverse = new AlignHood(m_hood, false);
-  private final RunShooter m_runShooter = new RunShooter(m_shootingSystem);
+  private final RunShooter m_runShooter = new RunShooter(m_shootingSystem, Constants.shooterSpeed);
+  private final RunShooter m_zone2RunShooter = new RunShooter(m_shootingSystem, Constants.zone2ShooterSpeed);
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 9);
   private final SetIntake m_raiseIntake = new SetIntake(m_intake, true);
   private final SetIntake m_lowerIntake = new SetIntake(m_intake, false);
   private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood);
+  private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem);
 
   // Autonomous Commands
   private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
@@ -114,6 +118,7 @@ public class RobotContainer {
   private final RedSearchAutonA autonRedA = new RedSearchAutonA(m_drive, m_intake);
   private final RedSearchAutonB autonRedB = new RedSearchAutonB(m_drive, m_intake);
   private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
+  private final DriveSetDistance driveSetDistance = new DriveSetDistance(m_drive, 40);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
@@ -172,8 +177,10 @@ public class RobotContainer {
     systemsAButton.whenPressed(m_alignHood);
     systemsBButton.whenPressed(m_alignHoodReverse);
     systemsXButton.toggleWhenPressed(m_runShooter);
-    systemsYButton.toggleWhenPressed(m_turretAlignmentMacro);
-    systemsBackButton.whenHeld(m_indexOut);
+    systemsYButton.toggleWhenPressed(m_zone2RunShooter);
+    //systemsBackButton.whenHeld(m_indexOut);
+    //systemsYButton.toggleWhenPressed(m_basicRunShooter);
+    systemsBackButton.toggleWhenPressed(m_flywheel);
     systemsLeftBumper.toggleWhenPressed(m_raiseIntake);
     systemsRightBumper.toggleWhenPressed(m_lowerIntake);
   }
@@ -184,25 +191,27 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    return driveSetDistance;
     // Globals.pathChosen is set in Robot.java disabledPeriodic()
-    if (Globals.pathChosen == 1) {
-      return autonBlueA;
-    }
+  //   if (Globals.pathChosen == 1) {
+  //     return autonBlueA;
+  //   }
 
-    else if (Globals.pathChosen == 2) {
-      return autonBlueB;
-    }
+  //   else if (Globals.pathChosen == 2) {
+  //     return autonBlueB;
+  //   }
 
-    else if (Globals.pathChosen == 3) {
-      return autonRedA;
-    }
+  //   else if (Globals.pathChosen == 3) {
+  //     return autonRedA;
+  //   }
 
-    else if (Globals.pathChosen == 4) {
-      return autonRedB;
-    }
+  //   else if (Globals.pathChosen == 4) {
+  //     return autonRedB;
+  //   }
 
-    else {
-      return zeroDistance;
-    }
+  //   else {
+  //     return zeroDistance;
+  //   }
+  // }
   }
 }

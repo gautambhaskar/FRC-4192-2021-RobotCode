@@ -40,11 +40,7 @@ public class IntakeBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Globals.drivetrainDistanceReached) {
       m_intake.intake(m_intakeSpeed);
-    } else {
-      m_intake.intake(0);
-    }
   }
 
   // Called once the command ends or is interrupted.
