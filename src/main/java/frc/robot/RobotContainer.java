@@ -96,10 +96,12 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  // private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
-  //     -1);
-  // private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index,
-  //     m_shootingSystem, m_hood, -1);
+  // private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive,
+  // m_turret, m_shootingSystem, m_index, m_hood,
+  // -1);
+  // private final CloseRangeShootingMacro m_closeRangeMacro = new
+  // CloseRangeShootingMacro(m_drive, m_turret, m_index,
+  // m_shootingSystem, m_hood, -1);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
   private final AlignHood m_alignHood = new AlignHood(m_hood, true);
   private final AlignHood m_alignHoodReverse = new AlignHood(m_hood, false);
@@ -108,11 +110,8 @@ public class RobotContainer {
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 9);
   private final SetIntake m_raiseIntake = new SetIntake(m_intake, true);
   private final SetIntake m_lowerIntake = new SetIntake(m_intake, false);
-<<<<<<< HEAD
   private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood);
   private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem);
-=======
->>>>>>> 3927e662b1fce48095e566345c5ee2ff0eeed109
 
   // Autonomous Commands
   private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
@@ -179,15 +178,10 @@ public class RobotContainer {
     systemsAButton.whenPressed(m_alignHood);
     systemsBButton.whenPressed(m_alignHoodReverse);
     systemsXButton.toggleWhenPressed(m_runShooter);
-<<<<<<< HEAD
     systemsYButton.toggleWhenPressed(m_zone2RunShooter);
-    //systemsBackButton.whenHeld(m_indexOut);
-    //systemsYButton.toggleWhenPressed(m_basicRunShooter);
+    // systemsBackButton.whenHeld(m_indexOut);
+    // systemsYButton.toggleWhenPressed(m_basicRunShooter);
     systemsBackButton.toggleWhenPressed(m_flywheel);
-=======
-    systemsYButton.toggleWhenPressed(m_basicRunShooter);
-    // systemsBackButton.toggleWhenPressed();
->>>>>>> 3927e662b1fce48095e566345c5ee2ff0eeed109
     systemsLeftBumper.toggleWhenPressed(m_raiseIntake);
     systemsRightBumper.toggleWhenPressed(m_lowerIntake);
   }
@@ -200,25 +194,25 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return driveSetDistance;
     // Globals.pathChosen is set in Robot.java disabledPeriodic()
-  //   if (Globals.pathChosen == 1) {
-  //     return autonBlueA;
-  //   }
+    // if (Globals.pathChosen == 1) {
+    // return autonBlueA;
+    // }
 
-  //   else if (Globals.pathChosen == 2) {
-  //     return autonBlueB;
-  //   }
+    // else if (Globals.pathChosen == 2) {
+    // return autonBlueB;
+    // }
 
-  //   else if (Globals.pathChosen == 3) {
-  //     return autonRedA;
-  //   }
+    // else if (Globals.pathChosen == 3) {
+    // return autonRedA;
+    // }
 
-  //   else if (Globals.pathChosen == 4) {
-  //     return autonRedB;
-  //   }
+    // else if (Globals.pathChosen == 4) {
+    // return autonRedB;
+    // }
 
-  //   else {
-  //     return zeroDistance;
-  //   }
-  // }
+    // else {
+    // return zeroDistance;
+    // }
+    // }
   }
 }
