@@ -32,6 +32,7 @@ import frc.robot.commands.index.IndexOut;
 import frc.robot.commands.turret.TurretTurn;
 import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.shootingSystem.BasicRunShooter;
+import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
 import frc.robot.commands.shootingSystem.RunShooter;
 import frc.robot.commands.macros.CloseRangeShootingMacro;
 import frc.robot.commands.macros.ShootingMacro;
