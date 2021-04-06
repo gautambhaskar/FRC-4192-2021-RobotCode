@@ -21,7 +21,7 @@ public class FlyWheelBasedShoot extends PIDCommand {
         // This should return the measurement
         () -> m_shooter.getFlywheelSpeed(),
         // This should return the setpoint (can also be a constant)
-        () -> 1900,
+        () -> 1950,
         // This uses the output
         output -> {
           m_shooter.setPower(12 * output, -9);
