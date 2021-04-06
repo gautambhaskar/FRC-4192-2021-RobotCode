@@ -17,14 +17,14 @@ public class FlyWheelBasedShoot extends PIDCommand {
   public FlyWheelBasedShoot(ShootingSystem m_shooter) {
     super(
         // The controller that the command will use
-        new PIDController(0.01, 0, 0),
+        new PIDController(0.02, 0, 0),
         // This should return the measurement
         () -> m_shooter.getFlywheelSpeed(),
         // This should return the setpoint (can also be a constant)
         () -> 1900,
         // This uses the output
         output -> {
-          m_shooter.setPower(12 * output, -9);
+          m_shooter.setPower(13 * output, -9);
           // Use the output here
         });
     addRequirements(m_shooter);
