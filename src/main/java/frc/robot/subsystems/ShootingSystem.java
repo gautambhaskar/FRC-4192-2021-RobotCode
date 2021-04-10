@@ -20,6 +20,9 @@ import frc.robot.Globals;
 //import frc.robot.Constants.shooterPID;
 import frc.robot.Constants.shooterPID;
 import frc.robot.Constants.feederPID;
+
+import com.revrobotics.AlternateEncoderType;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
@@ -43,7 +46,7 @@ public class ShootingSystem extends SubsystemBase {
   private final CANSparkMax shooterRightMotor = new CANSparkMax(Constants.shooterRight, MotorType.kBrushless);
 
   // Flywheel Shaft Encoder
-  private final Encoder flywheelEncoder = new Encoder(5, 6);
+  // private final Encoder flywheelEncoder = new Encoder(5, 6);
 
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
@@ -57,7 +60,12 @@ public class ShootingSystem extends SubsystemBase {
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
-    flywheelEncoder.setDistancePerPulse(-0.01);
+    // flywheelEncoder.setDistancePerPulse(-0.01);
+
+    // shooter spark max is connected to through bore like this, if plugged in using
+    // alternate encoder adapter.
+    shooterController.setFeedbackDevice(shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
+
     // feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature,
     // 8192));
 
