@@ -51,6 +51,7 @@ public class ShootingSystem extends SubsystemBase {
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
+  private CANEncoder flyWheelEncoder = shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
 
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
@@ -64,7 +65,7 @@ public class ShootingSystem extends SubsystemBase {
 
     // shooter spark max is connected to through bore like this, if plugged in using
     // alternate encoder adapter.
-    shooterController.setFeedbackDevice(shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192));
+    shooterController.setFeedbackDevice(flyWheelEncoder);
 
     // feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature,
     // 8192));
@@ -91,8 +92,9 @@ public class ShootingSystem extends SubsystemBase {
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
 
     // Graph of FlyWheelSpeed
-    flyWheelSpeed = tuningTab.add("FlyWheel Speed", flywheelEncoder.getRate()).withWidget(BuiltInWidgets.kGraph)
-        .withSize(2, 2).withPosition(5, 5).getEntry();
+    // flyWheelSpeed = tuningTab.add("FlyWheel Speed",
+    // flywheelEncoder.getRate()).withWidget(BuiltInWidgets.kGraph).withSize(2,
+    // 2).withPosition(5, 5).getEntry();
 
     atSetpoint = mainTab.add("At Setpoint", false).getEntry();
   }
@@ -102,13 +104,13 @@ public class ShootingSystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // Update the ShooterSpeed and FeederSpeed Graphs
-    shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
-    Globals.flyWheelSpeed = flywheelEncoder.getRate();
+    shooterSpeed.setDouble(flyWheelEncoder.getVelocity());
+    Globals.flyWheelSpeed = flyWheelEncoder.getVelocity();
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
-    flyWheelSpeed.setDouble(flywheelEncoder.getRate());
+    // flyWheelSpeed.setDouble(flyWheelEncoder.getRate());
 
-    if (flywheelEncoder.getRate() > shooterPID.flyWheelSpeedMinimum
-        && flywheelEncoder.getRate() < (shooterPID.flyWheelSpeedMinimum + 250)) {
+    if (flyWheelEncoder.getVelocity() > shooterPID.flyWheelSpeedMinimum
+        && flyWheelEncoder.getVelocity() < (shooterPID.flyWheelSpeedMinimum + 250)) {
       atSetpoint.setBoolean(true);
     } else {
       atSetpoint.setBoolean(false);
@@ -122,7 +124,7 @@ public class ShootingSystem extends SubsystemBase {
   }
 
   public double getFlywheelSpeed() {
-    return flywheelEncoder.getRate();
+    return flyWheelEncoder.getVelocity();
   }
 
   public void initializeShooter() {
@@ -151,7 +153,7 @@ public class ShootingSystem extends SubsystemBase {
     feederController.setReference(0, ControlType.kVoltage);
   }
 
-  public double shooterSpeed() {
-    return shooterLeftMotor.getEncoder().getVelocity();
-  }
+  // public double shooterSpeed() {
+  // return shooterLeftMotor.getEncoder().getVelocity();
+  // }
 }
