@@ -114,11 +114,11 @@ public class Turret extends SubsystemBase {
 
   // turns the turret toward the target based on encoder values
   public void startAlign() {
-    if (tx.getDouble(0.0) > 1) {
+    if (tx.getDouble(0.0) > Constants.turretPID.tolerance) {
       turretMotor.set(-turretPID.kP * tx.getDouble(0));
       turretSetOutput.setDouble(turretPID.kP * tx.getDouble(0));
       turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
-    } else if (tx.getDouble(0.0) < 1) {
+    } else if (tx.getDouble(0.0) < Constants.turretPID.tolerance) {
       turretMotor.set(-turretPID.kP * tx.getDouble(0));
       turretSetOutput.setDouble(-turretPID.kP * tx.getDouble(0));
       turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());

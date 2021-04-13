@@ -23,6 +23,6 @@ public class UILAuton extends SequentialCommandGroup {
   public UILAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DriveSetDistance(drive, 1*drivePID.feetToRotations), new ShootingMacro(drive, turret, shooter, index, hood, 3, 4200));
+    addCommands(new DriveSetDistance(drive, 3*drivePID.feetToRotations), new ShootingMacro(drive, turret, shooter, index, hood, 3, 4200));
   }
 }

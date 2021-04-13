@@ -51,7 +51,7 @@ public class ShootingSystem extends SubsystemBase {
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
-  private CANEncoder flyWheelEncoder = shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
+  //private CANEncoder flyWheelEncoder = shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
 
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
@@ -65,7 +65,7 @@ public class ShootingSystem extends SubsystemBase {
 
     // shooter spark max is connected to through bore like this, if plugged in using
     // alternate encoder adapter.
-    shooterController.setFeedbackDevice(flyWheelEncoder);
+    //shooterController.setFeedbackDevice(flyWheelEncoder);
 
     // feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature,
     // 8192));
@@ -104,13 +104,13 @@ public class ShootingSystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // Update the ShooterSpeed and FeederSpeed Graphs
-    shooterSpeed.setDouble(flyWheelEncoder.getVelocity());
-    Globals.flyWheelSpeed = flyWheelEncoder.getVelocity();
+    shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
+    //Globals.flyWheelSpeed = flyWheelEncoder.getVelocity();
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
     // flyWheelSpeed.setDouble(flyWheelEncoder.getRate());
 
-    if (flyWheelEncoder.getVelocity() > shooterPID.flyWheelSpeedMinimum
-        && flyWheelEncoder.getVelocity() < (shooterPID.flyWheelSpeedMinimum + 250)) {
+    if (shooterLeftMotor.getEncoder().getVelocity() > shooterPID.flyWheelSpeedMinimum
+        && shooterLeftMotor.getEncoder().getVelocity() < (shooterPID.flyWheelSpeedMinimum + 250)) {
       atSetpoint.setBoolean(true);
     } else {
       atSetpoint.setBoolean(false);
@@ -124,7 +124,7 @@ public class ShootingSystem extends SubsystemBase {
   }
 
   public double getFlywheelSpeed() {
-    return flyWheelEncoder.getVelocity();
+    return shooterLeftMotor.getEncoder().getVelocity();
   }
 
   public void initializeShooter() {

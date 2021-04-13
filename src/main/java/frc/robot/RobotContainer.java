@@ -19,6 +19,7 @@ import frc.robot.commands.drive.DefaultDrive;
 
 import frc.robot.commands.autonomous.RedSearchAutonA;
 import frc.robot.commands.autonomous.RedSearchAutonB;
+import frc.robot.commands.autonomous.UILAuton;
 import frc.robot.commands.drive.DriveForDistance;
 import frc.robot.commands.drive.DriveSetDistance;
 import frc.robot.commands.drive.DriveStraight;
@@ -97,12 +98,10 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  // private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive,
-  // m_turret, m_shootingSystem, m_index, m_hood,
-  // -1);
-  // private final CloseRangeShootingMacro m_closeRangeMacro = new
-  // CloseRangeShootingMacro(m_drive, m_turret, m_index,
-  // m_shootingSystem, m_hood, -1);
+  // private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
+  //     -1);
+  // private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index,
+  //     m_shootingSystem, m_hood, -1);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
   private final AlignHood m_alignHood = new AlignHood(m_hood, true);
   private final AlignHood m_alignHoodReverse = new AlignHood(m_hood, false);
@@ -121,6 +120,7 @@ public class RobotContainer {
   private final RedSearchAutonB autonRedB = new RedSearchAutonB(m_drive, m_intake);
   private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
   private final DriveSetDistance driveSetDistance = new DriveSetDistance(m_drive, 40);
+  private final UILAuton uilAuton = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
@@ -180,9 +180,11 @@ public class RobotContainer {
     systemsBButton.whenPressed(m_alignHoodReverse);
     systemsXButton.toggleWhenPressed(m_runShooter);
     systemsYButton.toggleWhenPressed(m_zone2RunShooter);
-    // systemsBackButton.whenHeld(m_indexOut);
-    // systemsYButton.toggleWhenPressed(m_basicRunShooter);
+    //systemsBackButton.whenHeld(m_indexOut);
+    //systemsYButton.toggleWhenPressed(m_basicRunShooter);
     systemsBackButton.toggleWhenPressed(m_flywheel);
+    systemsYButton.toggleWhenPressed(m_basicRunShooter);
+    // systemsBackButton.toggleWhenPressed();
     systemsLeftBumper.toggleWhenPressed(m_raiseIntake);
     systemsRightBumper.toggleWhenPressed(m_lowerIntake);
   }
@@ -193,27 +195,27 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return driveSetDistance;
+    return uilAuton;
     // Globals.pathChosen is set in Robot.java disabledPeriodic()
-    // if (Globals.pathChosen == 1) {
-    // return autonBlueA;
-    // }
+  //   if (Globals.pathChosen == 1) {
+  //     return autonBlueA;
+  //   }
 
-    // else if (Globals.pathChosen == 2) {
-    // return autonBlueB;
-    // }
+  //   else if (Globals.pathChosen == 2) {
+  //     return autonBlueB;
+  //   }
 
-    // else if (Globals.pathChosen == 3) {
-    // return autonRedA;
-    // }
+  //   else if (Globals.pathChosen == 3) {
+  //     return autonRedA;
+  //   }
 
-    // else if (Globals.pathChosen == 4) {
-    // return autonRedB;
-    // }
+  //   else if (Globals.pathChosen == 4) {
+  //     return autonRedB;
+  //   }
 
-    // else {
-    // return zeroDistance;
-    // }
-    // }
+  //   else {
+  //     return zeroDistance;
+  //   }
+  // }
   }
 }

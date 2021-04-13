@@ -94,7 +94,7 @@ public final class Constants {
     }
 
     public static class turretPID {
-        public static double kP = 0.08;
+        public static double kP = 0.02;
         public static double kI = 0;
         public static double kD = 0;
         public static double kFF = 0;
@@ -110,7 +110,7 @@ public final class Constants {
     public static boolean trajectoryMapping = false;
 
     public static class drivePID {
-        public static double kP = .08;
+        public static double kP = -.08;
         public static double kI = -0;
         public static double kD = -0;
         public static double kFF = 0;
@@ -119,7 +119,7 @@ public final class Constants {
         public static double rotate_kP = 0.05;
         public static double rotate_kD = 0.002;
         public static double autonMaxSpeed = 0.7;
-        public static double tolerance = 4;
+        public static double tolerance = 5;
         public static double feetToRotations = 5.15;
         public static double rotateMax = 0.5;
 
