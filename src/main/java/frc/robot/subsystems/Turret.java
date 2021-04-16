@@ -126,7 +126,7 @@ public class Turret extends SubsystemBase {
   }
 
   public boolean finishedAligning() {
-    return Math.abs(tx.getDouble(0.0)) < 1;
+    return Math.abs(tx.getDouble(0.0)) < turretPID.tolerance;
   }
 
   // the angular offset of turret from the original angle on robot start-up

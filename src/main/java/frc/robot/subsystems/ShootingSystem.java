@@ -51,21 +51,21 @@ public class ShootingSystem extends SubsystemBase {
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
-  //private CANEncoder flyWheelEncoder = shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
+  private CANEncoder flyWheelEncoder = shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
 
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
   private ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
 
-  private NetworkTableEntry shooterSpeed, feederSpeed, atSetpoint, flyWheelSpeed;
+  private NetworkTableEntry shooterSpeed, shooterRightSpeed, feederSpeed, atSetpoint, flyWheelSpeed;
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
-    // flywheelEncoder.setDistancePerPulse(-0.01);
+    // flyWheelEncoder.setVelocityConversionFactor(-0.01);
 
     // shooter spark max is connected to through bore like this, if plugged in using
     // alternate encoder adapter.
-    //shooterController.setFeedbackDevice(flyWheelEncoder);
+    shooterController.setFeedbackDevice(flyWheelEncoder);
 
     // feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature,
     // 8192));
@@ -87,14 +87,15 @@ public class ShootingSystem extends SubsystemBase {
     // Graph of shooterSpeed
     shooterSpeed = tuningTab.add("Shooter Speed", shooterLeftMotor.getEncoder().getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 0).getEntry();
+
+    shooterRightSpeed = tuningTab.add("Shooter Right Speed", shooterRightMotor.getEncoder().getVelocity())
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 0).getEntry();
     // Graph of feederSpeed
     feederSpeed = tuningTab.add("Feeder Speed", -feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
 
     // Graph of FlyWheelSpeed
-    // flyWheelSpeed = tuningTab.add("FlyWheel Speed",
-    // flywheelEncoder.getRate()).withWidget(BuiltInWidgets.kGraph).withSize(2,
-    // 2).withPosition(5, 5).getEntry();
+    flyWheelSpeed = tuningTab.add("FlyWheel Speed",flyWheelEncoder.getVelocity()).withWidget(BuiltInWidgets.kGraph).withSize(2,2).withPosition(5, 5).getEntry();
 
     atSetpoint = mainTab.add("At Setpoint", false).getEntry();
   }
@@ -105,12 +106,13 @@ public class ShootingSystem extends SubsystemBase {
 
     // Update the ShooterSpeed and FeederSpeed Graphs
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
-    //Globals.flyWheelSpeed = flyWheelEncoder.getVelocity();
+    shooterRightSpeed.setDouble(shooterRightMotor.getEncoder().getVelocity());
+    Globals.flyWheelSpeed = flyWheelEncoder.getVelocity();
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
-    // flyWheelSpeed.setDouble(flyWheelEncoder.getRate());
+    flyWheelSpeed.setDouble(flyWheelEncoder.getVelocity());
 
-    if (shooterLeftMotor.getEncoder().getVelocity() > shooterPID.flyWheelSpeedMinimum
-        && shooterLeftMotor.getEncoder().getVelocity() < (shooterPID.flyWheelSpeedMinimum + 250)) {
+    if (flyWheelEncoder.getVelocity() > shooterPID.flyWheelSpeedMinimum
+        && flyWheelEncoder.getVelocity() < (shooterPID.flyWheelSpeedMinimum + 250)) {
       atSetpoint.setBoolean(true);
     } else {
       atSetpoint.setBoolean(false);
@@ -124,7 +126,7 @@ public class ShootingSystem extends SubsystemBase {
   }
 
   public double getFlywheelSpeed() {
-    return shooterLeftMotor.getEncoder().getVelocity();
+    return flyWheelEncoder.getVelocity();
   }
 
   public void initializeShooter() {
@@ -134,6 +136,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterController.setD(shooterPID.kD);
     shooterController.setFF(shooterPID.kFF);
     shooterController.setOutputRange(shooterPID.kMin, shooterPID.kMax);
+    shooterController.setFeedbackDevice(flyWheelEncoder);
 
     // Set feeder PID values on controller
     feederController.setP(feederPID.kP);

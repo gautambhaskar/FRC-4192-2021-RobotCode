@@ -94,16 +94,13 @@ public final class Constants {
     }
 
     public static class turretPID {
-        public static double kP = 0.02;
-        public static double kI = 0;
-        public static double kD = 0;
-        public static double kFF = 0;
+        public static double kP = 0.03;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
-
         // find these values for turret soft limit
         public static double leftPositionLimit = 0;
         public static double rightPositionLimit = 0;
+        public static double tolerance = 3;
     }
 
     // Trajectory Mapping
