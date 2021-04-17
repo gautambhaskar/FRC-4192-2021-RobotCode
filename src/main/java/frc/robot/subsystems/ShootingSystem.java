@@ -61,7 +61,7 @@ public class ShootingSystem extends SubsystemBase {
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
-    // flyWheelEncoder.setVelocityConversionFactor(-0.01);
+    flyWheelEncoder.setVelocityConversionFactor(-0.01);
 
     // shooter spark max is connected to through bore like this, if plugged in using
     // alternate encoder adapter.
@@ -95,7 +95,8 @@ public class ShootingSystem extends SubsystemBase {
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
 
     // Graph of FlyWheelSpeed
-    flyWheelSpeed = tuningTab.add("FlyWheel Speed",flyWheelEncoder.getVelocity()).withWidget(BuiltInWidgets.kGraph).withSize(2,2).withPosition(5, 5).getEntry();
+    flyWheelSpeed = tuningTab.add("FlyWheel Speed", flyWheelEncoder.getVelocity()).withWidget(BuiltInWidgets.kGraph)
+        .withSize(2, 2).withPosition(5, 5).getEntry();
 
     atSetpoint = mainTab.add("At Setpoint", false).getEntry();
   }
@@ -120,8 +121,8 @@ public class ShootingSystem extends SubsystemBase {
 
   }
 
-  public void startShooter(double shootingSpeed) {
-    shooterController.setReference(shootingSpeed, ControlType.kVelocity);
+  public void startShooter() {
+    shooterController.setReference(Constants.flywheelSpeed, ControlType.kVelocity);
     feederController.setReference(Constants.feederSpeed, ControlType.kVelocity);
   }
 

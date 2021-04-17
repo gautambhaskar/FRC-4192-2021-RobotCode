@@ -15,9 +15,9 @@ import frc.robot.subsystems.ShootingSystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class FireInTheHole extends ParallelRaceGroup {
   /** Creates a new RunShooterWithAutoIndex. */
-  public FireInTheHole(ShootingSystem shooter, double shooterSpeed, Index index, int numBalls) {
+  public FireInTheHole(ShootingSystem shooter, Index index, int numBalls) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new RunShooter(shooter, shooterSpeed), new AutoIndex(index, numBalls));
+    addCommands(new RunShooter(shooter), new AutoIndex(index, numBalls));
   }
 }

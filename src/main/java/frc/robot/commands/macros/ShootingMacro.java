@@ -26,6 +26,6 @@ public class ShootingMacro extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
     super(new TurretAlignmentMacro(m_drive, m_turret, m_hood), new ReverseFeeder(m_shooter),
-        new FireInTheHole(m_shooter, shooterSpeed, m_index, numBalls));
+        new FireInTheHole(m_shooter, m_index, numBalls));
   }
 }
