@@ -35,6 +35,7 @@ import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.shootingSystem.BasicRunShooter;
 import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
 import frc.robot.commands.shootingSystem.RunShooter;
+import frc.robot.commands.shootingSystem.StopFlyWheel;
 import frc.robot.commands.macros.CloseRangeShootingMacro;
 import frc.robot.commands.macros.ShootingMacro;
 import frc.robot.commands.macros.TurretAlignmentMacro;
@@ -113,6 +114,7 @@ public class RobotContainer {
   private final SetIntake m_lowerIntake = new SetIntake(m_intake, false);
   private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood);
   private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem);
+  private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
 
   // Autonomous Commands
   private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
@@ -179,11 +181,12 @@ public class RobotContainer {
     systemsStartButton.whenHeld(m_indexIn);
     systemsAButton.whenPressed(m_alignHood);
     systemsBButton.whenPressed(m_alignHoodReverse);
-    systemsXButton.toggleWhenPressed(m_runShooter);
     // systemsBackButton.whenHeld(m_indexOut);
     // systemsYButton.toggleWhenPressed(m_basicRunShooter);
     systemsBackButton.toggleWhenPressed(m_turretAlignmentMacro);
-    systemsYButton.toggleWhenPressed(m_basicRunShooter);
+
+    systemsYButton.whenPressed(m_flywheel);
+    systemsXButton.whenPressed(m_flywheelStop);
     // systemsBackButton.toggleWhenPressed();
     systemsLeftBumper.toggleWhenPressed(m_raiseIntake);
     systemsRightBumper.toggleWhenPressed(m_lowerIntake);
