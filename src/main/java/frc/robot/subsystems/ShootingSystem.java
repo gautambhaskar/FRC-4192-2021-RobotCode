@@ -46,12 +46,12 @@ public class ShootingSystem extends SubsystemBase {
   private final CANSparkMax shooterRightMotor = new CANSparkMax(Constants.shooterRight, MotorType.kBrushless);
 
   // Flywheel Shaft Encoder
-  // private final Encoder flywheelEncoder = new Encoder(5, 6);
+  private final Encoder flyWheelEncoder = new Encoder(5, 6);
 
   // PID Controller
   private CANPIDController shooterController = shooterLeftMotor.getPIDController();
   private CANPIDController feederController = feederMotor.getPIDController();
-  private CANEncoder flyWheelEncoder = shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
+  //private CANEncoder flyWheelEncoder = shooterLeftMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature, 8192);
 
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
@@ -61,12 +61,10 @@ public class ShootingSystem extends SubsystemBase {
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
-    flyWheelEncoder.setVelocityConversionFactor(-0.01);
+    flyWheelEncoder.setDistancePerPulse(0.01);
 
     // shooter spark max is connected to through bore like this, if plugged in using
     // alternate encoder adapter.
-    shooterController.setFeedbackDevice(flyWheelEncoder);
-
     // feederController.setFeedbackDevice(feederMotor.getAlternateEncoder(AlternateEncoderType.kQuadrature,
     // 8192));
 
@@ -95,7 +93,7 @@ public class ShootingSystem extends SubsystemBase {
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(0, 0).getEntry();
 
     // Graph of FlyWheelSpeed
-    flyWheelSpeed = tuningTab.add("FlyWheel Speed", flyWheelEncoder.getVelocity()).withWidget(BuiltInWidgets.kGraph)
+    flyWheelSpeed = tuningTab.add("FlyWheel Speed", flyWheelEncoder.getRate()).withWidget(BuiltInWidgets.kGraph)
         .withSize(2, 2).withPosition(5, 5).getEntry();
 
     atSetpoint = mainTab.add("At Setpoint", false).getEntry();
@@ -108,12 +106,11 @@ public class ShootingSystem extends SubsystemBase {
     // Update the ShooterSpeed and FeederSpeed Graphs
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
     shooterRightSpeed.setDouble(shooterRightMotor.getEncoder().getVelocity());
-    Globals.flyWheelSpeed = flyWheelEncoder.getVelocity();
+    Globals.flyWheelSpeed = flyWheelEncoder.getRate();
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
-    flyWheelSpeed.setDouble(flyWheelEncoder.getVelocity());
+    flyWheelSpeed.setDouble(flyWheelEncoder.getRate());
 
-    if (flyWheelEncoder.getVelocity() > shooterPID.flyWheelSpeedMinimum
-        && flyWheelEncoder.getVelocity() < (shooterPID.flyWheelSpeedMinimum + 250)) {
+    if (flyWheelEncoder.getRate() > shooterPID.flyWheelSpeedMinimum) {
       atSetpoint.setBoolean(true);
     } else {
       atSetpoint.setBoolean(false);
@@ -127,7 +124,7 @@ public class ShootingSystem extends SubsystemBase {
   }
 
   public double getFlywheelSpeed() {
-    return flyWheelEncoder.getVelocity();
+    return flyWheelEncoder.getRate();
   }
 
   public void initializeShooter() {
@@ -137,7 +134,7 @@ public class ShootingSystem extends SubsystemBase {
     shooterController.setD(shooterPID.kD);
     shooterController.setFF(shooterPID.kFF);
     shooterController.setOutputRange(shooterPID.kMin, shooterPID.kMax);
-    shooterController.setFeedbackDevice(flyWheelEncoder);
+    //shooterController.setFeedbackDevice(flyWheelEncoder);
 
     // Set feeder PID values on controller
     feederController.setP(feederPID.kP);
@@ -148,12 +145,12 @@ public class ShootingSystem extends SubsystemBase {
   }
 
   public void setPower(double s_power, double f_power) {
-    shooterController.setReference(s_power, ControlType.kVoltage);
+    shooterLeftMotor.set(s_power);
     feederController.setReference(f_power, ControlType.kVoltage);
   }
 
   public void stopShooter() {
-    shooterController.setReference(0, ControlType.kVoltage);
+    shooterLeftMotor.set(0);
     feederController.setReference(0, ControlType.kVoltage);
   }
 
