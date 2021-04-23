@@ -4,21 +4,19 @@
 
 package frc.robot.commands.macros;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.commands.shootingSystem.RunShooter;
-import frc.robot.commands.index.AutoIndex;
-import frc.robot.subsystems.Index;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ShootingSystem;
-import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
-
+import frc.robot.subsystems.Index;
+import frc.robot.commands.shootingSystem.StopFlyWheel;
+import frc.robot.commands.shootingSystem.ReverseFeeder;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FireInTheHole extends ParallelRaceGroup {
-  /** Creates a new RunShooterWithAutoIndex. */
-  public FireInTheHole(ShootingSystem shooter, Index index, int numBalls) {
+public class shootTheBall extends SequentialCommandGroup {
+  /** Creates a new shootTheBall. */
+  public shootTheBall(ShootingSystem shooter, Index index, int numBalls) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FlyWheelBasedShoot(shooter), new AutoIndex(index, numBalls));
+    addCommands(new ReverseFeeder(shooter), new FireInTheHole(shooter, index, numBalls), new StopFlyWheel(shooter));
   }
 }

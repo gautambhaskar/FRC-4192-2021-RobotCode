@@ -23,7 +23,6 @@ public class CloseRangeShootingMacro extends SequentialCommandGroup {
       Hood m_hood, int numBalls, double shooterSpeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new AlignHood(m_hood, false), new FieldBasedTurretTurn(m_drive, m_turret), new ReverseFeeder(m_shooter),
-        new FireInTheHole(m_shooter, m_index, numBalls));
+    addCommands(new AlignHood(m_hood, false), new FieldBasedTurretTurn(m_drive, m_turret), new shootTheBall(m_shooter, m_index, numBalls));
   }
 }
