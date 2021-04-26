@@ -28,6 +28,7 @@ import frc.robot.commands.intake.OuttakeSlowly;
 import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.drive.PrecisionDrive;
 import frc.robot.commands.hood.AlignHood;
+import frc.robot.commands.hood.SetHood;
 import frc.robot.commands.index.IndexIn;
 import frc.robot.commands.index.IndexOut;
 import frc.robot.commands.turret.TurretTurn;
@@ -105,11 +106,10 @@ public class RobotContainer {
   // m_shootingSystem, m_hood, -1);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
   private final AlignHood m_alignHood = new AlignHood(m_hood, true);
-  private final AlignHood m_alignHoodReverse = new AlignHood(m_hood, false);
+  private final SetHood m_setHood = new SetHood(m_hood);
   private final RunShooter m_runShooter = new RunShooter(m_shootingSystem);
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 9);
-  private final SetIntake m_raiseIntake = new SetIntake(m_intake, true);
-  private final SetIntake m_lowerIntake = new SetIntake(m_intake, false);
+  private final SetIntake m_setIntake = new SetIntake(m_intake);
   private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood);
   private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem);
   private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
@@ -165,8 +165,7 @@ public class RobotContainer {
     // Driver Controller
     driverRightTrigger.whileActiveOnce(m_halfSpeedDrive);
     driverLeftTrigger.whileActiveOnce(m_quarterSpeedDrive);
-    driverLeftBumper.toggleWhenPressed(m_raiseIntake);
-    driverRightBumper.toggleWhenPressed(m_lowerIntake);
+    // driverLeftBumper.toggleWhenPressed(m_setIntake);
     driverXButton.toggleWhenPressed(m_intakeCommand);
     driverBackButton.whenHeld(m_unjamBalls);
     driverStartButton.whenHeld(m_testMotor);
@@ -178,16 +177,14 @@ public class RobotContainer {
     systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
     systemsStartButton.whenHeld(m_indexIn);
     systemsAButton.whenPressed(m_shooterMacro);
-    systemsBButton.whenPressed(m_alignHoodReverse);
+    systemsBButton.toggleWhenPressed(m_setHood);
     // systemsBackButton.whenHeld(m_indexOut);
     // systemsYButton.toggleWhenPressed(m_basicRunShooter);
     systemsBackButton.toggleWhenPressed(m_turretAlignmentMacro);
-
     systemsYButton.whenPressed(m_flywheel);
     systemsXButton.whenPressed(m_flywheelStop);
     // systemsBackButton.toggleWhenPressed();
-    systemsLeftBumper.toggleWhenPressed(m_raiseIntake);
-    systemsRightBumper.toggleWhenPressed(m_lowerIntake);
+    systemsLeftBumper.toggleWhenPressed(m_setIntake);
   }
 
   /**

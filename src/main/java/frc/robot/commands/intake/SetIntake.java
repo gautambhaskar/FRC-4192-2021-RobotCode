@@ -14,12 +14,10 @@ import frc.robot.subsystems.Intake;
 public class SetIntake extends CommandBase {
 
   private final Intake m_intake;
-  private final boolean m_up;
 
-  public SetIntake(Intake intake, boolean up) {
+  public SetIntake(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_intake = intake;
-    m_up = up;
     addRequirements(m_intake);
   }
 
