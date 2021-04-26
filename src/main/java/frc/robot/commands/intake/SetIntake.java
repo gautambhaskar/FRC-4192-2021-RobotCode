@@ -4,13 +4,14 @@
 
 package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SetIntake extends InstantCommand {
+public class SetIntake extends CommandBase {
 
   private final Intake m_intake;
   private final boolean m_up;
@@ -25,6 +26,13 @@ public class SetIntake extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.setIntake(m_up);
+  }
+
+  public void execute() {
+    m_intake.setIntake(true);
+  }
+
+  public void end() {
+    m_intake.setIntake(false);
   }
 }
