@@ -560,17 +560,22 @@
                 {
                   "_type": "Encoder",
                   "_source0": "network_table:///LiveWindow/Ungrouped/Encoder[1]",
-                  "_title": "/LiveWindow/Ungrouped/Encoder[1]"
+                  "_title": "Encoder[1]"
                 },
                 {
                   "_type": "PID Controller",
                   "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[36]",
-                  "_title": "/LiveWindow/Ungrouped/PIDController[36]"
+                  "_title": "PIDController[36]"
                 },
                 {
                   "_type": "PID Controller",
                   "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[37]",
-                  "_title": "/LiveWindow/Ungrouped/PIDController[37]"
+                  "_title": "PIDController[37]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[38]",
+                  "_title": "PIDController[38]"
                 }
               ]
             }

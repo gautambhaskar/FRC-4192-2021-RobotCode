@@ -4,7 +4,10 @@
 
 package frc.robot.commands.index;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Globals;
@@ -18,13 +21,15 @@ public class AutoIndex extends CommandBase {
   private Timer timer = new Timer();
   private int numBalls;
   private int ballsShot;
+  private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
+  private NetworkTableEntry ballsFired;
 
   public AutoIndex(Index m_index, int m_numBalls) {
     index = m_index;
     alreadyRun = false;
     numBalls = m_numBalls;
     ballsShot = 0;
-
+    ballsFired = tuningTab.add("Balls Fired", ballsShot).getEntry();
     addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -44,6 +49,7 @@ public class AutoIndex extends CommandBase {
       timer.start();
       alreadyRun = true;
       ballsShot++;
+      ballsFired.setNumber(ballsShot);
       // Once the index has run for long enough to fire a ball, stop running the index
     } else if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == true
         && timer.get() > Constants.indexRunTime) {
