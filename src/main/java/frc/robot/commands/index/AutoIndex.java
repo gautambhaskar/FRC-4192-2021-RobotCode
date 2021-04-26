@@ -29,7 +29,7 @@ public class AutoIndex extends CommandBase {
     alreadyRun = false;
     numBalls = m_numBalls;
     ballsShot = 0;
-    ballsFired = tuningTab.add("Balls Fired", ballsShot).getEntry();
+    //ballsFired = tuningTab.add("Balls Fired", ballsShot).getEntry();
     addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -49,7 +49,7 @@ public class AutoIndex extends CommandBase {
       timer.start();
       alreadyRun = true;
       ballsShot++;
-      ballsFired.setNumber(ballsShot);
+      //ballsFired.setNumber(ballsShot);
       // Once the index has run for long enough to fire a ball, stop running the index
     } else if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == true
         && timer.get() > Constants.indexRunTime) {

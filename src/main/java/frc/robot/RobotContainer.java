@@ -99,9 +99,7 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  // private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive,
-  // m_turret, m_shootingSystem, m_index, m_hood,
-  // -1);
+  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood, -1, 0);
   // private final CloseRangeShootingMacro m_closeRangeMacro = new
   // CloseRangeShootingMacro(m_drive, m_turret, m_index,
   // m_shootingSystem, m_hood, -1);
@@ -179,7 +177,7 @@ public class RobotContainer {
     systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
     systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
     systemsStartButton.whenHeld(m_indexIn);
-    systemsAButton.whenPressed(m_alignHood);
+    systemsAButton.whenPressed(m_shooterMacro);
     systemsBButton.whenPressed(m_alignHoodReverse);
     // systemsBackButton.whenHeld(m_indexOut);
     // systemsYButton.toggleWhenPressed(m_basicRunShooter);
