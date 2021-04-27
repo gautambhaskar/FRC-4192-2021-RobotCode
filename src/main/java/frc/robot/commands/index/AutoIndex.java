@@ -38,6 +38,7 @@ public class AutoIndex extends CommandBase {
   @Override
   public void initialize() {
     ballsFired = tuningTab.add("Balls Firedd", 0).getEntry();
+    timer.start();
     timer2.start();
     ballsShot = 0;
   }
@@ -47,10 +48,10 @@ public class AutoIndex extends CommandBase {
   public void execute() {
     // Shooter is up to speed and hasn't shot a ball since it sped up, then run
     // index to fire a ball
-    if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == false && timer2.get() > Constants.indexRunTime+0.5) {
+    if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == false && timer2.get() > Constants.indexRunTime+1) {
       index.run(Constants.indexSpeed);
-      timer.start();
-      timer2.start();
+      timer.reset();
+      timer2.reset();
       alreadyRun = true;
       ballsShot++;
       ballsFired.setNumber(ballsShot);
