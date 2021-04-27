@@ -19,6 +19,7 @@ public class AutoIndex extends CommandBase {
   private Index index;
   private boolean alreadyRun;
   private Timer timer = new Timer();
+  private Timer timer2 = new Timer();
   private int numBalls;
   private int ballsShot;
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
@@ -37,6 +38,8 @@ public class AutoIndex extends CommandBase {
   @Override
   public void initialize() {
     ballsFired = tuningTab.add("Balls Firedd", 0).getEntry();
+    timer2.start();
+    ballsShot = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,9 +47,10 @@ public class AutoIndex extends CommandBase {
   public void execute() {
     // Shooter is up to speed and hasn't shot a ball since it sped up, then run
     // index to fire a ball
-    if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == false) {
+    if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == false && timer2.get() > Constants.indexRunTime+0.5) {
       index.run(Constants.indexSpeed);
       timer.start();
+      timer2.start();
       alreadyRun = true;
       ballsShot++;
       ballsFired.setNumber(ballsShot);
@@ -54,11 +58,12 @@ public class AutoIndex extends CommandBase {
     } else if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == true
         && timer.get() > Constants.indexRunTime) {
       index.run(0);
+      
       alreadyRun = false;
       // Once the shooter has lost speed due to shooting the ball, set alreadyRun to
       // false
       // so that the next time it gets up to speed, a ball can be fired again
-    } else if (Globals.flyWheelSpeed < shooterPID.flyWheelSpeedMinimum) {
+    } else if (Globals.flyWheelSpeed < shooterPID.flyWheelSpeedMinimum && timer.get() > Constants.indexRunTime) {
       alreadyRun = false;
       index.run(0);
       // by default, set index to 0 speed.

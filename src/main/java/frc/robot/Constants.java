@@ -55,7 +55,7 @@ public final class Constants {
     public static double flywheelSpeed = 1950;
     public static double hoodRotateSpeed = 0.3;
     public static double turretTurn = 0.7;
-    public static double indexRunTime = 0.15;
+    public static double indexRunTime = 0.25;
 
     // Buttons
     public static int aButton = 1;
