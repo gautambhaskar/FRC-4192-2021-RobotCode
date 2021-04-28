@@ -8,11 +8,14 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Constants.drivePID;
 import frc.robot.commands.drive.DriveSetDistance;
+import frc.robot.commands.intake.IntakeDown;
+import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.macros.ShootingMacro;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Hood;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -20,9 +23,9 @@ import frc.robot.subsystems.Hood;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class UILAuton extends SequentialCommandGroup {
   /** Creates a new UILAuton. */
-  public UILAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood) {
+  public UILAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood, Intake intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ShootingMacro(drive, turret, shooter, index, hood, 3, 4200), new DriveSetDistance(drive, 3*drivePID.feetToRotations));
+    addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, 4200), new DriveSetDistance(drive, 3*drivePID.feetToRotations));
   }
 }

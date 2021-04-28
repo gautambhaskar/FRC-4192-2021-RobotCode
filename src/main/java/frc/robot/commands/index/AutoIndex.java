@@ -17,9 +17,8 @@ import frc.robot.subsystems.Index;
 public class AutoIndex extends CommandBase {
   /** Creates a new AutoIndex. */
   private Index index;
-  private boolean alreadyRun;
+  private boolean alreadyRun, timerStarted;
   private Timer timer = new Timer();
-  private Timer timer2 = new Timer();
   private int numBalls;
   private int ballsShot;
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
@@ -30,6 +29,7 @@ public class AutoIndex extends CommandBase {
     alreadyRun = false;
     numBalls = m_numBalls;
     ballsShot = 0;
+    timerStarted = false;
     addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -38,8 +38,6 @@ public class AutoIndex extends CommandBase {
   @Override
   public void initialize() {
     ballsFired = tuningTab.add("Balls Firedd", 0).getEntry();
-    timer.start();
-    timer2.start();
     ballsShot = 0;
   }
 
@@ -48,29 +46,11 @@ public class AutoIndex extends CommandBase {
   public void execute() {
     // Shooter is up to speed and hasn't shot a ball since it sped up, then run
     // index to fire a ball
-    if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == false && timer2.get() > Constants.indexRunTime+1) {
+    if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == false) {
       index.run(Constants.indexSpeed);
-      timer.reset();
-      timer2.reset();
-      alreadyRun = true;
-      ballsShot++;
-      ballsFired.setNumber(ballsShot);
+      timer.start();
       // Once the index has run for long enough to fire a ball, stop running the index
-    } else if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == true
-        && timer.get() > Constants.indexRunTime) {
-      index.run(0);
-      
-      alreadyRun = false;
-      // Once the shooter has lost speed due to shooting the ball, set alreadyRun to
-      // false
-      // so that the next time it gets up to speed, a ball can be fired again
-    } else if (Globals.flyWheelSpeed < shooterPID.flyWheelSpeedMinimum && timer.get() > Constants.indexRunTime) {
-      alreadyRun = false;
-      index.run(0);
-      // by default, set index to 0 speed.
-    } else {
-      index.run(0);
-    }
+    } 
   }
 
   // Called once the command ends or is interrupted.
@@ -85,7 +65,7 @@ public class AutoIndex extends CommandBase {
     if (numBalls == -1) {
       return false;
     } else {
-      return ballsShot >= numBalls;
+      return timer.get()>Constants.indexRunTime;
     }
   }
 }

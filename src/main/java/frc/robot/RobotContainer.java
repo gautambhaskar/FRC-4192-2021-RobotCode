@@ -121,7 +121,7 @@ public class RobotContainer {
   private final RedSearchAutonB autonRedB = new RedSearchAutonB(m_drive, m_intake);
   private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
   private final DriveSetDistance driveSetDistance = new DriveSetDistance(m_drive, 40);
-  private final UILAuton uilAuton = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood);
+  private final UILAuton uilAuton = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
