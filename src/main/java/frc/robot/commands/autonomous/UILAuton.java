@@ -20,9 +20,22 @@ import frc.robot.subsystems.Hood;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class UILAuton extends SequentialCommandGroup {
   /** Creates a new UILAuton. */
-  public UILAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood) {
+  public UILAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood, int route) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ShootingMacro(drive, turret, shooter, index, hood, 3, 4200), new DriveSetDistance(drive, 3*drivePID.feetToRotations));
+    switch (route) {
+    case 1:
+      addCommands(new ShootingMacro(drive, turret, shooter, index, hood, 3, 0),
+          new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
+      break;
+    case 2:
+      addCommands(new ShootingMacro(drive, turret, shooter, index, hood, 3, 20),
+          new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
+      break;
+    case 3:
+      addCommands(new ShootingMacro(drive, turret, shooter, index, hood, 3, -20),
+          new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
+      break;
+    }
   }
 }
