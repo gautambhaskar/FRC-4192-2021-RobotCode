@@ -100,7 +100,8 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood, -1, 0);
+  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
+      -1, 0);
   // private final CloseRangeShootingMacro m_closeRangeMacro = new
   // CloseRangeShootingMacro(m_drive, m_turret, m_index,
   // m_shootingSystem, m_hood, -1);
@@ -110,7 +111,7 @@ public class RobotContainer {
   private final RunShooter m_runShooter = new RunShooter(m_shootingSystem);
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 9);
   private final SetIntake m_setIntake = new SetIntake(m_intake);
-  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood);
+  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0);
   private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem);
   private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
 
@@ -121,7 +122,9 @@ public class RobotContainer {
   private final RedSearchAutonB autonRedB = new RedSearchAutonB(m_drive, m_intake);
   private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
   private final DriveSetDistance driveSetDistance = new DriveSetDistance(m_drive, 40);
-  private final UILAuton uilAuton = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake);
+  private final UILAuton uilAuton1 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 1);
+  private final UILAuton uilAuton2 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 2);
+  private final UILAuton uilAuton3 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 3);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
@@ -193,27 +196,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return uilAuton;
-    // Globals.pathChosen is set in Robot.java disabledPeriodic()
-    // if (Globals.pathChosen == 1) {
-    // return autonBlueA;
-    // }
-
-    // else if (Globals.pathChosen == 2) {
-    // return autonBlueB;
-    // }
-
-    // else if (Globals.pathChosen == 3) {
-    // return autonRedA;
-    // }
-
-    // else if (Globals.pathChosen == 4) {
-    // return autonRedB;
-    // }
-
-    // else {
-    // return zeroDistance;
-    // }
-    // }
+    return uilAuton1;
   }
 }

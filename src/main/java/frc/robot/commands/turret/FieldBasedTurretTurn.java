@@ -20,15 +20,15 @@ public class FieldBasedTurretTurn extends PIDCommand {
   /**
    * Creates a new FieldBasedTurretTurn.
    */
-  
-  public FieldBasedTurretTurn(Drivetrain m_drive, Turret m_turret) {
+
+  public FieldBasedTurretTurn(Drivetrain m_drive, Turret m_turret, double offset) {
     super(
         // The controller that the command will use
         new PIDController(fieldBasedTurretPID.kP, fieldBasedTurretPID.kI, fieldBasedTurretPID.kD),
         // This should return the measurement
         () -> m_turret.getNativePosition(),
         // This should return the setpoint (can also be a constant)
-        () -> m_drive.returnNativeAngle(),
+        () -> m_drive.returnNativeAngle() + offset,
         // This uses the output
         output -> {
           if (output > fieldBasedTurretPID.maxSpeed) {
@@ -40,8 +40,8 @@ public class FieldBasedTurretTurn extends PIDCommand {
           }
           // Use the output here
         });
-        addRequirements(m_drive, m_turret);
-        getController().setTolerance(5);
+    addRequirements(m_drive, m_turret);
+    getController().setTolerance(5);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
