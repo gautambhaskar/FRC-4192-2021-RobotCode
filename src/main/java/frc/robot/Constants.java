@@ -55,7 +55,7 @@ public final class Constants {
     public static double flywheelSpeed = 1950;
     public static double hoodRotateSpeed = 0.3;
     public static double turretTurn = 0.7;
-    public static double indexRunTime = 3;
+    public static double indexRunTime = 2;
 
     // Buttons
     public static int aButton = 1;
@@ -95,7 +95,7 @@ public final class Constants {
     }
 
     public static class turretPID {
-        public static double kP = 0.025;
+        public static double kP = 0.02;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
         // find these values for turret soft limit
@@ -116,7 +116,7 @@ public final class Constants {
         public static double kMin = -1;
         public static double rotate_kP = 0.05;
         public static double rotate_kD = 0.002;
-        public static double autonMaxSpeed = 0.7;
+        public static double autonMaxSpeed = 0.8;
         public static double tolerance = 5;
         public static double feetToRotations = 5.15;
         public static double rotateMax = 0.5;

@@ -11,6 +11,7 @@ import frc.robot.commands.drive.DriveSetDistance;
 import frc.robot.commands.intake.IntakeDown;
 import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.macros.ShootingMacro;
+import frc.robot.commands.autonomous.DriveAndIntake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.subsystems.Turret;
@@ -27,15 +28,15 @@ public class UILAuton extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     switch (route) {
-    case 1:
+    case 1: // turret side bumpers on line (DSMid)
       addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, 0), 
           new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
       break;
-    case 2:
+    case 2: // the 1 on bumpers on line (DSLeft)
       addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, 20),
-          new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
+          new DriveAndIntake(drive, intake, 17 * drivePID.feetToRotations, false));
       break;
-    case 3:
+    case 3: // the 1 on bumpers on line (DSRight)
       addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, -20),
           new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
       break;

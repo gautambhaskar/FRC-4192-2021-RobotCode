@@ -122,9 +122,9 @@ public class RobotContainer {
   private final RedSearchAutonB autonRedB = new RedSearchAutonB(m_drive, m_intake);
   private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
   private final DriveSetDistance driveSetDistance = new DriveSetDistance(m_drive, 40);
-  private final UILAuton uilAuton1 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 1);
-  private final UILAuton uilAuton2 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 2);
-  private final UILAuton uilAuton3 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 3);
+  private final UILAuton uilAutonDSMid = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 1);
+  private final UILAuton uilAutonDSLeft = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 2);
+  private final UILAuton uilAutonDSRight = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 3);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
@@ -179,15 +179,15 @@ public class RobotContainer {
     systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
     systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
     systemsStartButton.whenHeld(m_indexIn);
-    systemsAButton.whenPressed(m_shooterMacro);
+    systemsAButton.toggleWhenPressed(m_shooterMacro);
     systemsBButton.toggleWhenPressed(m_setHood);
-    // systemsBackButton.whenHeld(m_indexOut);
+    systemsRightBumper.whenHeld(m_indexOut);
     // systemsYButton.toggleWhenPressed(m_basicRunShooter);
     systemsBackButton.toggleWhenPressed(m_turretAlignmentMacro);
     systemsYButton.whenPressed(m_flywheel);
     systemsXButton.whenPressed(m_flywheelStop);
     // systemsBackButton.toggleWhenPressed();
-    systemsLeftBumper.toggleWhenPressed(m_setIntake);
+    systemsLeftBumper.whenPressed(m_setIntake);
   }
 
   /**
@@ -196,6 +196,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return uilAuton3;
+    return uilAutonDSLeft;
   }
 }

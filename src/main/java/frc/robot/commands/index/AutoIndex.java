@@ -63,7 +63,7 @@ public class AutoIndex extends CommandBase {
   @Override
   public boolean isFinished() {
     if (numBalls == -1) {
-      return false;
+      return timer.get()>3;
     } else {
       return timer.get()>Constants.indexRunTime;
     }
