@@ -49,14 +49,6 @@ public class Intake extends SubsystemBase {
     intakeEngaged.setBoolean(true);
   }
 
-  public void setIntake(boolean up) {
-    if (up) {
-      intakeSolenoid.set(Value.kReverse);
-    } else {
-      intakeSolenoid.set(Value.kForward);
-    }
-  }
-
   // brings down intake by releasing pneumatics
   public void lower() {
     intakeSolenoid.set(Value.kForward);

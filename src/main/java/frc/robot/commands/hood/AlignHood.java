@@ -24,6 +24,7 @@ public class AlignHood extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
     if (hoodUp) {
       hood.up();
     } else {

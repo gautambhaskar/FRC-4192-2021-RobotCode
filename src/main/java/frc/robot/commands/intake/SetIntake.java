@@ -24,13 +24,14 @@ public class SetIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_intake.lower();
   }
 
   public void execute() {
-    m_intake.setIntake(true);
+
   }
 
   public void end() {
-    m_intake.setIntake(false);
+    m_intake.raise();
   }
 }
