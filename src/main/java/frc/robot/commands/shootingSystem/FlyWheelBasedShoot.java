@@ -14,14 +14,14 @@ import frc.robot.subsystems.ShootingSystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class FlyWheelBasedShoot extends PIDCommand {
   /** Creates a new FlyWheelBasedShoot. */
-  public FlyWheelBasedShoot(ShootingSystem m_shooter) {
+  public FlyWheelBasedShoot(ShootingSystem m_shooter, double setpoint) {
     super(
         // The controller that the command will use
         new PIDController(0.04, 0, 0),
         // This should return the measurement
         () -> m_shooter.getFlywheelSpeed(),
         // This should return the setpoint (can also be a constant)
-        () -> 2000,
+        () -> setpoint,
         // This uses the output
         output -> {
           m_shooter.setPower(output, -11);

@@ -14,9 +14,9 @@ import frc.robot.commands.shootingSystem.ReverseFeeder;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class shootTheBall extends SequentialCommandGroup {
   /** Creates a new shootTheBall. */
-  public shootTheBall(ShootingSystem shooter, Index index, int numBalls) {
+  public shootTheBall(ShootingSystem shooter, Index index, int numBalls, double setpoint) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ReverseFeeder(shooter), new FireInTheHole(shooter, index, numBalls), new StopFlyWheel(shooter));
+    addCommands(new ReverseFeeder(shooter), new FireInTheHole(shooter, index, numBalls, setpoint), new StopFlyWheel(shooter));
   }
 }

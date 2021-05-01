@@ -28,16 +28,16 @@ public class UILAuton extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     switch (route) {
-    case 1: // turret side bumpers on line (DSMid)
-      addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, 0), 
+    case 0: // turret side bumpers on line (DSMid)
+      addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2000), 
           new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
       break;
-    case 2: // the 1 on bumpers on line (DSLeft)
-      addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, 20),
+    case -1: // the 1 on bumpers on line (DSLeft)
+      addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2000),
           new DriveAndIntake(drive, intake, 17 * drivePID.feetToRotations, false));
       break;
-    case 3: // the 1 on bumpers on line (DSRight)
-      addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, -20),
+    case 1: // the 1 on bumpers on line (DSRight)
+      addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, -20, 2000),
           new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
       break;
     }

@@ -25,18 +25,18 @@ public class IACAuton extends SequentialCommandGroup {
       Intake m_intake, double shooterSpeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shooter, m_hood, 3, shooterSpeed),
+    addCommands(new CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shooter, m_hood, 3, shooterSpeed, 2000),
         new DriveAndIntake(m_drive, m_intake, 20 * drivePID.feetToRotations, false),
         new DriveSetDistance(m_drive, -15 * drivePID.feetToRotations),
-        new ShootingMacro(m_drive, m_turret, m_shooter, m_index, m_hood, 3, 0),
+        new ShootingMacro(m_drive, m_turret, m_shooter, m_index, m_hood, 3, 0, 2000),
         new DriveAndIntake(m_drive, m_intake, 15 * drivePID.feetToRotations, false),
         new DriveSetDistance(m_drive, -10 * drivePID.feetToRotations),
-        new ShootingMacro(m_drive, m_turret, m_shooter, m_index, m_hood, 3, 0),
+        new ShootingMacro(m_drive, m_turret, m_shooter, m_index, m_hood, 3, 0, 2000),
         new DriveAndIntake(m_drive, m_intake, 10 * drivePID.feetToRotations, false),
         new DriveSetDistance(m_drive, -5 * drivePID.feetToRotations),
-        new ShootingMacro(m_drive, m_turret, m_shooter, m_index, m_hood, 3, 0),
+        new ShootingMacro(m_drive, m_turret, m_shooter, m_index, m_hood, 3, 0, 2000),
         new DriveAndIntake(m_drive, m_intake, 5 * drivePID.feetToRotations, false),
         new DriveSetDistance(m_drive, -5 * drivePID.feetToRotations),
-        new ShootingMacro(m_drive, m_turret, m_shooter, m_index, m_hood, 3, 0));
+        new ShootingMacro(m_drive, m_turret, m_shooter, m_index, m_hood, 3, 0, 2000));
   }
 }

@@ -21,6 +21,6 @@ public class IntakeDown extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.setIntake(false);
+    m_intake.lower();
   }
 }
