@@ -34,7 +34,7 @@ public class UILAuton extends SequentialCommandGroup {
       break;
     case -1: // the 1 on bumpers on line (DSLeft)
       addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2000),
-          new DriveAndIntake(drive, intake, 17 * drivePID.feetToRotations, false));
+          new DriveAndIntake(drive, intake, 16 * drivePID.feetToRotations, false), new DriveSetDistance(drive, -7 * drivePID.feetToRotations), new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2000));
       break;
     case 1: // the 1 on bumpers on line (DSRight)
       addCommands(new IntakeDown(intake), new ShootingMacro(drive, turret, shooter, index, hood, 3, -20, 2000),

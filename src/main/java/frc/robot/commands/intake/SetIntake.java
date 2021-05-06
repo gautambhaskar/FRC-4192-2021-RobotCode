@@ -24,7 +24,7 @@ public class SetIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.lower();
+    m_intake.raise();
   }
 
   public void execute() {
@@ -32,6 +32,6 @@ public class SetIntake extends CommandBase {
   }
 
   public void end() {
-    m_intake.raise();
+    m_intake.lower();
   }
 }

@@ -95,7 +95,7 @@ public final class Constants {
     }
 
     public static class turretPID {
-        public static double kP = 0.02;
+        public static double kP = 0.025;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
         // find these values for turret soft limit
