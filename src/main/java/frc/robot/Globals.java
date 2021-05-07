@@ -1,6 +1,17 @@
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import frc.robot.Constants.limelightPID;
+
 public class Globals {
+    public static NetworkTableEntry limelightP = Shuffleboard.getTab("Main").add("Limelight P", limelightPID.kP)
+            .getEntry();
+    public static NetworkTableEntry limelightI = Shuffleboard.getTab("Main").add("Limelight I", limelightPID.kI)
+            .getEntry();
+    public static NetworkTableEntry limelightD = Shuffleboard.getTab("Main").add("Limelight D", limelightPID.kD)
+            .getEntry();
+
     public static double flyWheelSpeed = 0;
     public static int pathChosen = 0; // 0-none, 1-blueA, 2-blueB, 3-redA, 4-redB
 

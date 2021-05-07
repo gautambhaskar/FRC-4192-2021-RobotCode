@@ -22,7 +22,7 @@ public class AutoIndex extends CommandBase {
   private int numBalls;
   private int ballsShot;
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
-  private NetworkTableEntry ballsFired;
+  // private NetworkTableEntry ballsFired;
 
   public AutoIndex(Index m_index, int m_numBalls) {
     index = m_index;
@@ -37,7 +37,7 @@ public class AutoIndex extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ballsFired = tuningTab.add("Balls Firedd", 0).getEntry();
+    // ballsFired = tuningTab.add("Balls Firedd", 0).getEntry();
     ballsShot = 0;
   }
 
@@ -50,7 +50,7 @@ public class AutoIndex extends CommandBase {
       index.run(Constants.indexSpeed);
       timer.start();
       // Once the index has run for long enough to fire a ball, stop running the index
-    } 
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -63,9 +63,9 @@ public class AutoIndex extends CommandBase {
   @Override
   public boolean isFinished() {
     if (numBalls == -1) {
-      return timer.get()>3;
+      return timer.get() > 3;
     } else {
-      return timer.get()>Constants.indexRunTime;
+      return timer.get() > Constants.indexRunTime;
     }
   }
 }
