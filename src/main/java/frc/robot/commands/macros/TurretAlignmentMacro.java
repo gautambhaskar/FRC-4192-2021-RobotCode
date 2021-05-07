@@ -9,7 +9,7 @@ package frc.robot.commands.macros;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.hood.AlignHood;
-import frc.robot.commands.turret.AlignWithTarget;
+import frc.robot.commands.turret.LimelightAlign;
 import frc.robot.commands.turret.FieldBasedTurretTurn;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
@@ -22,11 +22,11 @@ public class TurretAlignmentMacro extends SequentialCommandGroup {
   /**
    * Creates a new TurretAlignmentMacro.
    */
-  public TurretAlignmentMacro(Drivetrain m_drive, Turret m_turret, Hood m_hood, double turretOffset) {
+  public TurretAlignmentMacro(Drivetrain m_drive, Turret m_turret, Hood m_hood, double turretOffset, boolean runInfinite) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(new AlignHood(m_hood, false), new FieldBasedTurretTurn(m_drive, m_turret, turretOffset),
-        new AlignWithTarget(m_turret)); // new
+        new LimelightAlign(m_turret, runInfinite)); // new
     // new ResetHood(m_hood),
     // FieldBasedTurretTurn(m_drive,
     // m_turret),new AlignHood(m_turret, m_hood)

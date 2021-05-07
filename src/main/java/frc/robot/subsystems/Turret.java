@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.turretPID;
+import frc.robot.Constants.limelightPID;
+import frc.robot.Constants.limelightPID;
 import edu.wpi.cscore.HttpCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -72,9 +73,9 @@ public class Turret extends SubsystemBase {
     init_original_position = turretEncoder.getDistance() / 45;
     // Code it in
     // turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, (float)
-    // init_original_position + (float) turretPID.rightPositionLimit);
+    // init_original_position + (float) limelightPID.rightPositionLimit);
     // turretMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, (float)
-    // init_original_position + (float) turretPID.leftPositionLimit);
+    // init_original_position + (float) limelightPID.leftPositionLimit);
 
     turretPosition = tab.add("turret angular position", turretEncoder.getDistance() / 45).getEntry();
     turretVelocity = tab.add("turret angular velocity", turretEncoder.getRate()).getEntry();
@@ -114,19 +115,19 @@ public class Turret extends SubsystemBase {
 
   // turns the turret toward the target based on encoder values
   public void startAlign() {
-    if (tx.getDouble(0.0) > Constants.turretPID.tolerance) {
-      turretMotor.set(-turretPID.kP * tx.getDouble(0));
-      turretSetOutput.setDouble(turretPID.kP * tx.getDouble(0));
+    if (tx.getDouble(0.0) > Constants.limelightPID.tolerance) {
+      turretMotor.set(-limelightPID.kP * tx.getDouble(0));
+      turretSetOutput.setDouble(limelightPID.kP * tx.getDouble(0));
       turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
-    } else if (tx.getDouble(0.0) < Constants.turretPID.tolerance) {
-      turretMotor.set(-turretPID.kP * tx.getDouble(0));
-      turretSetOutput.setDouble(-turretPID.kP * tx.getDouble(0));
+    } else if (tx.getDouble(0.0) < Constants.limelightPID.tolerance) {
+      turretMotor.set(-limelightPID.kP * tx.getDouble(0));
+      turretSetOutput.setDouble(-limelightPID.kP * tx.getDouble(0));
       turretAppliedOutput.setDouble(turretMotor.getAppliedOutput());
     }
   }
 
   public boolean finishedAligning() {
-    return Math.abs(tx.getDouble(0.0)) < turretPID.tolerance;
+    return Math.abs(tx.getDouble(0.0)) < limelightPID.tolerance;
   }
 
   // the angular offset of turret from the original angle on robot start-up

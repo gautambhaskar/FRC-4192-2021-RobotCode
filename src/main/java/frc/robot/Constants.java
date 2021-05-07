@@ -83,6 +83,7 @@ public final class Constants {
         public static double kMax = 0.95;
         public static double kMin = -0.95;
         public static double flyWheelSpeedMinimum = 1900;
+        public static double maxRunTime = 10.0;
     }
 
     public static class feederPID {
@@ -94,8 +95,10 @@ public final class Constants {
         public static double kMin = -0.9;
     }
 
-    public static class turretPID {
+    public static class limelightPID {
         public static double kP = 0.025;
+        public static double kI = 0;
+        public static double kD = 0;
         public static double kMax = 0.8;
         public static double kMin = -0.8;
         // find these values for turret soft limit

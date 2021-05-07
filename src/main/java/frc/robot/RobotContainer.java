@@ -103,7 +103,7 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood, -1, 0, 2000);
+  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood, -1, 0, 2000, false);
   // private final CloseRangeShootingMacro m_closeRangeMacro = new
   // CloseRangeShootingMacro(m_drive, m_turret, m_index,
   // m_shootingSystem, m_hood, -1);
@@ -112,8 +112,9 @@ public class RobotContainer {
   private final SetHood m_setHood = new SetHood(m_hood);
   private final RunShooter m_runShooter = new RunShooter(m_shootingSystem);
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 9);
-  private final SetIntake m_setIntake = new SetIntake(m_intake);
-  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0);
+  private final SetIntake m_setIntakeUp = new SetIntake(m_intake, true);
+  private final SetIntake m_setIntakeDown = new SetIntake(m_intake, false);
+  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0, true);
   private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem, 2000);
   private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
 
@@ -189,7 +190,7 @@ public class RobotContainer {
     systemsYButton.whenPressed(m_flywheel);
     systemsXButton.whenPressed(m_flywheelStop);
     // systemsBackButton.toggleWhenPressed();
-    systemsLeftBumper.toggleWhenPressed(m_setIntake);
+    systemsLeftBumper.toggleWhenPressed(m_setIntakeDown);
   }
 
   /**
