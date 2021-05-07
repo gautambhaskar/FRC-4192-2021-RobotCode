@@ -39,6 +39,6 @@ public class FlyWheelBasedShoot extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > shooterPID.maxRunTime;
+    return false;//timer.get() > shooterPID.maxRunTime;
   }
 }

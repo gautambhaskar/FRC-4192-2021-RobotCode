@@ -22,8 +22,8 @@ public class LimelightAlign extends PIDCommand {
   public LimelightAlign(Turret m_turret, boolean runInfinite) {
     super(
         // The controller that the command will use
-        new PIDController(LimelightShuffleboard.kP.getDouble(0.0), LimelightShuffleboard.kI.getDouble(0.0),
-            LimelightShuffleboard.kD.getDouble(0.0)),
+        new PIDController(0.025, 0.02,
+            0),
         // This should return the measurement
         () -> m_turret.limelightOffset(),
         // This should return the setpoint (can also be a constant)

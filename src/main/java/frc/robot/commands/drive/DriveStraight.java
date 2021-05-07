@@ -33,7 +33,7 @@ public class DriveStraight extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          m_drive.arcadeDrive(m_forward.getAsDouble(), output);
+          m_drive.arcadeDrive(m_forward.getAsDouble(), -output);
           SmartDashboard.putNumber("output", output);
         });
     // Use addRequirements() here to declare subsystem dependencies.

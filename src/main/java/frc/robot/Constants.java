@@ -104,7 +104,7 @@ public final class Constants {
         // find these values for turret soft limit
         public static double leftPositionLimit = 0;
         public static double rightPositionLimit = 0;
-        public static double tolerance = 3;
+        public static double tolerance = 1.5;
     }
 
     // Trajectory Mapping

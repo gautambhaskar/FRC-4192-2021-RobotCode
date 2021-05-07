@@ -21,15 +21,17 @@ public class AutoIndex extends CommandBase {
   private Timer timer = new Timer();
   private int numBalls;
   private int ballsShot;
+  private double runTime;
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
   // private NetworkTableEntry ballsFired;
 
-  public AutoIndex(Index m_index, int m_numBalls) {
+  public AutoIndex(Index m_index, int m_numBalls, double runTime) {
     index = m_index;
     alreadyRun = false;
     numBalls = m_numBalls;
     ballsShot = 0;
     timerStarted = false;
+    this.runTime = runTime;
     addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -65,7 +67,7 @@ public class AutoIndex extends CommandBase {
     if (numBalls == -1) {
       return timer.get() > 3;
     } else {
-      return timer.get() > Constants.indexRunTime;
+      return timer.get() > runTime;
     }
   }
 }

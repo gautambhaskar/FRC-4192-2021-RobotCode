@@ -103,7 +103,7 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood, -1, 0, 2000, false);
+  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood, -1, 0, 2000, false, 2);
   // private final CloseRangeShootingMacro m_closeRangeMacro = new
   // CloseRangeShootingMacro(m_drive, m_turret, m_index,
   // m_shootingSystem, m_hood, -1);
