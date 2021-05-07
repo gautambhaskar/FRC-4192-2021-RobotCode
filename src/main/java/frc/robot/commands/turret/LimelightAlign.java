@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Globals;
 import frc.robot.Constants.limelightPID;
+import frc.robot.Globals.LimelightShuffleboard;
 import frc.robot.subsystems.Turret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -21,8 +22,8 @@ public class LimelightAlign extends PIDCommand {
   public LimelightAlign(Turret m_turret, boolean runInfinite) {
     super(
         // The controller that the command will use
-        new PIDController(Globals.limelightP.getDouble(0.0), Globals.limelightI.getDouble(0.0),
-            Globals.limelightD.getDouble(0.0)),
+        new PIDController(LimelightShuffleboard.kP.getDouble(0.0), LimelightShuffleboard.kI.getDouble(0.0),
+            LimelightShuffleboard.kD.getDouble(0.0)),
         // This should return the measurement
         () -> m_turret.limelightOffset(),
         // This should return the setpoint (can also be a constant)
