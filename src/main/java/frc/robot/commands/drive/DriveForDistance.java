@@ -25,7 +25,7 @@ public class DriveForDistance extends PIDCommand {
   public DriveForDistance(Drivetrain m_drive, double m_distance) {
     super(
         // The controller that the command will use
-        new PIDController(-0.09, 0, -0.015), // work with D to slow bot down.
+        new PIDController(-0.12, 0, -0.02), // work with D to slow bot down.
         // This should return the measurement
         () -> m_drive.returnDrivetrainPosition(),
         // This should return the setpoint (can also be a constant)
@@ -52,7 +52,6 @@ public class DriveForDistance extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
     getController().setTolerance(drivePID.tolerance);
   }
-
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

@@ -119,7 +119,7 @@ public final class Constants {
         public static double kMin = -1;
         public static double rotate_kP = 0.05;
         public static double rotate_kD = 0.002;
-        public static double autonMaxSpeed = 0.9;
+        public static double autonMaxSpeed = 0.95;
         public static double tolerance = 5;
         public static double feetToRotations = 5.15;
         public static double rotateMax = 0.5;
