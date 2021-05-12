@@ -97,9 +97,9 @@ public class RobotContainer {
   private final IndexIn m_indexIn = new IndexIn(m_index, Constants.indexSpeed);
   private final IndexOut m_indexOut = new IndexOut(m_index, Constants.indexSpeed);
   private final TurretTurn m_turretTurnLeft = new TurretTurn(m_turret,
-      () -> systemsController.getTriggerAxis(Hand.kLeft) * 7 / 10);
+      () -> systemsController.getTriggerAxis(Hand.kLeft) * 3 / 10);
   private final TurretTurn m_turretTurnRight = new TurretTurn(m_turret,
-      () -> -systemsController.getTriggerAxis(Hand.kRight) * 7 / 10);
+      () -> -systemsController.getTriggerAxis(Hand.kRight) * 3 / 10);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_index, m_shootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
@@ -113,7 +113,7 @@ public class RobotContainer {
   private final AlignHood m_alignHood = new AlignHood(m_hood, true);
   private final SetHood m_setHood = new SetHood(m_hood);
   private final RunShooter m_runShooter = new RunShooter(m_shootingSystem);
-  private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 9);
+  private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 0);
   private final SetIntake m_setIntakeUp = new SetIntake(m_intake, true);
   private final SetIntake m_setIntakeDown = new SetIntake(m_intake, false);
   private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0,
@@ -194,8 +194,8 @@ public class RobotContainer {
     systemsBButton.toggleWhenPressed(m_setHood);
     systemsRightBumper.whenHeld(m_indexOut);
     // systemsYButton.toggleWhenPressed(m_basicRunShooter);
-    systemsBackButton.toggleWhenPressed(m_turretAlignmentMacro);
-    systemsYButton.whenPressed(m_flywheel);
+    systemsBackButton.whenPressed(m_turretAlignmentMacro);
+    systemsYButton.whenPressed(m_basicRunShooter);
     systemsXButton.whenPressed(m_flywheelStop);
     // systemsBackButton.toggleWhenPressed();
     systemsLeftBumper.toggleWhenPressed(m_setIntakeDown);
