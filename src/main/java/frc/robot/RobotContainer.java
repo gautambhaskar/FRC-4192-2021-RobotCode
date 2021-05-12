@@ -68,7 +68,8 @@ public class RobotContainer {
 
   private final DoubleSupplier centerX;
   ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
-  private NetworkTableEntry autonEntry = mainTab.add("Auton Selection", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", -1, "max", 1)).getEntry();
+  private NetworkTableEntry autonEntry = mainTab.add("Auton Selection", 0).withWidget(BuiltInWidgets.kNumberSlider)
+      .withProperties(Map.of("min", -1, "max", 1)).getEntry();
   // Controllers
   private final XboxController driveController = new XboxController(Constants.driveController);
   private final XboxController systemsController = new XboxController(Constants.systemsController);
@@ -103,7 +104,8 @@ public class RobotContainer {
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
   // private final AlignWithTarget m_alignWithTarget = new
   // AlignWithTarget(m_turret);
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood, -1, 0, 2000, false, 2);
+  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
+      -1, 0, 2000, false, 2);
   // private final CloseRangeShootingMacro m_closeRangeMacro = new
   // CloseRangeShootingMacro(m_drive, m_turret, m_index,
   // m_shootingSystem, m_hood, -1);
@@ -114,7 +116,8 @@ public class RobotContainer {
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 9);
   private final SetIntake m_setIntakeUp = new SetIntake(m_intake, true);
   private final SetIntake m_setIntakeDown = new SetIntake(m_intake, false);
-  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0, true);
+  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0,
+      true);
   private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem, 2000);
   private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
 
@@ -125,9 +128,14 @@ public class RobotContainer {
   private final RedSearchAutonB autonRedB = new RedSearchAutonB(m_drive, m_intake);
   private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
   private final DriveSetDistance driveSetDistance = new DriveSetDistance(m_drive, 40);
-  private final UILAuton uilAutonDSMid = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 0);
-  private final UILAuton uilAutonDSLeft = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, -1);
-  private final UILAuton uilAutonDSRight = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake, 1);
+  private final UILAuton uilAutonDSMid = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
+      0);
+  private final UILAuton uilAutonDSLeft = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
+      -1);
+  private final UILAuton uilAutonDSLeft2 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
+      -2);
+  private final UILAuton uilAutonDSRight = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
+      1);
   // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
@@ -200,13 +208,13 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // if(autonEntry.getDouble(0) < 0){
-    //   return uilAutonDSLeft;
+    // return uilAutonDSLeft;
     // }
     // else if (autonEntry.getDouble(0) > 0){
-    //   return uilAutonDSRight;
+    // return uilAutonDSRight;
     // }
     // else {
-    //   return uilAutonDSMid;
+    // return uilAutonDSMid;
     // }
     return uilAutonDSLeft;
   }

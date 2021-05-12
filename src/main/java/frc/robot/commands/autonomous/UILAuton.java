@@ -24,22 +24,34 @@ import frc.robot.subsystems.Hood;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class UILAuton extends SequentialCommandGroup {
   /** Creates a new UILAuton. */
-  public UILAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood, Intake intake, int route) {
+  public UILAuton(Drivetrain drive, Turret turret, ShootingSystem shooter, Index index, Hood hood, Intake intake,
+      int route) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     switch (route) {
-    case 0: // turret side bumpers on line (DSMid)
-      addCommands(new SetIntake(intake, false), new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2000, false, 2), 
-          new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
-      break;
-    case -1: // the 1 on bumpers on line (DSLeft)
-      addCommands(new SetIntake(intake, false), new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2000, false, 2),
-          new DriveAndIntake(drive, intake, 15.5 * drivePID.feetToRotations, false), new DriveSetDistance(drive, -6.5 * drivePID.feetToRotations), new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 1950, false, 2));
-      break;
-    case 1: // the 1 on bumpers on line (DSRight)
-      addCommands(new SetIntake(intake, false), new ShootingMacro(drive, turret, shooter, index, hood, 3, -20, 2000, false, 2),
-          new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
-      break;
+      case 0: // turret side bumpers on line (DSMid)
+        addCommands(new SetIntake(intake, false),
+            new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2000, false, 2),
+            new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
+        break;
+      case -1: // the 1 on bumpers on line (DSLeft)
+        addCommands(new SetIntake(intake, false),
+            new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2000, false, 2),
+            new DriveAndIntake(drive, intake, 15.5 * drivePID.feetToRotations, false),
+            new DriveSetDistance(drive, -6.5 * drivePID.feetToRotations),
+            new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 1950, false, 2));
+        break;
+      case -2: // the 1 on bumpers on line (DSLeft)
+        addCommands(new SetIntake(intake, false),
+            new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2000, false, 2),
+            new DriveAndIntake(drive, intake, 15.5 * drivePID.feetToRotations, false),
+            new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2050, false, 2));
+        break;
+      case 1: // the 1 on bumpers on line (DSRight)
+        addCommands(new SetIntake(intake, false),
+            new ShootingMacro(drive, turret, shooter, index, hood, 3, -20, 2000, false, 2),
+            new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
+        break;
     }
   }
 }
