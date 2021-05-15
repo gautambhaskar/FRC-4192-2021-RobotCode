@@ -52,6 +52,10 @@ public class UILAuton extends SequentialCommandGroup {
             new ShootingMacro(drive, turret, shooter, index, hood, 3, -20, 2000, false, 2),
             new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
         break;
+      default:
+        addCommands(new SetIntake(intake, false),
+            new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2000, false, 2),
+            new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
     }
   }
 }
