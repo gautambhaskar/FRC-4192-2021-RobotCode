@@ -110,7 +110,7 @@ public class ShootingSystem extends SubsystemBase {
     feederSpeed.setDouble(feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity());
     flyWheelSpeed.setDouble(flyWheelEncoder.getRate());
 
-    if (flyWheelEncoder.getRate() > shooterPID.flyWheelSpeedMinimum) {
+    if (flyWheelEncoder.getRate() > shooterPID.flyWheelSpeedMinimum && flyWheelEncoder.getRate() < shooterPID.flyWheelSpeedMinimum + 100) {
       atSetpoint.setBoolean(true);
     } else {
       atSetpoint.setBoolean(false);

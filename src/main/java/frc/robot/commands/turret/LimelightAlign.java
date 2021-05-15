@@ -4,6 +4,7 @@
 
 package frc.robot.commands.turret;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Globals;
@@ -18,11 +19,13 @@ public class LimelightAlign extends PIDCommand {
   /** Creates a new LimelightAlign. */
   private boolean runInfinite;
   private Turret m_turret;
+  private Timer timer = new Timer();
+  private boolean timerStarted = false;
 
   public LimelightAlign(Turret m_turret, boolean runInfinite) {
     super(
         // The controller that the command will use
-        new PIDController(0.02, 0.025,
+        new PIDController(0.02, 0.035,
             0),
         // This should return the measurement
         () -> m_turret.limelightOffset(),
@@ -46,6 +49,21 @@ public class LimelightAlign extends PIDCommand {
     if (runInfinite) {
       return false;
     }
-    return Math.abs(m_turret.limelightOffset()) < limelightPID.tolerance;
+    if(m_turret.limelightOffset()<5&&!timerStarted){
+      timerStarted=true;
+      
+      timer.start();
+      timer.reset();
+      timer.start();
+    }
+    if(Math.abs(m_turret.limelightOffset()) < limelightPID.tolerance || (timer.get()>1&&m_turret.limelightOffset()<5&&timerStarted)){
+      timerStarted=false;
+      timer.stop();
+      timer.reset();
+      timer.stop();
+      return true;
+    } else {
+      return false;
+    }
   }
 }

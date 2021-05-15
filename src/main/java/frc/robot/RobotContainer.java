@@ -88,11 +88,11 @@ public class RobotContainer {
   private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
       () -> driveController.getX(Hand.kRight));
   private final PrecisionDrive m_halfSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
-      () -> driveController.getX(Hand.kRight), 0.5);
+      () -> driveController.getX(Hand.kRight), 0.7);
   private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
-      () -> driveController.getX(Hand.kRight), 0.3);
+      () -> driveController.getX(Hand.kRight), 0.5);
   private final DriveStraight m_driveStraight = new DriveStraight(m_drive, () -> driveController.getY(Hand.kLeft));
-  private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed, true);
+  private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed, false);
   private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
   private final IndexIn m_indexIn = new IndexIn(m_index, Constants.indexSpeed);
   private final IndexOut m_indexOut = new IndexOut(m_index, Constants.indexSpeed);
@@ -102,13 +102,9 @@ public class RobotContainer {
       () -> -systemsController.getTriggerAxis(Hand.kRight) * 3 / 10);
   private final UnjamBall m_unjamBalls = new UnjamBall(m_index, m_shootingSystem, Constants.unjamBalls.ind_power,
       Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
-  // private final AlignWithTarget m_alignWithTarget = new
-  // AlignWithTarget(m_turret);
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
-      -1, 0, 2000, false, 2);
-  // private final CloseRangeShootingMacro m_closeRangeMacro = new
-  // CloseRangeShootingMacro(m_drive, m_turret, m_index,
-  // m_shootingSystem, m_hood, -1);
+
+  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,-1, 0, 2000, false, 5);
+  //private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shootingSystem, m_hood, -1);
   private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
   private final AlignHood m_alignHood = new AlignHood(m_hood, true);
   private final SetHood m_setHood = new SetHood(m_hood);
@@ -116,8 +112,7 @@ public class RobotContainer {
   private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 0);
   private final SetIntake m_setIntakeUp = new SetIntake(m_intake, true);
   private final SetIntake m_setIntakeDown = new SetIntake(m_intake, false);
-  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0,
-      true);
+  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0, true);
   private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem, 2000);
   private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
 
@@ -136,7 +131,7 @@ public class RobotContainer {
       -2);
   private final UILAuton uilAutonDSRight = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
       1);
-  // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
+  //private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
   // Triggers
   Trigger driverRightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
@@ -165,7 +160,7 @@ public class RobotContainer {
   public RobotContainer(DoubleSupplier maxCenterX) {
     m_drive.setDefaultCommand(m_driveCommand);
     centerX = maxCenterX;
-    // Configure the button bindings
+    // Configurehe button bindings
     configureButtonBindings();
   }
 
@@ -179,12 +174,12 @@ public class RobotContainer {
     // Driver Controller
     driverRightTrigger.whileActiveOnce(m_halfSpeedDrive);
     driverLeftTrigger.whileActiveOnce(m_quarterSpeedDrive);
-    // driverLeftBumper.toggleWhenPressed(m_setIntake);
+    driverLeftBumper.toggleWhenPressed(m_setIntakeDown);
     driverXButton.toggleWhenPressed(m_intakeCommand);
     driverBackButton.whenHeld(m_unjamBalls);
     driverStartButton.whenHeld(m_testMotor);
     driverAButton.whenHeld(m_outtakeSlowlyCommand);
-    joystickYOnly.whileActiveOnce(m_driveStraight, false);
+    joystickYOnly.whileActiveOnce(m_driveStraight, true);
 
     // Systems Controller (Manual Control)
     systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
@@ -193,12 +188,13 @@ public class RobotContainer {
     systemsAButton.toggleWhenPressed(m_shooterMacro);
     systemsBButton.toggleWhenPressed(m_setHood);
     systemsRightBumper.whenHeld(m_indexOut);
-    // systemsYButton.toggleWhenPressed(m_basicRunShooter);
+    systemsYButton.toggleWhenPressed(m_flywheel);
     systemsBackButton.whenPressed(m_turretAlignmentMacro);
-    systemsYButton.whenPressed(m_basicRunShooter);
+    //systemsYButton.whenPressed(m_basicRunShooter);
     systemsXButton.whenPressed(m_flywheelStop);
-    // systemsBackButton.toggleWhenPressed();
     systemsLeftBumper.toggleWhenPressed(m_setIntakeDown);
+    //systemsBackButton.toggleWhenPressed();
+    //systemsXButton.toggleWhenPressed(m_intakeCommand);
   }
 
   /**
@@ -216,6 +212,6 @@ public class RobotContainer {
     // else {
     // return uilAutonDSMid;
     // }
-    return uilAutonDSLeft;
+    return uilAutonDSMid;// uilAutonDSLeft;
   }
 }

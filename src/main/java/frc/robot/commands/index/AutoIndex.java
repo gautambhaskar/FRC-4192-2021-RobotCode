@@ -41,6 +41,8 @@ public class AutoIndex extends CommandBase {
   public void initialize() {
     // ballsFired = tuningTab.add("Balls Firedd", 0).getEntry();
     ballsShot = 0;
+    timer.reset();
+    timer.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -50,6 +52,7 @@ public class AutoIndex extends CommandBase {
     // index to fire a ball
     if (Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum && alreadyRun == false) {
       index.run(Constants.indexSpeed);
+      //timer.reset();
       timer.start();
       // Once the index has run for long enough to fire a ball, stop running the index
     }
@@ -59,15 +62,18 @@ public class AutoIndex extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     index.run(0);
+    timer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (numBalls == -1) {
-      return timer.get() > 3;
+    if(timer.get()>runTime){
+      timer.reset();
+      timer.stop();
+      return true;
     } else {
-      return timer.get() > runTime;
+      return false;
     }
   }
 }

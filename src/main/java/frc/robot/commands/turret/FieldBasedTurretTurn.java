@@ -41,7 +41,7 @@ public class FieldBasedTurretTurn extends PIDCommand {
           // Use the output here
         });
     addRequirements(m_drive, m_turret);
-    getController().setTolerance(5);
+    getController().setTolerance(3);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
