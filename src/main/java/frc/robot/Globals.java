@@ -12,6 +12,7 @@ public class Globals {
     }
 
     public static double flyWheelSpeed = 0;
+    public static double feederSpeed = 0;
     public static int pathChosen = 0; // 0-none, 1-blueA, 2-blueB, 3-redA, 4-redB
 
     public static boolean drivetrainDistanceReached = false;

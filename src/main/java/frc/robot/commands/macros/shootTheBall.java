@@ -17,6 +17,6 @@ public class shootTheBall extends SequentialCommandGroup {
   public shootTheBall(ShootingSystem shooter, Index index, int numBalls, double setpoint, double runTime) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ReverseFeeder(shooter), new FireInTheHole(shooter, index, numBalls, setpoint, runTime), new StopFlyWheel(shooter));
+    addCommands(new FireInTheHole(shooter, index, numBalls, setpoint, runTime), new StopFlyWheel(shooter));
   }
 }

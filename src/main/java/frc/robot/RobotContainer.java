@@ -38,7 +38,6 @@ import frc.robot.commands.turret.TurretTurn;
 import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.shootingSystem.BasicRunShooter;
 import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
-import frc.robot.commands.shootingSystem.RunShooter;
 import frc.robot.commands.shootingSystem.StopFlyWheel;
 import frc.robot.commands.macros.CloseRangeShootingMacro;
 import frc.robot.commands.macros.ShootingMacro;
@@ -66,152 +65,145 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
 
-  private final DoubleSupplier centerX;
-  ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
-  private NetworkTableEntry autonEntry = mainTab.add("Auton Selection", 0).withWidget(BuiltInWidgets.kNumberSlider)
-      .withProperties(Map.of("min", -1, "max", 1)).getEntry();
-  // Controllers
-  private final XboxController driveController = new XboxController(Constants.driveController);
-  private final XboxController systemsController = new XboxController(Constants.systemsController);
+    private DoubleSupplier centerX;
+    ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
+    private NetworkTableEntry autonEntry = mainTab.add("Auton Selection", 0).withWidget(BuiltInWidgets.kNumberSlider)
+            .withProperties(Map.of("min", -1, "max", 1)).getEntry();
+    // Controllers
+    private final XboxController driveController = new XboxController(Constants.driveController);
+    private final XboxController systemsController = new XboxController(Constants.systemsController);
 
-  // Subsystems
-  private final Drivetrain m_drive = new Drivetrain();
+    // Subsystems
+    private final Drivetrain m_drive = new Drivetrain();
 
-  private final Intake m_intake = new Intake();
-  private final ShootingSystem m_shootingSystem = new ShootingSystem();
-  private final Index m_index = new Index();
-  private final Turret m_turret = new Turret();
-  private final TestingSystem m_motor = new TestingSystem();
-  private final Hood m_hood = new Hood();
+    private final Intake m_intake = new Intake();
+    private final ShootingSystem m_shootingSystem = new ShootingSystem();
+    private final Index m_index = new Index();
+    private final Turret m_turret = new Turret();
+    private final TestingSystem m_motor = new TestingSystem();
+    private final Hood m_hood = new Hood();
 
-  // Commands
-  private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
-      () -> driveController.getX(Hand.kRight));
-  private final PrecisionDrive m_halfSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
-      () -> driveController.getX(Hand.kRight), 0.7);
-  private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
-      () -> driveController.getX(Hand.kRight), 0.5);
-  private final DriveStraight m_driveStraight = new DriveStraight(m_drive, () -> driveController.getY(Hand.kLeft));
-  private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed, false);
-  private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
-  private final IndexIn m_indexIn = new IndexIn(m_index, Constants.indexSpeed);
-  private final IndexOut m_indexOut = new IndexOut(m_index, Constants.indexSpeed);
-  private final TurretTurn m_turretTurnLeft = new TurretTurn(m_turret,
-      () -> systemsController.getTriggerAxis(Hand.kLeft) * 3 / 10);
-  private final TurretTurn m_turretTurnRight = new TurretTurn(m_turret,
-      () -> -systemsController.getTriggerAxis(Hand.kRight) * 3 / 10);
-  private final UnjamBall m_unjamBalls = new UnjamBall(m_index, m_shootingSystem, Constants.unjamBalls.ind_power,
-      Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
+    // Commands
+    private final DefaultDrive m_driveCommand = new DefaultDrive(m_drive, () -> driveController.getY(Hand.kLeft),
+            () -> driveController.getX(Hand.kRight));
+    private final PrecisionDrive m_halfSpeedDrive = new PrecisionDrive(m_drive, () -> driveController.getY(Hand.kLeft),
+            () -> driveController.getX(Hand.kRight), 0.7);
+    private final PrecisionDrive m_quarterSpeedDrive = new PrecisionDrive(m_drive,
+            () -> driveController.getY(Hand.kLeft), () -> driveController.getX(Hand.kRight), 0.5);
+    private final DriveStraight m_driveStraight = new DriveStraight(m_drive, () -> driveController.getY(Hand.kLeft));
+    private final IntakeBalls m_intakeCommand = new IntakeBalls(m_intake, Constants.intakeSpeed, false);
+    private final OuttakeSlowly m_outtakeSlowlyCommand = new OuttakeSlowly(m_intake, Constants.outtakeSlowlySpeed);
+    private final IndexIn m_indexIn = new IndexIn(m_index, Constants.indexSpeed);
+    private final IndexOut m_indexOut = new IndexOut(m_index, Constants.indexSpeed);
+    private final TurretTurn m_turretTurnLeft = new TurretTurn(m_turret,
+            () -> systemsController.getTriggerAxis(Hand.kLeft) * 3 / 10);
+    private final TurretTurn m_turretTurnRight = new TurretTurn(m_turret,
+            () -> -systemsController.getTriggerAxis(Hand.kRight) * 3 / 10);
+    private final UnjamBall m_unjamBalls = new UnjamBall(m_index, m_shootingSystem, Constants.unjamBalls.ind_power,
+            Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
 
-  private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,-1, 0, 2000, false, 5);
-  //private final CloseRangeShootingMacro m_closeRangeMacro = new CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shootingSystem, m_hood, -1);
-  private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
-  private final AlignHood m_alignHood = new AlignHood(m_hood, true);
-  private final SetHood m_setHood = new SetHood(m_hood);
-  private final RunShooter m_runShooter = new RunShooter(m_shootingSystem);
-  private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 0);
-  private final SetIntake m_setIntakeUp = new SetIntake(m_intake, true);
-  private final SetIntake m_setIntakeDown = new SetIntake(m_intake, false);
-  private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0, true);
-  private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem, 2000);
-  private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
+    private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
+            -1, 0, 2000, false, 5);
+    // private final CloseRangeShootingMacro m_closeRangeMacro = new
+    // CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shootingSystem, m_hood,
+    // -1);
+    private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
+    private final SetHood m_setHood = new SetHood(m_hood);
+    private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 0);
+    private final SetIntake m_setIntake = new SetIntake(m_intake, false);
+    private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0,
+            true);
+    private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem, 2000);
+    private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
 
-  // Autonomous Commands
-  private final BlueSearchAutonA autonBlueA = new BlueSearchAutonA(m_drive, m_intake);
-  private final BlueSearchAutonB autonBlueB = new BlueSearchAutonB(m_drive, m_intake);
-  private final RedSearchAutonA autonRedA = new RedSearchAutonA(m_drive, m_intake);
-  private final RedSearchAutonB autonRedB = new RedSearchAutonB(m_drive, m_intake);
-  private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
-  private final DriveSetDistance driveSetDistance = new DriveSetDistance(m_drive, 40);
-  private final UILAuton uilAutonDSMid = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
-      0);
-  private final UILAuton uilAutonDSLeft = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
-      -1);
-  private final UILAuton uilAutonDSLeft2 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
-      -2);
-  private final UILAuton uilAutonDSRight = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
-      1);
-  //private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
+    // Autonomous Commands
 
-  // Triggers
-  Trigger driverRightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
-  Trigger driverLeftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
-  JoystickButton driverLeftBumper = new JoystickButton(driveController, Constants.leftBumper);
-  JoystickButton driverRightBumper = new JoystickButton(driveController, Constants.rightBumper);
-  JoystickButton driverAButton = new JoystickButton(driveController, Constants.aButton);
-  JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
-  JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
-  JoystickButton driverXButton = new JoystickButton(driveController, Constants.xButton);
-  JoystickButton driverStartButton = new JoystickButton(driveController, Constants.startButton);
-  JoystickButton systemsLeftBumper = new JoystickButton(systemsController, Constants.leftBumper);
-  JoystickButton systemsRightBumper = new JoystickButton(systemsController, Constants.rightBumper);
-  JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
-  JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
-  JoystickButton systemsXButton = new JoystickButton(systemsController, Constants.xButton);
-  JoystickButton systemsAButton = new JoystickButton(systemsController, Constants.aButton);
-  JoystickButton systemsBButton = new JoystickButton(systemsController, Constants.bButton);
-  JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
-  Trigger systemsRightTrigger = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
-  Trigger systemsLeftTrigger = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
-  Trigger joystickYOnly = new Trigger(
-      () -> Math.abs(driveController.getX(Hand.kRight)) < 0.05 && Math.abs(driveController.getY(Hand.kLeft)) > 0.05
-          && driveController.getTriggerAxis(Hand.kRight) < 0.6 && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
+    private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
+    private final UILAuton uilAutonDSMid = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
+            0);
+    private final UILAuton uilAutonDSRight = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
+            m_intake, -1);
+    private final UILAuton uilAutonDSRight2 = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
+            m_intake, -2);
+    private final UILAuton uilAutonDSLeft = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
+            1);
+    // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
-  public RobotContainer(DoubleSupplier maxCenterX) {
-    m_drive.setDefaultCommand(m_driveCommand);
-    centerX = maxCenterX;
-    // Configurehe button bindings
-    configureButtonBindings();
-  }
+    // Triggers
+    Trigger driverRightTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kRight) > 0.6);
+    Trigger driverLeftTrigger = new Trigger(() -> driveController.getTriggerAxis(Hand.kLeft) > 0.6);
+    JoystickButton driverLeftBumper = new JoystickButton(driveController, Constants.leftBumper);
+    JoystickButton driverRightBumper = new JoystickButton(driveController, Constants.rightBumper);
+    JoystickButton driverAButton = new JoystickButton(driveController, Constants.aButton);
+    JoystickButton driverBackButton = new JoystickButton(driveController, Constants.backButton);
+    JoystickButton driverYButton = new JoystickButton(driveController, Constants.yButton);
+    JoystickButton driverXButton = new JoystickButton(driveController, Constants.xButton);
+    JoystickButton driverStartButton = new JoystickButton(driveController, Constants.startButton);
+    JoystickButton systemsLeftBumper = new JoystickButton(systemsController, Constants.leftBumper);
+    JoystickButton systemsRightBumper = new JoystickButton(systemsController, Constants.rightBumper);
+    JoystickButton systemsStartButton = new JoystickButton(systemsController, Constants.startButton);
+    JoystickButton systemsBackButton = new JoystickButton(systemsController, Constants.backButton);
+    JoystickButton systemsXButton = new JoystickButton(systemsController, Constants.xButton);
+    JoystickButton systemsAButton = new JoystickButton(systemsController, Constants.aButton);
+    JoystickButton systemsBButton = new JoystickButton(systemsController, Constants.bButton);
+    JoystickButton systemsYButton = new JoystickButton(systemsController, Constants.yButton);
+    Trigger systemsRightTrigger = new Trigger(() -> systemsController.getTriggerAxis(Hand.kRight) > 0.2);
+    Trigger systemsLeftTrigger = new Trigger(() -> systemsController.getTriggerAxis(Hand.kLeft) > 0.2);
+    Trigger joystickYOnly = new Trigger(() -> Math.abs(driveController.getX(Hand.kRight)) < 0.05
+            && Math.abs(driveController.getY(Hand.kLeft)) > 0.05 && driveController.getTriggerAxis(Hand.kRight) < 0.6
+            && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
-    // Driver Controller
-    driverRightTrigger.whileActiveOnce(m_halfSpeedDrive);
-    driverLeftTrigger.whileActiveOnce(m_quarterSpeedDrive);
-    driverLeftBumper.toggleWhenPressed(m_setIntakeDown);
-    driverXButton.toggleWhenPressed(m_intakeCommand);
-    driverBackButton.whenHeld(m_unjamBalls);
-    driverStartButton.whenHeld(m_testMotor);
-    driverAButton.whenHeld(m_outtakeSlowlyCommand);
-    joystickYOnly.whileActiveOnce(m_driveStraight, true);
+    public RobotContainer(DoubleSupplier maxCenterX) {
+        m_drive.setDefaultCommand(m_driveCommand);
+        centerX = maxCenterX;
+        // Configurehe button bindings
+        configureButtonBindings();
+    }
 
-    // Systems Controller (Manual Control)
-    systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
-    systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
-    systemsStartButton.whenHeld(m_indexIn);
-    systemsAButton.toggleWhenPressed(m_shooterMacro);
-    systemsBButton.toggleWhenPressed(m_setHood);
-    systemsRightBumper.whenHeld(m_indexOut);
-    systemsYButton.toggleWhenPressed(m_flywheel);
-    systemsBackButton.whenPressed(m_turretAlignmentMacro);
-    //systemsYButton.whenPressed(m_basicRunShooter);
-    systemsXButton.whenPressed(m_flywheelStop);
-    systemsLeftBumper.toggleWhenPressed(m_setIntakeDown);
-    //systemsBackButton.toggleWhenPressed();
-    //systemsXButton.toggleWhenPressed(m_intakeCommand);
-  }
+    /**
+     * Use this method to define your button->command mappings. Buttons can be
+     * created by instantiating a {@link GenericHID} or one of its subclasses
+     * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+     * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings() {
+        // Driver Controller
+        driverRightTrigger.whileActiveOnce(m_halfSpeedDrive);
+        driverLeftTrigger.whileActiveOnce(m_quarterSpeedDrive);
+        driverLeftBumper.toggleWhenPressed(m_setIntake);
+        driverXButton.toggleWhenPressed(m_intakeCommand);
+        driverBackButton.whenHeld(m_unjamBalls);
+        driverAButton.whenHeld(m_outtakeSlowlyCommand);
+        joystickYOnly.whileActiveOnce(m_driveStraight, true);
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // if(autonEntry.getDouble(0) < 0){
-    // return uilAutonDSLeft;
-    // }
-    // else if (autonEntry.getDouble(0) > 0){
-    // return uilAutonDSRight;
-    // }
-    // else {
-    // return uilAutonDSMid;
-    // }
-    return uilAutonDSMid;// uilAutonDSLeft;
-  }
+        // Systems Controller (Manual Control)
+        systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
+        systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
+        systemsStartButton.whenHeld(m_indexIn);
+        systemsAButton.toggleWhenPressed(m_shooterMacro);
+        systemsBButton.toggleWhenPressed(m_setHood);
+        systemsRightBumper.whenHeld(m_indexOut);
+        systemsYButton.toggleWhenPressed(m_flywheel);
+        systemsBackButton.whenPressed(m_turretAlignmentMacro);
+        // systemsYButton.whenPressed(m_basicRunShooter);
+        systemsXButton.whenPressed(m_flywheelStop);
+        systemsLeftBumper.toggleWhenPressed(m_setIntake);
+        // systemsBackButton.toggleWhenPressed();
+        // systemsXButton.toggleWhenPressed(m_intakeCommand);
+    }
+
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        if (autonEntry.getDouble(0) < -0.5) {
+            return uilAutonDSLeft;
+        } else if (autonEntry.getDouble(0) > 0.5) {
+            return uilAutonDSRight;
+        } else {
+            return uilAutonDSMid;
+        }
+    }
 }

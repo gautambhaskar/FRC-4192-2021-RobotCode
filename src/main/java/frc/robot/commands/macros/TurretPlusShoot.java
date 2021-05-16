@@ -4,20 +4,20 @@
 
 package frc.robot.commands.macros;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.commands.index.AutoIndex;
-import frc.robot.subsystems.Index;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.ShootingSystem;
-import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FireInTheHole extends ParallelRaceGroup {
-  /** Creates a new RunShooterWithAutoIndex. */
-  public FireInTheHole(ShootingSystem shooter, Index index, int numBalls, double setpoint, double runTime) {
+public class TurretPlusShoot extends ParallelCommandGroup {
+  /** Creates a new TurretPlusShoot. */
+  public TurretPlusShoot(ShootingSystem m_shooter, Drivetrain m_drive, Turret m_turret, Hood m_hood, double turretOffset, boolean runInfinite, double setpoint) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FlyWheelBasedShoot(shooter, setpoint), new AutoIndex(index, numBalls));
+    addCommands(new TurretAlignmentMacro(m_drive, m_turret, m_hood, turretOffset, runInfinite), new BeginShoot(m_shooter, setpoint));
   }
 }

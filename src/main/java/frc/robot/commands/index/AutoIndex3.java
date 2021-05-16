@@ -12,16 +12,15 @@ import frc.robot.Globals;
 import frc.robot.Constants.shooterPID;
 import frc.robot.subsystems.Index;
 
-public class AutoIndex extends CommandBase {
+public class AutoIndex3 extends CommandBase {
   /** Creates a new AutoIndex. */
   private Index index;
   private boolean alreadyRun;
-  private Timer timer = new Timer();
   private int numBalls;
   private int ballsShot;
   private boolean inThreshold;
 
-  public AutoIndex(Index m_index, int m_numBalls) {
+  public AutoIndex3(Index m_index, int m_numBalls) {
     index = m_index;
     alreadyRun = false;
     numBalls = m_numBalls;
@@ -45,11 +44,10 @@ public class AutoIndex extends CommandBase {
         && Globals.flyWheelSpeed < shooterPID.flyWheelSpeedMinimum + 100;
     if (inThreshold && alreadyRun == false) {
       index.run(Constants.indexSpeed);
-      timer.start();
       alreadyRun = true;
       ballsShot++;
       // Once the index has run for long enough to fire a ball, stop running the index
-    } else if (inThreshold && alreadyRun == true && timer.get() > Constants.indexRunTime) {
+    } else if (inThreshold && alreadyRun == true && Globals.feederSpeed < shooterPID.feederSpeedMinimum) {
       index.run(0);
       alreadyRun = false;
       // Once the shooter has lost speed due to shooting the ball, set alreadyRun to

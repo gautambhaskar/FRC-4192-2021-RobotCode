@@ -34,20 +34,20 @@ public class UILAuton extends SequentialCommandGroup {
             new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2000, false, 2),
             new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
         break;
-      case -1: // the 1 on bumpers on line (DSLeft)
+      case -1: // the 1 on bumpers on line (DSRight)
         addCommands(new SetIntake(intake, false),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2000, false, 2),
             new DriveAndIntake(drive, intake, 15.5 * drivePID.feetToRotations, false),
             new DriveSetDistance(drive, -6.5 * drivePID.feetToRotations),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 1950, false, 2));
         break;
-      case -2: // the 1 on bumpers on line (DSLeft)
+      case -2: // the 1 on bumpers on line (DSRight2)
         addCommands(new SetIntake(intake, false),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2000, false, 2),
             new DriveAndIntake(drive, intake, 15.5 * drivePID.feetToRotations, false),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2150, false, 2));
         break;
-      case 1: // the 1 on bumpers on line (DSRight)
+      case 1: // the 1 on bumpers on line (DSLeft)
         addCommands(new SetIntake(intake, false),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, -20, 2000, false, 2),
             new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
