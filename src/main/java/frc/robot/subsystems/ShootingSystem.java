@@ -55,7 +55,7 @@ public class ShootingSystem extends SubsystemBase {
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
   private ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
 
-  private NetworkTableEntry shooterSpeed, shooterRightSpeed, feederSpeed, atSetpoint, flyWheelSpeed;
+  private NetworkTableEntry shooterSpeed, shooterRightSpeed, feederSpeed, atSetpoint, flyWheelSpeed, averageFeederSpeed;
 
   public ShootingSystem() {
     shooterRightMotor.follow(shooterLeftMotor, true);
@@ -76,6 +76,8 @@ public class ShootingSystem extends SubsystemBase {
         .withSize(2, 2).withPosition(5, 5).getEntry();
 
     atSetpoint = mainTab.add("At Setpoint", false).getEntry();
+    averageFeederSpeed = tuningTab.add("Average Feeder Speed", Globals.averageFeederSpeed)
+        .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).getEntry();
   }
 
   @Override
@@ -105,5 +107,9 @@ public class ShootingSystem extends SubsystemBase {
   public void setPower(double s_power, double f_power) {
     shooterLeftMotor.set(s_power);
     feederController.setReference(f_power, ControlType.kVoltage);
+    Globals.totalFeederSpeed += feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity();
+    Globals.numIterations++;
+    Globals.averageFeederSpeed = Globals.totalFeederSpeed / Globals.numIterations;
+    averageFeederSpeed.setDouble(Globals.averageFeederSpeed);
   }
 }
