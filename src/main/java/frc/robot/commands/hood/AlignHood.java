@@ -26,9 +26,9 @@ public class AlignHood extends InstantCommand {
   public void initialize() {
     
     if (hoodUp) {
-      hood.up();
-    } else {
       hood.down();
+    } else {
+      hood.up();
     }
   }
 }

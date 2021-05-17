@@ -33,6 +33,7 @@ public class AutoIndex3 extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    ballsShot=0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,23 +43,19 @@ public class AutoIndex3 extends CommandBase {
     // index to fire a ball
     inThreshold = Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum
         && Globals.flyWheelSpeed < shooterPID.flyWheelSpeedMinimum + 100;
-    if (inThreshold && alreadyRun == false) {
+    if (inThreshold && Globals.feederSpeed > shooterPID.feederSpeedMinimum && alreadyRun==false) {
       index.run(Constants.indexSpeed);
       alreadyRun = true;
-      ballsShot++;
       // Once the index has run for long enough to fire a ball, stop running the index
-    } else if (inThreshold && alreadyRun == true && Globals.feederSpeed < shooterPID.feederSpeedMinimum) {
+    } else if (alreadyRun == true && Globals.feederSpeed < shooterPID.feederSpeedMinimum) {
       index.run(0);
       alreadyRun = false;
+      ballsShot++;
       // Once the shooter has lost speed due to shooting the ball, set alreadyRun to
       // false
       // so that the next time it gets up to speed, a ball can be fired again
-    } else if (!inThreshold) {
-      alreadyRun = false;
-      index.run(0);
-      // by default, set index to 0 speed.
     } else {
-      index.run(0);
+      // by default, set index to 0 speed.
     }
   }
 

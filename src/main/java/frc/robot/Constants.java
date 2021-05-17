@@ -79,8 +79,8 @@ public final class Constants {
         public static double kFF = 0.000;
         public static double kMax = 0.95;
         public static double kMin = -0.95;
-        public static double flyWheelSpeedMinimum = 1950;
-        public static double feederSpeedMinimum = 2900;
+        public static double flyWheelSpeedMinimum = 2050;
+        public static double feederSpeedMinimum = 2700;
         public static double maxRunTime = 10.0;
     }
 
@@ -102,7 +102,7 @@ public final class Constants {
         // find these values for turret soft limit
         public static double leftPositionLimit = 0;
         public static double rightPositionLimit = 0;
-        public static double tolerance = 1.5;
+        public static double tolerance = 1.2;
     }
 
     // Trajectory Mapping

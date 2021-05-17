@@ -5,7 +5,7 @@
 package frc.robot.commands.macros;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.commands.index.AutoIndex;
+import frc.robot.commands.index.AutoIndex3;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
@@ -18,6 +18,6 @@ public class FireInTheHole extends ParallelRaceGroup {
   public FireInTheHole(ShootingSystem shooter, Index index, int numBalls, double setpoint, double runTime) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FlyWheelBasedShoot(shooter, setpoint), new AutoIndex(index, numBalls));
+    addCommands(new FlyWheelBasedShoot(shooter, setpoint), new AutoIndex3(index, numBalls));
   }
 }

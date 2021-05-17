@@ -4,13 +4,13 @@
 
 package frc.robot.commands.shootingSystem;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShootingSystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class StopFlyWheel extends InstantCommand {
+public class StopFlyWheel extends CommandBase {
   private ShootingSystem m_shooter;
 
   public StopFlyWheel(ShootingSystem shooter) {
@@ -23,5 +23,18 @@ public class StopFlyWheel extends InstantCommand {
   @Override
   public void initialize() {
     m_shooter.setPower(0, 0);
+  }
+  @Override
+  public void execute() {
+
+  }
+  @Override
+  public void end(boolean interrupted){
+    m_shooter.setPower(0, 0);
+  }
+  @Override
+  public boolean isFinished() {
+    m_shooter.setPower(0, 0);
+    return true;
   }
 }
