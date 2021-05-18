@@ -25,7 +25,7 @@ public class LimelightAlign extends PIDCommand {
   public LimelightAlign(Turret m_turret, boolean runInfinite) {
     super(
         // The controller that the command will use
-        new PIDController(0.02, 0.035,
+        new PIDController(0.02, 0.045,
             0),
         // This should return the measurement
         () -> m_turret.limelightOffset(),

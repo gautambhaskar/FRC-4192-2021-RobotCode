@@ -58,8 +58,8 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() {
     // declare any encoders/odemetry stuff here...
-    init_angle = imu.getAngle();
-    init_original_angle = imu.getAngle();
+    init_angle = getAngle();
+    init_original_angle = getAngle();
     init_position = leftLead.getEncoder().getPosition();
 
     // leftLead.getEncoder().setPositionConversionFactor(drivePID.positionConversionFactor);
@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
 
     leftRPM = tab.add("Drivetrain Left RPM", leftLead.getEncoder().getVelocity()).getEntry();
     rightRPM = tab.add("Drivetrain Right RPM", rightLead.getEncoder().getVelocity()).getEntry();
-    robotAngle = tab.add("Robot Angle", init_angle - imu.getAngle()).getEntry();
+    robotAngle = tab.add("Robot Angle", init_angle - getAngle()).getEntry();
     drivetrainSpeed = tuningTab.add("Drivetrain Speed", leftLead.getEncoder().getVelocity())
         .withWidget(BuiltInWidgets.kGraph).withSize(2, 2).withPosition(5, 4).getEntry();
     drivetrainPosition = tuningTab.add("Drivetrain Position", init_position - leftLead.getEncoder().getPosition())
@@ -117,11 +117,29 @@ public class Drivetrain extends SubsystemBase {
     m_rightMotors.setVoltage(-rightVolts); 
     m_drive.feed();
   }
+  public double getAngle(){
+    double thisAngle = imu.getAngle();
+        if (thisAngle < -180)
+        {
+            while (thisAngle < -180)
+            {
+                thisAngle += 360;
+            }
+        }
+        else if (thisAngle >= 180)
+        {
+            while (thisAngle >= 180)
+            {
+                thisAngle -= 360;
+            }
+        }
+      return thisAngle;
+  }
 
   // gives the curent offset from the calibrated/recalibrated angle
   public double returnAngle() {
     // return imu.getAngle() - init_angle;
-    return init_angle - imu.getAngle(); // Replace 0 w sensor val
+    return init_angle - getAngle(); // Replace 0 w sensor val
   }
 
   public Pose2d returnPose() {
@@ -131,7 +149,7 @@ public class Drivetrain extends SubsystemBase {
   // gives the current offset from the original angle
   public double returnNativeAngle() {
     // return imu.getAngle() - init_original_angle;
-    return (init_original_angle - imu.getAngle());
+    return (init_original_angle - getAngle());
   }
 
   // shows the distance the robot has traveled relative to starting position
@@ -161,7 +179,7 @@ public class Drivetrain extends SubsystemBase {
 
   // makes the current angle the initial angle
   public void recalibrateAngle() {
-    init_angle = imu.getAngle();
+    init_angle = getAngle();
   }
 
   // sets the current position as the new initial position

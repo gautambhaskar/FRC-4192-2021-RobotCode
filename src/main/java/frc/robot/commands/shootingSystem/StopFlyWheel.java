@@ -5,6 +5,7 @@
 package frc.robot.commands.shootingSystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Globals;
 import frc.robot.subsystems.ShootingSystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -23,6 +24,7 @@ public class StopFlyWheel extends CommandBase {
   @Override
   public void initialize() {
     m_shooter.setPower(0, 0);
+    Globals.ballsShot = 0;
   }
   @Override
   public void execute() {
@@ -31,10 +33,12 @@ public class StopFlyWheel extends CommandBase {
   @Override
   public void end(boolean interrupted){
     m_shooter.setPower(0, 0);
+    Globals.ballsShot = 0;
   }
   @Override
   public boolean isFinished() {
     m_shooter.setPower(0, 0);
+    Globals.ballsShot = 0;
     return true;
   }
 }

@@ -10,6 +10,7 @@ public class Globals {
         public static NetworkTableEntry kI = Shuffleboard.getTab("Main").add("Limelight I", limelightPID.kI).getEntry();
         public static NetworkTableEntry kD = Shuffleboard.getTab("Main").add("Limelight D", limelightPID.kD).getEntry();
     }
+    public static NetworkTableEntry shotBalls = Shuffleboard.getTab("Tuning").add("Ball Counter", 0).getEntry();
 
     public static double flyWheelSpeed = 0;
     public static double feederSpeed = 0;
@@ -18,6 +19,7 @@ public class Globals {
     public static double numIterations = 0;
     public static double averageFeederSpeed = 0; 
     public static boolean drivetrainDistanceReached = false;
+    public static int ballsShot = 0;
     // Used to turn on intake once the drive has reached 50% of the desired distance
     // in DriveAndIntake
 }
