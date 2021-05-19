@@ -60,7 +60,6 @@ public class AutoIndex3 extends CommandBase {
     } else {
       // by default, set index to 0 speed.
     }
-    Globals.shotBalls.setNumber(Globals.ballsShot);
   }
 
   // Called once the command ends or is interrupted.
@@ -68,6 +67,7 @@ public class AutoIndex3 extends CommandBase {
   public void end(boolean interrupted) {
     index.run(0);
     Globals.ballsShot = 0;
+    alreadyRun = false;
   }
 
   // Returns true when the command should end.
@@ -78,6 +78,7 @@ public class AutoIndex3 extends CommandBase {
     } else {
       if(Globals.ballsShot >= numBalls){
         Globals.ballsShot=0;
+
         return true;
       }
       return false;

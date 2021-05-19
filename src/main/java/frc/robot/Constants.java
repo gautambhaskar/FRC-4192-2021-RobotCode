@@ -46,7 +46,7 @@ public final class Constants {
     public static int systemsController = 1;
 
     // Speeds
-    public static double intakeSpeed = 0.5;
+    public static double intakeSpeed = 0.4;
     public static double outtakeSlowlySpeed = 0.3;
     public static double indexSpeed = 0.6;
     public static double feederSpeed = -3000;

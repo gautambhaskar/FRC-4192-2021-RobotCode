@@ -83,6 +83,7 @@ public class ShootingSystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Globals.shotBalls.setNumber(Globals.ballsShot);
 
     // Update the ShooterSpeed and FeederSpeed Graphs
     shooterSpeed.setDouble(shooterLeftMotor.getEncoder().getVelocity());
