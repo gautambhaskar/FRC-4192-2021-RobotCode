@@ -21,11 +21,10 @@ public class LimelightAlign extends PIDCommand {
   private Turret m_turret;
   private Timer timer = new Timer();
   private boolean timerStarted = false;
-
   public LimelightAlign(Turret m_turret, boolean runInfinite) {
     super(
         // The controller that the command will use
-        new PIDController(0.02, 0.04,
+        new PIDController(0.02, 0.045,
             0),
         // This should return the measurement
         () -> m_turret.limelightOffset(),
@@ -49,14 +48,18 @@ public class LimelightAlign extends PIDCommand {
     if (runInfinite) {
       return false;
     }
-    if(m_turret.limelightOffset()<5&&!timerStarted){
+    if(m_turret.limelightOffset()<3&&!timerStarted){
       timerStarted=true;
       
       timer.start();
       timer.reset();
       timer.start();
+      Globals.goodFrameCounter = 0;
     }
-    if(Math.abs(m_turret.limelightOffset()) < limelightPID.tolerance || (timer.get()>1&&m_turret.limelightOffset()<5&&timerStarted)){
+    if(Math.abs(m_turret.limelightOffset()) < limelightPID.tolerance){
+      Globals.goodFrameCounter++;
+    }
+    if((timer.get()>4&&m_turret.limelightOffset()<3&&timerStarted)||Globals.goodFrameCounter>30){
       timerStarted=false;
       timer.stop();
       timer.reset();

@@ -20,6 +20,7 @@ public class AutoIndex3 extends CommandBase {
   private boolean alreadyRun;
   private int numBalls;
   private boolean inThreshold;
+  private Timer timer;
 
 
   public AutoIndex3(Index m_index, int m_numBalls) {
@@ -36,6 +37,7 @@ public class AutoIndex3 extends CommandBase {
   public void initialize() {
     Globals.ballsShot=0;
 
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,6 +45,10 @@ public class AutoIndex3 extends CommandBase {
   public void execute() {
     // Shooter is up to speed and hasn't shot a ball since it sped up, then run
     // index to fire a ball
+    if(Globals.ballsShot>0){
+      timer.reset();
+      timer.start();
+    }
     inThreshold = Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum
         && Globals.flyWheelSpeed < shooterPID.flyWheelSpeedMinimum + 100;
     if (inThreshold && Globals.feederSpeed > shooterPID.feederSpeedMinimum && alreadyRun==false) {
@@ -76,9 +82,11 @@ public class AutoIndex3 extends CommandBase {
     if (numBalls == -1) {
       return false;
     } else {
-      if(Globals.ballsShot >= numBalls){
+      if(Globals.ballsShot >= numBalls || timer.hasElapsed(5)){
         Globals.ballsShot=0;
-
+        timer.stop();
+        timer.reset();
+        timer.stop();
         return true;
       }
       return false;

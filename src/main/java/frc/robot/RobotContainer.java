@@ -198,12 +198,13 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        if (autonEntry.getDouble(0) < -0.5) {
-            return uilAutonDSLeft;
-        } else if (autonEntry.getDouble(0) > 0.5) {
-            return uilAutonDSRight;
-        } else {
-            return uilAutonDSMid;
-        }
+        // if (autonEntry.getDouble(0) < -0.5) {
+        //     return uilAutonDSLeft;
+        // } else if (autonEntry.getDouble(0) > 0.5) {
+        //     return uilAutonDSRight;
+        // } else {
+        //     return uilAutonDSMid;
+        // }
+        return uilAutonDSRight;
     }
 }
