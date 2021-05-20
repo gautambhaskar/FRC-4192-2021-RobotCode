@@ -198,13 +198,18 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // if (autonEntry.getDouble(0) < -0.5) {
-        //     return uilAutonDSLeft;
-        // } else if (autonEntry.getDouble(0) > 0.5) {
-        //     return uilAutonDSRight;
-        // } else {
-        //     return uilAutonDSMid;
-        // }
-        return uilAutonDSRight;
+        if (autonEntry.getDouble(0) < -0.3) {
+                Globals.selectedAuton = "Left";
+                Globals.chosenAuton.setString("Left");
+            return uilAutonDSLeft;
+        } else if (autonEntry.getDouble(0) > 0.3) {
+                Globals.selectedAuton = "Right";
+                Globals.chosenAuton.setString("Right");
+            return uilAutonDSRight;
+        } else {
+                Globals.selectedAuton = "Middle";
+                Globals.chosenAuton.setString("Middle");
+            return uilAutonDSMid;
+        }
     }
 }

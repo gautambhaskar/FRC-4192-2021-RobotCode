@@ -12,6 +12,7 @@ import frc.robot.commands.intake.IntakeDown;
 //import frc.robot.commands.intake.IntakeDown;
 import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.macros.ShootingMacro;
+import frc.robot.commands.macros.Wait;
 import frc.robot.commands.autonomous.DriveAndIntake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShootingSystem;
@@ -31,9 +32,8 @@ public class UILAuton extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     switch (route) {
       case 0: // turret side bumpers on line (DSMid)
-        addCommands(new IntakeDown(intake),
-            new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2050, false, 2),
-            new DriveSetDistance(drive, 3 * drivePID.feetToRotations));
+        addCommands(new IntakeDown(intake), new Wait(0.25), new DriveSetDistance(drive, 4 * drivePID.feetToRotations),
+            new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2100, false, 2));
         break;
       case -1: // the 1 on bumpers on line (DSRight)
         // addCommands(new SetIntake(intake, false),
@@ -41,18 +41,18 @@ public class UILAuton extends SequentialCommandGroup {
         //     new DriveAndIntake(drive, intake, 15.5 * drivePID.feetToRotations, false),
         //     new DriveSetDistance(drive, -6.5 * drivePID.feetToRotations),
         //     new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 1950, false, 2));
-        addCommands(new IntakeDown(intake),
+        addCommands(new IntakeDown(intake), new Wait(0.25),
             new DriveSetDistance(drive, 4 * drivePID.feetToRotations),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2100, false, 2));
         break;
       case -2: // the 1 on bumpers on line (DSRight2)
-        addCommands(new IntakeDown(intake),
+        addCommands(new IntakeDown(intake), new Wait(0.25),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, 20, 2050, false, 2),
             new DriveAndIntake(drive, intake, 15.5 * drivePID.feetToRotations, false),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 2150, false, 2));
         break;
       case 1: // the 1 on bumpers on line (DSLeft)
-        addCommands(new IntakeDown(intake),
+        addCommands(new IntakeDown(intake), new Wait(0.25),
             new DriveSetDistance(drive, 4 * drivePID.feetToRotations),
             new ShootingMacro(drive, turret, shooter, index, hood, 3, -20, 2100, false, 2));
             

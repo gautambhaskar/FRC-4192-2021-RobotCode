@@ -21,13 +21,15 @@ public class AutoIndex3 extends CommandBase {
   private int numBalls;
   private boolean inThreshold;
   private Timer timer;
-
+  private boolean timerStarted;
 
   public AutoIndex3(Index m_index, int m_numBalls) {
     index = m_index;
     alreadyRun = false;
     numBalls = m_numBalls;
     inThreshold = false;
+    timer = new Timer();
+    timerStarted = false;
     addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -45,9 +47,10 @@ public class AutoIndex3 extends CommandBase {
   public void execute() {
     // Shooter is up to speed and hasn't shot a ball since it sped up, then run
     // index to fire a ball
-    if(Globals.ballsShot>0){
+    if(Globals.ballsShot==1 && timerStarted == false){
       timer.reset();
       timer.start();
+      timerStarted = true;
     }
     inThreshold = Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum
         && Globals.flyWheelSpeed < shooterPID.flyWheelSpeedMinimum + 100;
@@ -82,11 +85,11 @@ public class AutoIndex3 extends CommandBase {
     if (numBalls == -1) {
       return false;
     } else {
-      if(Globals.ballsShot >= numBalls || timer.hasElapsed(5)){
+      if(Globals.ballsShot >= numBalls || (timer.hasElapsed(5) && timerStarted)){
         Globals.ballsShot=0;
         timer.stop();
         timer.reset();
-        timer.stop();
+        timerStarted = false;
         return true;
       }
       return false;
