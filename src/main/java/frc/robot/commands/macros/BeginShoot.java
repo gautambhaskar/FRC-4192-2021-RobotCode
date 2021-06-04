@@ -6,6 +6,7 @@ package frc.robot.commands.macros;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.shootingSystem.ReverseFeeder;
+import frc.robot.commands.shootingSystem.TwoStagePID;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
 
@@ -18,6 +19,6 @@ public class BeginShoot extends SequentialCommandGroup {
   public BeginShoot(ShootingSystem m_shooter, double setpoint) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ReverseFeeder(m_shooter), new FlyWheelBasedShoot(m_shooter, setpoint));
+    addCommands(new ReverseFeeder(m_shooter), new TwoStagePID(m_shooter, setpoint));
   }
 }
