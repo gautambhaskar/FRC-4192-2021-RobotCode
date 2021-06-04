@@ -16,11 +16,14 @@ import frc.robot.subsystems.ShootingSystem;
 public class FlyWheelBasedShoot extends PIDCommand {
   /** Creates a new FlyWheelBasedShoot. */
   private Timer timer = new Timer();
-
-  public FlyWheelBasedShoot(ShootingSystem m_shooter, double setpoint) {
+  private boolean endNearSetpoint;
+  private double setpoint;
+  private ShootingSystem shooter;
+  public FlyWheelBasedShoot(ShootingSystem m_shooter, double kP, double kI, double kD, double setpoint, boolean endNearSetpoint) {
     super(
         // The controller that the command will use
-        new PIDController(0.04, 0, 0),
+        //0.04, 0, 0
+        new PIDController(kP, kI, kD),
         // This should return the measurement
         () -> m_shooter.getFlywheelSpeed(),
         // This should return the setpoint (can also be a constant)
@@ -31,6 +34,9 @@ public class FlyWheelBasedShoot extends PIDCommand {
           // Use the output here
         });
     timer.start();
+    this.endNearSetpoint = endNearSetpoint;
+    this.setpoint = setpoint;
+    shooter = m_shooter;
     addRequirements(m_shooter);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -39,6 +45,9 @@ public class FlyWheelBasedShoot extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;//timer.get() > shooterPID.maxRunTime;
+    if(endNearSetpoint) {
+      return Math.abs(shooter.getFlywheelSpeed() - setpoint) == 100;//timer.get() > shooterPID.maxRunTime;
+    }
+    return false;    
   }
 }

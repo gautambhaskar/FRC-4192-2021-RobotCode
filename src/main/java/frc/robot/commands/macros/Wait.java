@@ -34,6 +34,7 @@ public class Wait extends CommandBase {
   public void end(boolean interrupted) {
     timer.stop();
     timer.reset();
+    
   }
 
   // Returns true when the command should end.
