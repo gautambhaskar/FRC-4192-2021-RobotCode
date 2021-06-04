@@ -9,6 +9,7 @@ import frc.robot.commands.index.AutoIndex3;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.ShootingSystem;
 import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
+import frc.robot.commands.shootingSystem.TwoStagePID;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -18,6 +19,6 @@ public class FireInTheHole extends ParallelRaceGroup {
   public FireInTheHole(ShootingSystem shooter, Index index, int numBalls, double setpoint, double runTime) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FlyWheelBasedShoot(shooter, setpoint), new AutoIndex3(index, numBalls));
+    addCommands(new TwoStagePID(shooter, setpoint), new AutoIndex3(index, numBalls));
   }
 }
