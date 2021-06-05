@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Globals;
 import frc.robot.Constants.shooterPID;
+import frc.robot.commands.macros.Wait;
 import frc.robot.subsystems.Index;
 
 public class AutoIndex3 extends CommandBase {
@@ -22,6 +23,9 @@ public class AutoIndex3 extends CommandBase {
   private boolean inThreshold;
   private Timer timer;
   private boolean timerStarted;
+  private Timer sinceLastShot;
+  private Timer endTime;
+  private boolean firstShot;
 
   public AutoIndex3(Index m_index, int m_numBalls) {
     index = m_index;
@@ -29,7 +33,11 @@ public class AutoIndex3 extends CommandBase {
     numBalls = m_numBalls;
     inThreshold = false;
     timer = new Timer();
+    sinceLastShot = new Timer();
+    endTime =new Timer();
+    
     timerStarted = false;
+    firstShot = true;
     addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -38,6 +46,10 @@ public class AutoIndex3 extends CommandBase {
   @Override
   public void initialize() {
     Globals.ballsShot=0;
+    endTime.stop();
+    endTime.reset();
+    firstShot = true;
+    //sinceLastShot.start();
 
 
   }
@@ -54,14 +66,20 @@ public class AutoIndex3 extends CommandBase {
     }
     inThreshold = Globals.flyWheelSpeed > shooterPID.flyWheelSpeedMinimum
         && Globals.flyWheelSpeed < shooterPID.flyWheelSpeedMinimum + 100;
-    if (inThreshold && Globals.feederSpeed > shooterPID.feederSpeedMinimum && alreadyRun==false) {
+    if (inThreshold && Globals.feederSpeed > shooterPID.feederSpeedMinimum && alreadyRun==false && (sinceLastShot.hasElapsed(.4)||firstShot)) {
+      firstShot = false;
+      sinceLastShot.stop();
+      sinceLastShot.reset();
       index.run(Constants.indexSpeed);
       alreadyRun = true;
       // Once the index has run for long enough to fire a ball, stop running the index
     } else if (alreadyRun == true && Globals.feederSpeed < shooterPID.feederSpeedMinimum) {
+      sinceLastShot.start();
       index.run(0);
       alreadyRun = false;
       Globals.ballsShot++;
+
+
 
       // Once the shooter has lost speed due to shooting the ball, set alreadyRun to
       // false
@@ -85,7 +103,7 @@ public class AutoIndex3 extends CommandBase {
     if (numBalls == -1) {
       return false;
     } else {
-      if(Globals.ballsShot >= numBalls || (timer.hasElapsed(5) && timerStarted)){
+      if((Globals.ballsShot >= numBalls && timer.hasElapsed(10)) || (timer.hasElapsed(100) && timerStarted)){
         Globals.ballsShot=0;
         timer.stop();
         timer.reset();

@@ -48,7 +48,7 @@ public final class Constants {
     // Speeds
     public static double intakeSpeed = 0.4;
     public static double outtakeSlowlySpeed = 0.3;
-    public static double indexSpeed = 0.6;
+    public static double indexSpeed = 0.4;
     public static double feederSpeed = -3000;
     public static double hoodRotateSpeed = 0.3;
     public static double turretTurn = 0.7;
@@ -79,8 +79,8 @@ public final class Constants {
         public static double kFF = 0.000;
         public static double kMax = 0.95;
         public static double kMin = -0.95;
-        public static double flyWheelSpeedMinimum = 2000;
-        public static double feederSpeedMinimum = 2700;
+        public static double flyWheelSpeedMinimum = 1975;
+        public static double feederSpeedMinimum = 3000;
         public static double maxRunTime = 10.0;
     }
 
