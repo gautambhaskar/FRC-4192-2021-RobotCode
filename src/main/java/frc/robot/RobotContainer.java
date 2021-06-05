@@ -104,7 +104,7 @@ public class RobotContainer {
             Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
 
     private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
-            5, 0, 2050, false, 5);
+            5, 0, 2000, false, 5);
     // private final CloseRangeShootingMacro m_closeRangeMacro = new
     // CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shootingSystem, m_hood,
     // -1);
