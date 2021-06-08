@@ -21,6 +21,8 @@ import frc.robot.Globals;
 import frc.robot.Constants.shooterPID;
 import frc.robot.Constants.feederPID;
 
+import java.util.ResourceBundle.Control;
+
 import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
@@ -50,7 +52,7 @@ public class ShootingSystem extends SubsystemBase {
 
   // Feeder PID Controller
   private CANPIDController feederController = feederMotor.getPIDController();
-
+  private CANPIDController flywheelController = shooterLeftMotor.getPIDController();
   // Shuffleboard Tabs
   private ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning");
   private ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
@@ -106,7 +108,7 @@ public class ShootingSystem extends SubsystemBase {
   }
 
   public void setPower(double s_power, double f_power) {
-    shooterLeftMotor.set(s_power);
+    flywheelController.setReference(s_power, ControlType.kVoltage);
     feederController.setReference(f_power, ControlType.kVoltage);
     Globals.totalFeederSpeed += feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity();
     Globals.numIterations++;

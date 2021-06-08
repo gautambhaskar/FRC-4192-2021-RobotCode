@@ -151,7 +151,9 @@ public class Drivetrain extends SubsystemBase {
     // return imu.getAngle() - init_original_angle;
     return (init_original_angle - getAngle());
   }
-
+  public void makeNewInitAngle(){
+    init_angle = 0;
+  }
   // shows the distance the robot has traveled relative to starting position
   public double returnDrivetrainPosition() {
     return -1 * (leftLead.getEncoder().getPosition() - init_position);

@@ -95,6 +95,9 @@ public class AutoIndex3 extends CommandBase {
     index.run(0);
     Globals.ballsShot = 0;
     alreadyRun = false;
+    timer.stop();
+    timer.reset();
+    timerStarted = false;
   }
 
   // Returns true when the command should end.
@@ -103,7 +106,7 @@ public class AutoIndex3 extends CommandBase {
     if (numBalls == -1) {
       return false;
     } else {
-      if((Globals.ballsShot >= numBalls && timer.hasElapsed(10)) || (timer.hasElapsed(100) && timerStarted)){
+      if((Globals.ballsShot >= numBalls && timer.hasElapsed(7)) || (timer.hasElapsed(7) && timerStarted)){
         Globals.ballsShot=0;
         timer.stop();
         timer.reset();

@@ -27,7 +27,7 @@ public class FlyWheelBasedShoot extends PIDCommand {
         () -> setpoint,
         // This uses the output
         output -> {
-          m_shooter.setPower(output, -11);
+          m_shooter.setPower(8.5, -11);
           // Use the output here
         });
     timer.start();

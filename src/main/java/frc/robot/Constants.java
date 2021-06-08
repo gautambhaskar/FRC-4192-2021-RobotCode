@@ -79,7 +79,7 @@ public final class Constants {
         public static double kFF = 0.000;
         public static double kMax = 0.95;
         public static double kMin = -0.95;
-        public static double flyWheelSpeedMinimum = 1975;
+        public static double flyWheelSpeedMinimum = 1850;
         public static double feederSpeedMinimum = 3000;
         public static double maxRunTime = 10.0;
     }
