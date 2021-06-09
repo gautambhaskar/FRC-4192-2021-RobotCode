@@ -98,8 +98,11 @@ public class ShootingSystem extends SubsystemBase {
     if (flyWheelEncoder.getRate() > shooterPID.flyWheelSpeedMinimum
         && flyWheelEncoder.getRate() < shooterPID.flyWheelSpeedMinimum + 100) {
       atSetpoint.setBoolean(true);
+      SmartDashboard.putBoolean("DB/LED 0", true);
+
     } else {
       atSetpoint.setBoolean(false);
+      SmartDashboard.putBoolean("DB/LED 0", false);
     }
   }
 
