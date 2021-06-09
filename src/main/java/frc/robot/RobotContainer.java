@@ -208,11 +208,13 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        if (autonEntry.getDouble(0) < -0.3) {
+        SmartDashboard.setStringArray("Auto List", {"DSLeft", "DSRight", "DSMid"});
+        String selected = SmartDashboard.getString("Auto Selector", "DSLeft");
+        if (selected.equals("DSLeft")) {
                 Globals.selectedAuton = "Left";
                 Globals.chosenAuton.setString("Left");
             return uilAutonDSLeft;
-        } else if (autonEntry.getDouble(0) > 0.3) {
+        } else if (selected.equals("DSRightt")) {
                 Globals.selectedAuton = "Right";
                 Globals.chosenAuton.setString("Right");
             return uilAutonDSRight;

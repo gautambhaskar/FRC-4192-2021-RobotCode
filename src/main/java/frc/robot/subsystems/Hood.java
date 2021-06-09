@@ -32,10 +32,12 @@ public class Hood extends SubsystemBase {
   public void up() {
     hoodSolenoid.set(Value.kReverse);
     hoodPositionEntry.setBoolean(true);
+    SmartDashboard.putBoolean("DB/LED 1", true);
   }
 
   public void down() {
     hoodSolenoid.set(Value.kForward);
     hoodPositionEntry.setBoolean(false);
+    SmartDashboard.putBoolean("DB/LED 1", false);
   }
 }
