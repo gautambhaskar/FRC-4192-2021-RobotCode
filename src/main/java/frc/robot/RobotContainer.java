@@ -159,6 +159,7 @@ public class RobotContainer {
             && Math.abs(driveController.getY(Hand.kLeft)) > 0.05 && driveController.getTriggerAxis(Hand.kRight) < 0.6
             && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
     POVButton downSystems = new POVButton(systemsController, 270);
+    POVButton upSystems = new POVButton(systemsController, 90);
     public RobotContainer(DoubleSupplier maxCenterX) {
         m_drive.setDefaultCommand(m_driveCommand);
         centerX = maxCenterX;
@@ -178,7 +179,7 @@ public class RobotContainer {
         driverLeftTrigger.whileActiveOnce(m_quarterSpeedDrive);
         driverLeftBumper.toggleWhenPressed(m_setIntake);
         driverXButton.toggleWhenPressed(m_intakeCommand);
-        driverBackButton.whenHeld(m_unjamBalls);
+        //driverBackButton.whenHeld(m_unjamBalls);
         driverAButton.whenHeld(m_outtakeSlowlyCommand);
         joystickYOnly.whileActiveOnce(m_driveStraight, true);
 
@@ -196,6 +197,7 @@ public class RobotContainer {
         systemsXButton.whenPressed(m_flywheelStop);
         systemsLeftBumper.toggleWhenPressed(m_setIntake);
         downSystems.whenPressed(resetAngle);
+        upSystems.whenHeld(m_unjamBalls);
         // systemsBackButton.toggleWhenPressed();
         // systemsXButton.toggleWhenPressed(m_intakeCommand);
     }
