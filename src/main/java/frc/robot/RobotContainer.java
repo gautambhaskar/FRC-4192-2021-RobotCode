@@ -30,6 +30,7 @@ import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.OuttakeSlowly;
 import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.drive.PrecisionDrive;
+import frc.robot.commands.drive.ResetGyroAngle;
 import frc.robot.commands.hood.AlignHood;
 import frc.robot.commands.hood.SetHood;
 import frc.robot.commands.index.IndexIn;
@@ -55,7 +56,9 @@ import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.TestingSystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+//import edu.wpi.first.wpilibj.buttons.POVButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -105,6 +108,7 @@ public class RobotContainer {
 
     private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
             5, 0, 2000, false, 5);
+    private final ResetGyroAngle resetAngle = new ResetGyroAngle(m_drive);
     // private final CloseRangeShootingMacro m_closeRangeMacro = new
     // CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shootingSystem, m_hood,
     // -1);
@@ -154,7 +158,7 @@ public class RobotContainer {
     Trigger joystickYOnly = new Trigger(() -> Math.abs(driveController.getX(Hand.kRight)) < 0.05
             && Math.abs(driveController.getY(Hand.kLeft)) > 0.05 && driveController.getTriggerAxis(Hand.kRight) < 0.6
             && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
-
+    POVButton downSystems = new POVButton(systemsController, 270);
     public RobotContainer(DoubleSupplier maxCenterX) {
         m_drive.setDefaultCommand(m_driveCommand);
         centerX = maxCenterX;
@@ -178,6 +182,7 @@ public class RobotContainer {
         driverAButton.whenHeld(m_outtakeSlowlyCommand);
         joystickYOnly.whileActiveOnce(m_driveStraight, true);
 
+
         // Systems Controller (Manual Control)
         systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
         systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
@@ -190,6 +195,7 @@ public class RobotContainer {
         //systemsAButton.whenPressed(m_basicRunShooter);
         systemsXButton.whenPressed(m_flywheelStop);
         systemsLeftBumper.toggleWhenPressed(m_setIntake);
+        downSystems.whenPressed(resetAngle);
         // systemsBackButton.toggleWhenPressed();
         // systemsXButton.toggleWhenPressed(m_intakeCommand);
     }
