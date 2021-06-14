@@ -30,7 +30,8 @@ public class FlyWheelBasedShoot extends PIDCommand {
         () -> setpoint,
         // This uses the output
         output -> {
-          m_shooter.setPower(8.5, -11);
+          m_shooter.setPower(setpoint, -11);
+          //8.5 FOR TELEOP
           // Use the output here
         });
     timer.start();

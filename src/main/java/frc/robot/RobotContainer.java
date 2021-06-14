@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.drive.DefaultDrive;
 
 import frc.robot.commands.autonomous.RedSearchAutonA;
@@ -39,6 +39,7 @@ import frc.robot.commands.turret.TurretTurn;
 import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.shootingSystem.BasicRunShooter;
 import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
+import frc.robot.commands.shootingSystem.ReverseFeeder;
 import frc.robot.commands.shootingSystem.StopFlyWheel;
 import frc.robot.commands.shootingSystem.TwoStagePID;
 import frc.robot.commands.macros.CloseRangeShootingMacro;
@@ -107,7 +108,7 @@ public class RobotContainer {
             Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
 
     private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
-            5, 0, 2000, false, 5);
+            5, 0, 8.5, false, 5);
     private final ResetGyroAngle resetAngle = new ResetGyroAngle(m_drive);
     // private final CloseRangeShootingMacro m_closeRangeMacro = new
     // CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shootingSystem, m_hood,
@@ -120,8 +121,8 @@ public class RobotContainer {
             true);
     //private final FlyWheelBasedShoot m_flywheel = new FlyWheelBasedShoot(m_shootingSystem, 2000);
     private final StopFlyWheel m_flywheelStop = new StopFlyWheel(m_shootingSystem);
-    private final TwoStagePID m_flywheelShoot = new TwoStagePID(m_shootingSystem, 2000);
-
+    private final TwoStagePID m_flywheelShoot = new TwoStagePID(m_shootingSystem, 8.5);
+    private final ReverseFeeder m_reverseFeed = new ReverseFeeder(m_shootingSystem);
     // Autonomous Commands
 
     private final DriveForDistance zeroDistance = new DriveForDistance(m_drive, 0);
@@ -158,8 +159,8 @@ public class RobotContainer {
     Trigger joystickYOnly = new Trigger(() -> Math.abs(driveController.getX(Hand.kRight)) < 0.05
             && Math.abs(driveController.getY(Hand.kLeft)) > 0.05 && driveController.getTriggerAxis(Hand.kRight) < 0.6
             && driveController.getTriggerAxis(Hand.kLeft) < 0.6);
-    POVButton downSystems = new POVButton(systemsController, 270);
-    POVButton upSystems = new POVButton(systemsController, 90);
+    POVButton downSystems = new POVButton(systemsController, 180);
+    POVButton upSystems = new POVButton(systemsController, 0);
     public RobotContainer(DoubleSupplier maxCenterX) {
         m_drive.setDefaultCommand(m_driveCommand);
         centerX = maxCenterX;
@@ -184,6 +185,7 @@ public class RobotContainer {
         joystickYOnly.whileActiveOnce(m_driveStraight, true);
 
 
+
         // Systems Controller (Manual Control)
         systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
         systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
@@ -196,7 +198,7 @@ public class RobotContainer {
         //systemsAButton.whenPressed(m_basicRunShooter);
         systemsXButton.whenPressed(m_flywheelStop);
         systemsLeftBumper.toggleWhenPressed(m_setIntake);
-        downSystems.whenPressed(resetAngle);
+        downSystems.whenHeld(m_reverseFeed);
         upSystems.whenHeld(m_unjamBalls);
         // systemsBackButton.toggleWhenPressed();
         // systemsXButton.toggleWhenPressed(m_intakeCommand);
@@ -208,13 +210,14 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        SmartDashboard.setStringArray("Auto List", {"DSLeft", "DSRight", "DSMid"});
+        String[] autons = {"DSLeft", "DSRight", "DSMid"};
+        SmartDashboard.putStringArray("Auto List", autons);
         String selected = SmartDashboard.getString("Auto Selector", "DSLeft");
         if (selected.equals("DSLeft")) {
                 Globals.selectedAuton = "Left";
                 Globals.chosenAuton.setString("Left");
             return uilAutonDSLeft;
-        } else if (selected.equals("DSRightt")) {
+        } else if (selected.equals("DSRight")) {
                 Globals.selectedAuton = "Right";
                 Globals.chosenAuton.setString("Right");
             return uilAutonDSRight;
