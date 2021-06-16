@@ -32,8 +32,8 @@ import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.drive.PrecisionDrive;
 import frc.robot.commands.drive.ResetGyroAngle;
 import frc.robot.commands.hood.AlignHood;
-//import frc.robot.commands.hood.HoodGoingDown;
-//import frc.robot.commands.hood.HoodGoingUp;
+import frc.robot.commands.hood.HoodGoingDown;
+import frc.robot.commands.hood.HoodGoingUp;
 import frc.robot.commands.hood.SetHood;
 import frc.robot.commands.index.IndexIn;
 import frc.robot.commands.index.IndexOut;
@@ -120,8 +120,8 @@ public class RobotContainer {
     // -1);
     private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
     private final SetHood m_setHood = new SetHood(m_hood);
-    //private final HoodGoingUp hoodUp = new HoodGoingUp(m_hood);
-    //private final HoodGoingDown hoodDown = new HoodGoingDown(m_hood);
+    private final HoodGoingUp hoodUp = new HoodGoingUp(m_hood);
+    private final HoodGoingDown hoodDown = new HoodGoingDown(m_hood);
     private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 0);
     private final SetIntake m_setIntake = new SetIntake(m_intake, false);
     private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0,
@@ -188,7 +188,7 @@ public class RobotContainer {
         driverLeftBumper.toggleWhenPressed(m_setIntake);
         driverXButton.toggleWhenPressed(m_intakeCommand);
         //driverBackButton.whenHeld(m_unjamBalls);
-        driverStartButton.whenPressed(resetTurret);
+        //driverStartButton.whenPressed(resetTurret);
         driverAButton.whenHeld(m_outtakeSlowlyCommand);
         joystickYOnly.whileActiveOnce(m_driveStraight, true);
 
@@ -199,14 +199,14 @@ public class RobotContainer {
         systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
         systemsStartButton.whenHeld(m_indexIn);
         systemsAButton.whenPressed(m_shooterMacro, true);
-        //systemsBButton.whenPressed(hoodDown);
+        systemsBButton.whenPressed(hoodDown);
         systemsRightBumper.whenHeld(m_indexOut);
         //systemsYButton.toggleWhenPressed(m_flywheelShoot);
-        //systemsYButton.whenPressed(hoodUp);
+        systemsYButton.whenPressed(hoodUp);
         systemsBackButton.whenPressed(shootingBallsOnly);
         //systemsAButton.whenPressed(m_basicRunShooter);
         systemsXButton.whenPressed(m_flywheelStop);
-        systemsLeftBumper.whenHeld(m_unjamBalls);
+        systemsLeftBumper.toggleWhenPressed(m_setIntake);
         downSystems.whenPressed(m_reverseFeed);
         upSystems.whenHeld(m_unjamBalls);
         // systemsBackButton.toggleWhenPressed();
