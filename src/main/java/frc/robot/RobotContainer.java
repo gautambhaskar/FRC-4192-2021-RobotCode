@@ -32,8 +32,8 @@ import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.drive.PrecisionDrive;
 import frc.robot.commands.drive.ResetGyroAngle;
 import frc.robot.commands.hood.AlignHood;
-import frc.robot.commands.hood.HoodGoingDown;
-import frc.robot.commands.hood.HoodGoingUp;
+//import frc.robot.commands.hood.HoodGoingDown;
+//import frc.robot.commands.hood.HoodGoingUp;
 import frc.robot.commands.hood.SetHood;
 import frc.robot.commands.index.IndexIn;
 import frc.robot.commands.index.IndexOut;
@@ -110,19 +110,18 @@ public class RobotContainer {
             () -> -systemsController.getTriggerAxis(Hand.kRight) * 15 / 100);
     private final UnjamBall m_unjamBalls = new UnjamBall(m_index, m_shootingSystem, Constants.unjamBalls.ind_power,
             Constants.unjamBalls.s_power, Constants.unjamBalls.f_power);
-
     private final ShootingMacro m_shooterMacro = new ShootingMacro(m_drive, m_turret, m_shootingSystem, m_index, m_hood,
             5, 0, 8.5, false, 5);
-    private final ResetGyroAngle resetAngle = new ResetGyroAngle(m_drive);
     private final shootTheBall shootingBallsOnly = new shootTheBall(m_shootingSystem, m_index, 5, 8.5, 5);
+    private final ResetGyroAngle resetAngle = new ResetGyroAngle(m_drive);
     private final ResetNativeTurret resetTurret = new ResetNativeTurret(m_turret);
     // private final CloseRangeShootingMacro m_closeRangeMacro = new
     // CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shootingSystem, m_hood,
     // -1);
     private final TestMotor m_testMotor = new TestMotor(m_motor, 0.3);
     private final SetHood m_setHood = new SetHood(m_hood);
-    private final HoodGoingUp hoodUp = new HoodGoingUp(m_hood);
-    private final HoodGoingDown hoodDown = new HoodGoingDown(m_hood);
+    //private final HoodGoingUp hoodUp = new HoodGoingUp(m_hood);
+    //private final HoodGoingDown hoodDown = new HoodGoingDown(m_hood);
     private final BasicRunShooter m_basicRunShooter = new BasicRunShooter(m_shootingSystem, 11, 0);
     private final SetIntake m_setIntake = new SetIntake(m_intake, false);
     private final TurretAlignmentMacro m_turretAlignmentMacro = new TurretAlignmentMacro(m_drive, m_turret, m_hood, 0,
@@ -200,10 +199,10 @@ public class RobotContainer {
         systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
         systemsStartButton.whenHeld(m_indexIn);
         systemsAButton.whenPressed(m_shooterMacro, true);
-        systemsBButton.whenPressed(hoodDown);
+        //systemsBButton.whenPressed(hoodDown);
         systemsRightBumper.whenHeld(m_indexOut);
         //systemsYButton.toggleWhenPressed(m_flywheelShoot);
-        systemsYButton.whenPressed(hoodUp);
+        //systemsYButton.whenPressed(hoodUp);
         systemsBackButton.whenPressed(shootingBallsOnly);
         //systemsAButton.whenPressed(m_basicRunShooter);
         systemsXButton.whenPressed(m_flywheelStop);
