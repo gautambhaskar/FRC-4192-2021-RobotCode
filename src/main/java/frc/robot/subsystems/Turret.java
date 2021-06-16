@@ -135,6 +135,10 @@ public class Turret extends SubsystemBase {
     return ((init_original_position) - (turretEncoder.getDistance() / 43));
   }
 
+  public void setToZero(){
+    init_original_position = turretEncoder.getDistance() / 43;
+  }
+
   // returns the velocity of the turret
   public double getVelocity() {
     return turretEncoder.getRate() / 43;
