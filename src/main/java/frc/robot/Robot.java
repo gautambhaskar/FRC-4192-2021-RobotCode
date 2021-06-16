@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpiutil.net.PortForwarder;
 import frc.robot.Constants.visionPosition.blueA;
 import frc.robot.Constants.visionPosition.blueB;
 import frc.robot.Constants.visionPosition.redA;
@@ -68,6 +69,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
+    PortForwarder.add(5800, "10.41.92.11", 5800);
     Shuffleboard.selectTab("Main");
     mainTab.add("Code Version No.", 1.0);
     mainTab.add("Branch", "main");

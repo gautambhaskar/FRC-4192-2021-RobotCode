@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Constants.drivePID;
 import frc.robot.commands.drive.DriveSetDistance;
+import frc.robot.commands.hood.HoodGoingUp;
 import frc.robot.commands.intake.IntakeDown;
 //import frc.robot.commands.intake.IntakeDown;
 import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.macros.ShootingMacro;
 import frc.robot.commands.macros.Wait;
+import frc.robot.commands.macros.shootTheBall;
 import frc.robot.commands.autonomous.DriveAndIntake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShootingSystem;
@@ -33,7 +35,7 @@ public class UILAuton extends SequentialCommandGroup {
     switch (route) {
       case 0: // turret side bumpers on line (DSMid)
         addCommands(new IntakeDown(intake), new Wait(0.25), new DriveSetDistance(drive, 3.5 * drivePID.feetToRotations),
-            new ShootingMacro(drive, turret, shooter, index, hood, 3, 0, 8, false, 2));
+        new HoodGoingUp(hood), new shootTheBall(shooter, index, 5, 8.2, 5));
         break;
       case -1: // the 1 on bumpers on line (DSRight)
         // addCommands(new SetIntake(intake, false),
