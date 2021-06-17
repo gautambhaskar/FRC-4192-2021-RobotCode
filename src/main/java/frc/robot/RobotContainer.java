@@ -30,6 +30,7 @@ import frc.robot.commands.intake.IntakeBalls;
 import frc.robot.commands.intake.OuttakeSlowly;
 import frc.robot.commands.intake.SetIntake;
 import frc.robot.commands.drive.PrecisionDrive;
+import frc.robot.commands.drive.RecalPosition;
 import frc.robot.commands.drive.ResetGyroAngle;
 import frc.robot.commands.hood.AlignHood;
 import frc.robot.commands.hood.HoodGoingDown;
@@ -42,6 +43,7 @@ import frc.robot.commands.turret.TurretTurn;
 import frc.robot.commands.macros.UnjamBall;
 import frc.robot.commands.macros.shootTheBall;
 import frc.robot.commands.shootingSystem.BasicRunShooter;
+import frc.robot.commands.shootingSystem.DriverReverseFeed;
 import frc.robot.commands.shootingSystem.FlyWheelBasedShoot;
 import frc.robot.commands.shootingSystem.ReverseFeeder;
 import frc.robot.commands.shootingSystem.StopFlyWheel;
@@ -115,6 +117,7 @@ public class RobotContainer {
     private final shootTheBall shootingBallsOnly = new shootTheBall(m_shootingSystem, m_index, 5, 8.5, 5);
     private final ResetGyroAngle resetAngle = new ResetGyroAngle(m_drive);
     private final ResetNativeTurret resetTurret = new ResetNativeTurret(m_turret);
+    private final DriverReverseFeed reverseFeedOnly = new DriverReverseFeed(m_shootingSystem);
     // private final CloseRangeShootingMacro m_closeRangeMacro = new
     // CloseRangeShootingMacro(m_drive, m_turret, m_index, m_shootingSystem, m_hood,
     // -1);
@@ -141,6 +144,7 @@ public class RobotContainer {
             m_intake, -2);
     private final UILAuton uilAutonDSLeft = new UILAuton(m_drive, m_turret, m_shootingSystem, m_index, m_hood, m_intake,
             1);
+        private final RecalPosition zeroGyro = new RecalPosition(m_drive);
     // private final DistanceAuton m_distanceauton = new DistanceAuton(m_drive);
 
     // Triggers
@@ -188,7 +192,7 @@ public class RobotContainer {
         driverLeftBumper.toggleWhenPressed(m_setIntake);
         driverXButton.toggleWhenPressed(m_intakeCommand);
         //driverBackButton.whenHeld(m_unjamBalls);
-        //driverStartButton.whenPressed(resetTurret);
+        driverStartButton.whenPressed(resetAngle);
         driverAButton.whenHeld(m_outtakeSlowlyCommand);
         joystickYOnly.whileActiveOnce(m_driveStraight, true);
 
@@ -197,10 +201,11 @@ public class RobotContainer {
         // Systems Controller (Manual Control)
         systemsRightTrigger.whileActiveOnce(m_turretTurnRight);
         systemsLeftTrigger.whileActiveOnce(m_turretTurnLeft);
-        systemsStartButton.whenHeld(m_indexIn);
+        systemsStartButton.whenPressed(resetAngle);
         systemsAButton.whenPressed(m_shooterMacro, true);
         systemsBButton.whenPressed(hoodDown);
         systemsRightBumper.whenHeld(m_indexOut);
+        systemsRightBumper.whenHeld(reverseFeedOnly);
         //systemsYButton.toggleWhenPressed(m_flywheelShoot);
         systemsYButton.whenPressed(hoodUp);
         systemsBackButton.whenPressed(shootingBallsOnly);
@@ -225,11 +230,11 @@ public class RobotContainer {
         if (selected.equals("DSLeft")) {
                 Globals.selectedAuton = "Left";
                 Globals.chosenAuton.setString("Left");
-            return uilAutonDSLeft;
+            return uilAutonDSMid;
         } else if (selected.equals("DSRight")) {
                 Globals.selectedAuton = "Right";
                 Globals.chosenAuton.setString("Right");
-            return uilAutonDSRight;
+            return uilAutonDSMid;
         } else {
                 Globals.selectedAuton = "Middle";
                 Globals.chosenAuton.setString("Middle");

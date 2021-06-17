@@ -119,4 +119,11 @@ public class ShootingSystem extends SubsystemBase {
     Globals.averageFeederSpeed = Globals.totalFeederSpeed / Globals.numIterations;
     averageFeederSpeed.setDouble(Globals.averageFeederSpeed);
   }
+  public void reverseFeedOnly(double f_power){
+    feederController.setReference(f_power, ControlType.kVoltage);
+    Globals.totalFeederSpeed += feederMotor.getEncoder(EncoderType.kQuadrature, 8192).getVelocity();
+    Globals.numIterations++;
+    Globals.averageFeederSpeed = Globals.totalFeederSpeed / Globals.numIterations;
+    averageFeederSpeed.setDouble(Globals.averageFeederSpeed);
+  }
 }

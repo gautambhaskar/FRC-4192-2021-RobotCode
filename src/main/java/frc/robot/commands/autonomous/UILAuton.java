@@ -35,7 +35,7 @@ public class UILAuton extends SequentialCommandGroup {
     switch (route) {
       case 0: // turret side bumpers on line (DSMid)
         addCommands(new IntakeDown(intake), new Wait(.25), new DriveSetDistance(drive, 3.5 * drivePID.feetToRotations),
-        new HoodGoingUp(hood), new shootTheBall(shooter, index, 5, 8.2, 5));
+        new HoodGoingUp(hood), new shootTheBall(shooter, index, 5, 8.4, 5));
         break;
       case -1: // the 1 on bumpers on line (DSRight)
         // addCommands(new SetIntake(intake, false),
